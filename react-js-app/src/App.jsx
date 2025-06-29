@@ -7,6 +7,13 @@ import UseEffectAndState from './Lesson04/UseEffectAndState';
 import ContextAPI from './Lesson04/ContextAPI';
 import UseReducerHook from './Lesson04/UseReducerHook';
 import CombineStateAndReducer from './Lesson04/CombineStateAndReducer';
+import EventBubbling from './Lesson05/EventBubbling';
+import CapturingEvents from './Lesson05/CapturingEvents';
+import HandlingKeyboardEvents from './Lesson05/HandlingKeyboardEvents';
+import HandlingMouseEvents from './Lesson05/HandlingMouseEvents';
+import UncontrolledInputs from './Lesson05/UncontrolledInputs';
+import HandlingTouchEvents from './Lesson05/HandlingTouchEvents';
+import ThrottlingAndDebouncingEvents from './Lesson05/ThrottlingAndDebouncingEvents';
 
 function App() {
   return (
@@ -26,6 +33,13 @@ function App() {
         <ContextAPI />
         <UseReducerHook />
         <CombineStateAndReducer />
+        <EventBubbling />
+        <CapturingEvents />
+        <HandlingKeyboardEvents />
+        <HandlingMouseEvents />
+        <UncontrolledInputs />
+        <HandlingTouchEvents />
+        <ThrottlingAndDebouncingEvents />
       </div>
       <p className='read-the-docs'>Click on the Vite and React logos to learn more</p>
     </>
