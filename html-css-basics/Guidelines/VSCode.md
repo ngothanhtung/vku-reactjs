@@ -1,4 +1,13 @@
-# # Visual Studio Code Setup for ReactJS Development
+# Visual Studio Code Setup for FrontEnd Development
+
+## Create a GitHub Account
+
+- [Sign up for GitHub](https://github.com/join)
+- [Create a new repository](https://github.com/new)
+
+## Create a Vercel Account
+
+- [Sign up for Vercel](https://vercel.com/signup)
 
 ## Nodejs
 
@@ -13,9 +22,11 @@
 - [Download Git](https://git-scm.com/downloads)
 - [GitHub Desktop](https://desktop.github.com/) (Optional)
 
-## Extensions cho Visual Studio Code
+## Install Visual Studio Code
 
-### Extensions
+- [Download Visual Studio Code](https://code.visualstudio.com/Download)
+
+### Extensions cho Visual Studio Code
 
 - [Auto Rename](https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-rename-tag) (Jun Han)
 - [Auto Close Tag](https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-close-tag) (Jun Han)
@@ -42,3 +53,13 @@
 ### Icons
 
 - [Material Icon Theme](https://marketplace.visualstudio.com/items?itemName=PKief.material-icon-theme) (Philipp Kief)
+
+### Settings
+
+- Format on Save
+  - Open `settings.json` in VSCode
+  - Add the following lines:
+
+    ```json
+    "editor.formatOnSave": true,    
+    ```
