@@ -1,0 +1,118 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+:root {
+  --color1: #af43f1;
+  --color2: #8045c6;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.navigation {
+  position: relative;
+  width: 300px;
+  height: 400px;
+  background-color: #ffffff;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+  border-radius: 20px;
+}
+
+.navigation ul {
+  position: absolute;
+  top: 30px;
+  list-style-type: none;
+}
+
+.navigation ul li {
+  width: 280px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+}
+
+.navigation ul li a {
+  position: relative;
+  width: 100%;
+  margin-left: 24px;
+  z-index: 999;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.navigation ul li a .icon {
+  position: relative;
+  display: block;
+  color: var(--color2);
+  font-weight: 400;
+
+  margin-right: 8px;
+  transform: translateY(1px);
+  transition: 0.5s;
+}
+
+.navigation ul li a .text {
+  color: var(--color2);
+  letter-spacing: 0.15em;
+  font-weight: 400;
+  font-size: 0.75em;
+  transition: 0.5s;
+}
+
+.navigation ul li:hover a .text,
+.navigation ul li:hover a .icon {
+  color: var(--color1);
+}
+
+.navigation ul li.active a .icon,
+.navigation ul li.active a .text {
+  color: white;
+}
+
+.indicator {
+  position: absolute;
+  display: flex;
+  top: 0px;
+  left: -15px;
+  width: 280px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  background-color: var(--color1);
+  border-radius: 30px;
+  border-bottom-left-radius: 0;
+  transition: 0.5s;
+}
+
+.indicator::before {
+  content: '';
+  position: absolute;
+  top: 50px;
+  width: 15px;
+  height: 30px;
+  background-color: var(--color2);
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  z-index: 2;
+}
+
+.indicator::after {
+  content: '';
+  position: absolute;
+  top: 49px;
+  left: 0px;
+  width: 15px;
+  height: 15px;
+  background-color: var(--color1);
+}

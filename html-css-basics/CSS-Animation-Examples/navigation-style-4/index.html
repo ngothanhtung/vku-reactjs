@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Navigation Style 04</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div class="navigation">
+    <div class="menu">
+      <div class="user-box">
+        <img class="avatar" src="https://i.pravatar.cc/300" />
+        <span class="username">Tony Woo</span>
+      </div>
+      <div id="menu-toggle-button"></div>
+    </div>
+
+    <ul class="menu-panel">
+      <li style="--index: 6">
+        <a href="#"> <ion-icon name="home-outline"></ion-icon> Home </a>
+      </li>
+      <li style="--index: 5">
+        <a href="#"> <ion-icon name="information-circle-outline"></ion-icon>About </a>
+      </li>
+      <li style="--index: 4">
+        <a href="#"> <ion-icon name="apps-outline"></ion-icon>Services </a>
+      </li>
+      <li style="--index: 3">
+        <a href="#"> <ion-icon name="image-outline"></ion-icon> Portfolio </a>
+      </li>
+      <li style="--index: 2">
+        <a href="#"><ion-icon name="people-outline"></ion-icon> Our team </a>
+      </li>
+      <li style="--index: 1">
+        <a href="#"> <ion-icon name="mail-outline"></ion-icon> Contact </a>
+      </li>
+    </ul>
+  </div>
+
+  <script>
+    let menuToogle = document.querySelector('#menu-toggle-button');
+    let navigation = document.querySelector('.navigation');
+
+    menuToogle.onclick = function () {
+      navigation.classList.toggle('active');
+    };
+  </script>
+
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+
+</html>
