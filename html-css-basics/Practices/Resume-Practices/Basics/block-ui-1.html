@@ -25,24 +25,24 @@
       --spacing-bottom: 16px;
 
 
-      /* Theme colors */
+      /* BANDWIDTH */
       --bandwidth-primary: #561d1d;
       --bandwidth-secondary: #cd0e00;
       --bandwidth-text: "Bandwidth";
       --bandwidth-percentage: 30%;
       --bandwidth-percentage-text: "30%";
-
+      /* STORAGE */
       --storage-primary: #0097a7;
       --storage-secondary: #00bcd4;
       --storage-text: "Storage";
       --storage-percentage: 50%;
       --storage-percentage-text: "50%";
-
-      --users-primary: #0097a7;
-      --users-secondary: #00bcd4;
-      --users-text: "users";
-      --users-percentage: 50%;
-      --users-percentage-text: "50%";
+      /* USERS */
+      --users-primary: #070ab9;
+      --users-secondary: #181ce1;
+      --users-text: "Users";
+      --users-percentage: 70%;
+      --users-percentage-text: "70%";
     }
 
     .container {
@@ -93,6 +93,7 @@
 
     }
 
+    /* BANDWIDTH */
     .bandwidth-color-primary {
       background-color: var(--bandwidth-primary)
     }
@@ -100,15 +101,6 @@
     .bandwidth-color-secondary {
       background-color: var(--bandwidth-secondary);
     }
-
-    .storage-color-primary {
-      background-color: var(--storage-primary);
-    }
-
-    .storage-color-secondary {
-      background-color: var(--storage-secondary);
-    }
-
 
     .bandwidth-text::before {
       content: var(--bandwidth-text);
@@ -122,6 +114,15 @@
       width: var(--bandwidth-percentage)
     }
 
+    /* STORAGE */
+    .storage-color-primary {
+      background-color: var(--storage-primary);
+    }
+
+    .storage-color-secondary {
+      background-color: var(--storage-secondary);
+    }
+
     .storage-text::before {
       content: var(--storage-text);
     }
@@ -132,6 +133,26 @@
 
     .storage-percent {
       width: var(--storage-percentage);
+    }
+
+    .users-color-primary {
+      background-color: var(--users-primary);
+    }
+
+    .users-color-secondary {
+      background-color: var(--users-secondary);
+    }
+
+    .users-text::before {
+      content: var(--users-text);
+    }
+
+    .users-percent-text::before {
+      content: var(--users-percentage-text);
+    }
+
+    .users-percent {
+      width: var(--users-percentage);
     }
   </style>
 </head>
@@ -168,13 +189,13 @@
 
     <!-- USERS -->
     <section class="row">
-      <div class="left-column storage-color-primary">
-        <span class="storage-text"></span>
+      <div class="left-column users-color-primary">
+        <span class="users-text"></span>
       </div>
 
       <div class="right-column">
-        <div class="right-column-percent storage-color-secondary storage-percent">
-          <span class="storage-percent-text"></span>
+        <div class="right-column-percent users-color-secondary users-percent">
+          <span class="users-percent-text"></span>
         </div>
       </div>
     </section>
