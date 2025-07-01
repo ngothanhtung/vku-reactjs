@@ -45,26 +45,15 @@ You will create a web-based dashboard that includes:
 
 ---
 
-### ✅ 3. Clock and Greeting
 
-* Display current time and update every second.
-* Show a greeting like:
-
-  * "Good morning" (5AM–12PM)
-  * "Good afternoon" (12PM–6PM)
-  * "Good evening" (6PM–10PM)
-  * "Good night" (10PM–5AM)
-
----
-
-### ✅ 4. Theme Switcher
+### ✅ 3. Theme Switcher
 
 * Add a toggle button (🌙/☀️) to switch between light and dark themes.
 * Use CSS classes to change theme.
 
 ---
 
-### ✅ 5. Form Validation (for notes/tasks input)
+### ✅ 4. Form Validation (for notes/tasks input)
 
 * Do not allow empty inputs.
 * Show error message below the input field if user tries to add empty input.
