@@ -23,18 +23,16 @@ You will create a web-based dashboard that includes:
 ### ✅ 1. To-Do List
 
 * Input field and **Add** button to create new tasks.
-* Display tasks as a list (`<ul>` or `<div>`).
+* Display tasks as a list.
 * Each task should have:
 
-* A checkbox to mark as completed.
-* A "Delete" button to remove the task.
+  * A checkbox to mark as completed.
+  * A "Delete" button to remove the task.
 * Filter buttons:
 
-* Show All
-* Show Completed
-* Show Incomplete
-
-> **Use DOM methods**: `createElement`, `appendChild`, `remove`, `classList`, `querySelectorAll`, etc.
+  * Show All
+  * Show Completed
+  * Show Incomplete
 
 ---
 
@@ -49,21 +47,20 @@ You will create a web-based dashboard that includes:
 
 ### ✅ 3. Clock and Greeting
 
-* Display current time using `Date()` and `setInterval()`.
-* Update every second.
+* Display current time and update every second.
 * Show a greeting like:
 
-* "Good morning" (5AM–12PM)
-* "Good afternoon" (12PM–6PM)
-* "Good evening" (6PM–10PM)
-* "Good night" (10PM–5AM)
+  * "Good morning" (5AM–12PM)
+  * "Good afternoon" (12PM–6PM)
+  * "Good evening" (6PM–10PM)
+  * "Good night" (10PM–5AM)
 
 ---
 
 ### ✅ 4. Theme Switcher
 
 * Add a toggle button (🌙/☀️) to switch between light and dark themes.
-* Use `classList.toggle()` to change CSS classes.
+* Use CSS classes to change theme.
 
 ---
 
@@ -78,7 +75,7 @@ You will create a web-based dashboard that includes:
 
 * Save tasks and notes in `localStorage` and load them on page refresh.
 * Add "Edit Task" or "Edit Note" functionality.
-* Use `drag & drop` to reorder tasks or notes.
+* Use drag & drop to reorder tasks or notes.
 
 ---
 
@@ -86,7 +83,7 @@ You will create a web-based dashboard that includes:
 
 * **Do not use any JavaScript libraries/frameworks** (e.g., jQuery, React).
 * Use only **vanilla JavaScript**, **HTML**, and **CSS**.
-* All DOM interactions must be done via `document.*` methods.
+* All DOM interactions must be done via native JavaScript.
 
 ---
 
@@ -97,4 +94,10 @@ You will create a web-based dashboard that includes:
   * `index.html`
   * `style.css`
   * `script.js`
-* Or Google Driver / a GitHub repo link
+* Or Google Drive / a GitHub repo link
+
+## 📦 **Demo:**
+
+This is a demo. You are encouraged to design a more creative and beautiful UI.
+
+![Alt Text](./screen-todo-app.png)
