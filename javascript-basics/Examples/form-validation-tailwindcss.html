@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Registration Form</title>
+	<script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+	<div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+		<h1 class="text-2xl font-bold mb-6 text-center">Registration Form</h1>
+		<form id="registrationForm" novalidate>
+			<!-- Name -->
+			<div class="mb-4">
+				<label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+				<input type="text" id="name" name="name" required
+					class="mt-1 block w-full px-3 py-3 rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+					placeholder="Enter your name">
+				<p id="nameError" class="text-red-500 text-xs mt-1 hidden">Name is required and must contain only letters and
+					spaces.</p>
+			</div>
+
+			<!-- Email -->
+			<div class="mb-4">
+				<label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+				<input type="email" id="email" name="email" required
+					class="mt-1 block w-full px-3 py-3 rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+					placeholder="Enter your email">
+				<p id="emailError" class="text-red-500 text-xs mt-1 hidden">Please enter a valid email address.</p>
+			</div>
+
+			<!-- Address -->
+			<div class="mb-4">
+				<label for="address" class="block text-sm font-medium text-gray-700">Address <span class="text-red-500">*</span></label>
+				<textarea id="address" name="address" required
+					class="mt-1 block w-full px-3 py-3 rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+					placeholder="Enter your address" rows="4"></textarea>
+				<p id="addressError" class="text-red-500 text-xs mt-1 hidden">Address is required.</p>
+			</div>
+
+			<!-- Phone -->
+			<div class="mb-4">
+				<label for="phone" class="block text-sm font-medium text-gray-700">Phone</label>
+				<input type="tel" id="phone" name="phone"
+					class="mt-1 block w-full px-3 py-3 rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+					placeholder="Enter your phone number">
+				<p id="phoneError" class="text-red-500 text-xs mt-1 hidden">Phone number must be valid (e.g., 123-456-7890 or
+					1234567890).</p>
+			</div>
+
+			<!-- Birthday -->
+			<div class="mb-4">
+				<label for="birthday" class="block text-sm font-medium text-gray-700">Birthday</label>
+				<input type="text" id="birthday" name="birthday" placeholder="YYYY-MM-DD"
+					class="mt-1 block w-full px-3 py-3 rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+				<p id="birthdayError" class="text-red-500 text-xs mt-1 hidden">Please select a valid date.</p>
+			</div>
+
+			<!-- Hobbies -->
+			<div class="mb-4">
+				<label for="hobbies" class="block text-sm font-medium text-gray-700">Hobbies (Optional)</label>
+				<input type="text" id="hobbies" name="hobbies"
+					class="mt-1 block w-full px-3 py-3 rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+					placeholder="Enter your hobbies (e.g., reading, gaming)">
+			</div>
+
+			<!-- Submit Button -->
+			<div class="mt-6">
+				<button type="submit"
+					class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+					Submit
+				</button>
+			</div>
+		</form>
+	</div>
+
+	<script>
+		document.getElementById('registrationForm').addEventListener('submit', function (event) {
+			event.preventDefault();
+			let isValid = true;
+
+			// Reset error messages
+			document.querySelectorAll('.text-red-500').forEach(error => error.classList.add('hidden'));
+
+			// Name validation
+			const name = document.getElementById('name').value.trim();
+			const nameRegex = /^[A-Za-z\s]+$/;
+			if (!name || !nameRegex.test(name)) {
+				document.getElementById('nameError').classList.remove('hidden');
+				isValid = false;
+			}
+
+			// Email validation
+			const email = document.getElementById('email').value.trim();
+			const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+			if (!email || !emailRegex.test(email)) {
+				document.getElementById('emailError').classList.remove('hidden');
+				isValid = false;
+			}
+
+			// Address validation
+			const address = document.getElementById('address').value.trim();
+			if (!address) {
+				document.getElementById('addressError').classList.remove('hidden');
+				isValid = false;
+			}
+
+			// Phone validation (optional, but must be valid if provided)
+			const phone = document.getElementById('phone').value.trim();
+			const phoneRegex = /^\d{10}$|^\d{3}-\d{3}-\d{4}$/;
+			if (phone && !phoneRegex.test(phone)) {
+				document.getElementById('phoneError').classList.remove('hidden');
+				isValid = false;
+			}
+
+			// Birthday validation (optional, but must be valid if provided)
+			const birthday = document.getElementById('birthday').value;
+			if (birthday) {
+				const today = new Date();
+				const birthDate = new Date(birthday);
+				if (birthDate >= today) {
+					document.getElementById('birthdayError').classList.remove('hidden');
+					isValid = false;
+				}
+			}
+
+			// If all validations pass, process the form
+			if (isValid) {
+				alert('Form submitted successfully!');
+				// Here you can add code to submit the form data (e.g., to a server)
+				this.reset();
+			}
+		});
+	</script>
+</body>
+
+</html>
