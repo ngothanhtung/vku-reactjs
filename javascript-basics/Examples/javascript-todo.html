@@ -4,19 +4,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DOM Manipulation Example</title>
+    <title>Todo List</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             max-width: 600px;
             margin: 20px auto;
             padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .input-container {
+            display: flex;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+
+        #todoInput {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        #todoInput:focus {
+            outline: none;
+            border-color: #4CAF50;
         }
 
         button {
-            padding: 10px;
-            margin-bottom: 10px;
+            padding: 12px 20px;
             cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        #addButton {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        #addButton:hover {
+            background-color: #45a049;
+        }
+
+        #addButton:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
         }
 
         ul {
@@ -25,52 +75,148 @@
         }
 
         li {
-            padding: 10px;
-            background-color: #f0f0f0;
-            margin-bottom: 5px;
-            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background-color: #f9f9f9;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #4CAF50;
+            transition: all 0.3s;
         }
 
         li:hover {
-            background-color: #e0e0e0;
+            background-color: #f0f0f0;
+            transform: translateX(5px);
+        }
+
+        .todo-text {
+            flex: 1;
+            font-size: 16px;
+        }
+
+        .delete-btn {
+            background-color: #f44336;
+            color: white;
+            padding: 8px 12px;
+            font-size: 14px;
+        }
+
+        .delete-btn:hover {
+            background-color: #da190b;
+        }
+
+        .empty-state {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            padding: 40px;
         }
     </style>
 </head>
 
 <body>
-    <h1>DOM Manipulation Example</h1>
-    <button id="addButton">Add New Item</button>
-    <ul id="itemList">
-        <li>Item 1</li>
-        <li>Item 2</li>
-    </ul>
+    <div class="container">
+        <h1>📝 My Todo List</h1>
+
+        <div class="input-container">
+            <input type="text" id="todoInput" placeholder="Enter a new todo..." maxlength="100">
+            <button id="addButton">Add Todo</button>
+        </div>
+
+        <ul id="todoList">
+            <!-- Todos will be added here dynamically -->
+        </ul>
+
+        <div id="emptyState" class="empty-state">
+            No todos yet. Add one above! 🎯
+        </div>
+    </div>
 
     <script>
         // Get references to DOM elements
+        const todoInput = document.getElementById('todoInput');
         const addButton = document.getElementById('addButton');
-        const itemList = document.getElementById('itemList');
+        const todoList = document.getElementById('todoList');
+        const emptyState = document.getElementById('emptyState');
 
-        // Counter for new items
-        let itemCount = 2;
+        // Array to store todos
+        let todos = [];
 
-        // Add event listener to the button to create new list items
-        addButton.addEventListener('click', () => {
-            // Create a new list item
-            const newItem = document.createElement('li');
-            newItem.textContent = `Item ${ ++itemCount }`;
+        // Function to update the empty state visibility
+        function updateEmptyState() {
+            if (todos.length === 0) {
+                emptyState.style.display = 'block';
+                todoList.style.display = 'none';
+            } else {
+                emptyState.style.display = 'none';
+                todoList.style.display = 'block';
+            }
+        }
 
-            // Append the new item to the list
-            itemList.appendChild(newItem);
-        });
+        // Function to render all todos
+        function renderTodos() {
+            todoList.innerHTML = '';
 
-        // Add event listener to the list for removing items
-        itemList.addEventListener('click', (event) => {
-            // Check if the clicked element is a list item
-            if (event.target.tagName === 'LI') {
-                // Remove the clicked list item
-                itemList.removeChild(event.target);
+            todos.forEach((todo, index) => {
+                const li = document.createElement('li');
+
+                li.innerHTML = `
+                    <span class="todo-text">${ todo }</span>
+                    <button class="delete-btn" onclick="deleteTodo(${ index })">Delete</button>
+                `;
+
+                todoList.appendChild(li);
+            });
+
+            updateEmptyState();
+        }
+
+        // Function to add a new todo
+        function addTodo() {
+            const todoText = todoInput.value.trim();
+
+            if (todoText === '') {
+                alert('Please enter a todo!');
+                return;
+            }
+
+            if (todos.includes(todoText)) {
+                alert('This todo already exists!');
+                return;
+            }
+
+            todos.push(todoText);
+            todoInput.value = '';
+            renderTodos();
+        }
+
+        // Function to delete a todo
+        function deleteTodo(index) {
+            todos.splice(index, 1);
+            renderTodos();
+        }
+
+        // Add event listener to the add button
+        addButton.addEventListener('click', addTodo);
+
+        // Add event listener for Enter key in input field
+        todoInput.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                addTodo();
             }
         });
+
+        // Add event listener for input validation
+        todoInput.addEventListener('input', () => {
+            const todoText = todoInput.value.trim();
+            addButton.disabled = todoText === '';
+        });
+
+        // Initialize the app
+        updateEmptyState();
+        addButton.disabled = true;
     </script>
 </body>
 
