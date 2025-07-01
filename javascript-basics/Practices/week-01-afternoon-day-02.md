@@ -63,6 +63,8 @@ Create a basic calculator using **HTML**, **CSS**, and **JavaScript** that can:
 
 ### 12. Create a User Registration Form
 
+Create a user registration form using HTML, CSS, and plain JavaScript that includes various types of input fields and performs client-side validation
+
 #### 📄 Form Fields:
 
 | Field            | Input Type | Validation Requirements                       |
@@ -86,3 +88,12 @@ Create a basic calculator using **HTML**, **CSS**, and **JavaScript** that can:
 * Use DOM methods like `addEventListener`, `classList`, `value`, `setAttribute`, etc.
 * Highlight invalid fields using CSS classes.
 
+
+## 📦 **Deliverables:**
+
+* A folder containing:
+
+  * `index.html`
+  * `style.css`
+  * `script.js`
+* Or Google Driver / a GitHub repo link
