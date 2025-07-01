@@ -8,8 +8,8 @@ import DeclarativeRouting from './Lesson07/DeclarativeRouting.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    {/* <App /> */}
-    <DeclarativeRouting />
+    <App />
+    {/* <DeclarativeRouting /> */}
     {/* <DataRouting /> */}
     {/* <NestedRoutes /> */}
     {/* <DynamicRouting /> */}
