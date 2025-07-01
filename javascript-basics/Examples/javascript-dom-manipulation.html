@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript DOM Manipulation</title>
+</head>
+
+<body>
+
+  <h1 id="h1">
+    JavaScript DOM Manipulation
+  </h1>
+
+  <div id="div1"></div>
+  <script>
+    // Select the h1 element by its ID
+    const h1Element = document.getElementById('h1');
+
+    // Change the text content of the h1 element
+    h1Element.textContent = 'Welcome to JavaScript DOM Manipulation!';
+
+    // Change the style of the h1 element
+    h1Element.style.color = 'blue';
+    h1Element.style.fontSize = '2em';
+
+    const items = [{
+      id: 1,
+      name: 'Item 1'
+    }, {
+      id: 2,
+      name: 'Item 2'
+    }, {
+      id: 3,
+      name: 'Item 3'
+    }];
+
+    // Create list items dynamically
+    const div1 = document.getElementById('div1');
+    const ul = document.createElement('ul');
+    items.forEach(item => {
+      const li = document.createElement('li');
+      li.textContent = `${ item.id }: ${ item.name }`;
+      ul.appendChild(li);
+    });
+    div1.appendChild(ul);
+  </script>
+</body>
+
+</html>

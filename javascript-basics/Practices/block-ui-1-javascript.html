@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Block UI 1</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --container-width: 540px;
+      --font-family: 'Roboto', sans-serif;
+      --font-size: 13px;
+      --font-weight-bold: 700;
+      --color-white: #ffffff;
+      --color-background: #ecf0f1;
+      --spacing: 16px;
+      --block-height: 54px;
+      --label-width: 160px;
+      --spacing-bottom: 16px;
+    }
+
+    .container {
+      width: var(--container-width);
+      margin: 0 auto;
+    }
+
+    .row {
+      display: flex;
+      margin-bottom: var(--spacing-bottom);
+      height: var(--block-height);
+    }
+
+    .left-column {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      width: var(--label-width);
+      height: 100%;
+    }
+
+    .left-column>span {
+      margin-right: var(--spacing);
+      color: var(--color-white);
+      font-family: var(--font-family);
+      font-size: var(--font-size);
+      font-weight: var(--font-weight-bold);
+      text-transform: uppercase;
+    }
+
+    .right-column {
+      flex: 1;
+      background-color: var(--color-background);
+    }
+
+    .right-column-percent {
+      display: flex;
+      align-items: center;
+      height: 100%;
+    }
+
+    .right-column-percent>span {
+      margin-left: var(--spacing);
+      color: var(--color-white);
+      font-family: var(--font-family);
+      font-size: var(--font-size);
+      font-weight: var(--font-weight-bold);
+
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container" id="container"></div>
+  <script>
+    const items = [
+      {
+        id: 1,
+        name: 'BANDWIDTH',
+        colorPrimary: '#3498db',
+        colorSecondary: '#2ecc71',
+        percentage: '70%',
+        text: 'Item 1 Text'
+      },
+      {
+        id: 2,
+        name: 'STORAGE',
+        colorPrimary: '#e74c3c',
+        colorSecondary: '#f1c40f',
+        percentage: '50%',
+        text: 'Item 2 Text'
+      },
+      {
+        id: 3,
+        name: 'MEMORY',
+        colorPrimary: '#9b59b6',
+        colorSecondary: '#34495e',
+        percentage: '30%',
+        text: 'Item 3 Text'
+      },
+      {
+        id: 4,
+        name: 'CPU USAGE',
+        colorPrimary: '#1abc9c',
+        colorSecondary: '#1abc0c',
+        percentage: '80%',
+        text: 'Item 4 Text'
+      }
+    ];
+
+    // I want to create a block UI for each item
+    const container = document.querySelector('#container');
+    items.forEach(item => {
+      const row = document.createElement('section');
+      row.classList.add('row');
+      row.innerHTML = `
+          <div class="left-column" style="background-color: ${ item.colorPrimary }">
+            <span>${ item.name }</span>
+          </div>
+          <div class="right-column">
+            <div class="right-column-percent" style="background-color: ${ item.colorSecondary }; width: ${ item.percentage }">
+              <span>${ item.percentage }</span>
+            </div>
+          </div>
+        `;
+      container.appendChild(row);
+    }); 
+  </script>
+</body>
+
+</html>
