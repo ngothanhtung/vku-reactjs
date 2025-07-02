@@ -1,0 +1,28 @@
+.input {
+    background-color: #fff;
+    color: #111;
+    border: none;
+    padding: 8px 16px;
+    display: flex;
+    width: 100%;
+    border-radius: 16px;
+    /* column-gap: 10px; */
+    justify-content: space-between;
+    margin: 10px 0;
+    align-items: center;
+}
+.input svg {
+    color: #555;
+}
+.input input{
+    border: none;
+    padding: 8px 0;
+    appearance: none;
+    outline: none;
+}
+.input span{
+    display: flex;
+    column-gap: 10px;
+    align-items: center;
+
+}
