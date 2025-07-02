@@ -1,0 +1,25 @@
+.button {
+    background-color: #111;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    display: flex;
+    width: 230px;
+    border-radius: 10px;
+    /* column-gap: 10px; */
+    justify-content: space-between;
+    margin: 10px 0;
+    align-items: center;
+}
+.button span{
+    display: flex;
+    column-gap: 10px;
+    align-items: center;
+
+}
+
+.btn_outline{
+    background-color: #fff;
+    color: #111;
+    border: 1px solid #111
+}
