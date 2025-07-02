@@ -5,6 +5,7 @@ import './index.css';
 import SuspenseIntegration from './Lesson07/SuspenseIntegration.jsx';
 import ProtectedRoutes from './Lesson07/ProtectedRoutes.jsx';
 import DeclarativeRouting from './Lesson07/DeclarativeRouting.jsx';
+import App from './App.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

@@ -1,0 +1,11 @@
+.taskRow {
+  min-width: 300px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  background-color: #8a8a8a;
+  color: blue;
+  padding-left: 12px;
+  padding-right: 12px;
+}
