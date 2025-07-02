@@ -1,0 +1,98 @@
+:root {
+      --bg-light: #f9f9f9;
+      --bg-dark: #1e1e1e;
+      --text-light: #333;
+      --text-dark: #f1f1f1;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-light);
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    body.dark {
+      background-color: var(--bg-dark);
+      color: var(--text-dark);
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    #clock, #greeting {
+      font-size: 1.1rem;
+    }
+
+    .todo-section, .notes-section {
+      margin-top: 30px;
+    }
+
+    input[type="text"] {
+      padding: 10px;
+      width: 70%;
+      margin-right: 10px;
+    }
+
+    button {
+      padding: 10px 15px;
+      cursor: pointer;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #eee;
+      padding: 10px;
+      margin-top: 10px;
+    }
+
+    li.completed {
+      text-decoration: line-through;
+      background-color: #c8e6c9;
+    }
+
+    .filters button {
+      margin-right: 5px;
+    }
+
+    .note {
+      display: inline-block;
+      background-color: yellow;
+      padding: 10px;
+      margin: 10px;
+      width: 150px;
+      height: 100px;
+      position: relative;
+      border-radius: 5px;
+    }
+
+    .note button {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background: red;
+      color: white;
+      border: none;
+      border-radius: 50%;
+    }
+
+    .error {
+      color: red;
+      font-size: 0.9rem;
+    }

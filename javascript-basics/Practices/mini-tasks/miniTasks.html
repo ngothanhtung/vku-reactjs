@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript DOM Tasks</title>
+  <style>
+    .box, .hoverBox {
+      width: 100px; height: 100px; background-color: lightgray; margin: 10px;
+    }
+    .highlight { background-color: yellow; }
+    .thumbnail { width: 50px; cursor: pointer; margin-right: 5px; }
+    .strike { text-decoration: line-through; }
+  </style>
+</head>
+<body>
+
+<h3>1. Change Text</h3>
+<button id="changeTextBtn">Change Text</button>
+<div id="textDisplay">Original Text</div>
+
+<h3>2. Toggle Class</h3>
+<button id="toggleHighlightBtn">Toggle Highlight</button>
+<div class="box"></div>
+
+<h3>3. Add List Item</h3>
+<input id="itemInput" type="text">
+<button id="addItemBtn">Add Item</button>
+<ul id="itemList"></ul>
+
+<h3>4. Remove Element</h3>
+<ul>
+  <li>Item 1 <button class="deleteBtn">Delete</button></li>
+  <li>Item 2 <button class="deleteBtn">Delete</button></li>
+</ul>
+
+<h3>5. Update Image</h3>
+<button id="changeImageBtn">Change Image</button>
+<img id="mainImage" src="images/thumb1.jpg" width="100">
+
+<h3>6. Get Input Value</h3>
+<input id="usernameInput" type="text">
+<button id="submitUsername">Submit</button>
+
+<h3>7. Multiple Button Events</h3>
+<button class="colorBtn">Red</button>
+<button class="colorBtn">Green</button>
+
+<h3>8. Hover Background</h3>
+<div class="hoverBox">Hover me</div>
+
+<h3>9. Live Clock</h3>
+<p id="clockDisplay"></p>
+
+<h3>10. Validate Email</h3>
+<input id="emailInput" type="email">
+<button id="validateBtn">Validate</button>
+<p id="errorMessage" style="color:red"></p>
+
+<h3>11. Hide Element</h3>
+<p id="infoPara">This is some info.</p>
+<button id="hideParaBtn">Hide</button>
+
+<h3>12. Greeting</h3>
+<p id="greetingText"></p>
+
+<h3>13. Field Highlight</h3>
+<input id="nameInput" type="text">
+<button id="formSubmit">Submit</button>
+<p id="nameError" style="color:red"></p>
+
+<h3>14. Disable Button</h3>
+<button id="onceBtn">Click Once</button>
+
+<h3>15. Char Counter</h3>
+<textarea id="bioInput" maxlength="200"></textarea>
+<p id="charCount">200 characters left</p>
+
+<h3>16. Add Boxes</h3>
+<button id="addBoxBtn">Add Box</button>
+<div id="boxContainer" style="display: flex;"></div>
+
+<h3>17. Strike Through</h3>
+<ul id="todoList">
+  <li>Task 1</li>
+  <li>Task 2</li>
+</ul>
+
+<h3>18. Toggle Password</h3>
+<input id="passwordInput" type="password">
+<label><input type="checkbox" id="togglePassword"> Show Password</label>
+
+<h3>19. Count Checkboxes</h3>
+<label><input type="checkbox" class="optionBox"> Option 1</label>
+<label><input type="checkbox" class="optionBox"> Option 2</label>
+<p>Checked: <span id="checkedCount">0</span></p>
+
+<h3>20. Image Gallery</h3>
+<img id="mainPhoto" src="images/thumb1.jpg" width="150">
+<br>
+<img class="thumbnail" src="images/thumb1.jpg">
+<img class="thumbnail" src="images/thumb2.jpg">
+<img class="thumbnail" src="images/thumb3.jpg">
+
+<script>
+// 1
+function handleChangeText() {
+  textDisplay.innerText = "Hello, JavaScript!";
+}
+changeTextBtn.onclick = handleChangeText;
+
+// 2
+function handleToggleHighlight() {
+  document.querySelector('.box').classList.toggle('highlight');
+}
+toggleHighlightBtn.onclick = handleToggleHighlight;
+
+// 3
+function handleAddItem() {
+  const li = document.createElement('li');
+  li.textContent = itemInput.value;
+  itemList.appendChild(li);
+}
+addItemBtn.onclick = handleAddItem;
+
+// 4
+function handleDeleteItem(e) {
+  if (e.target.classList.contains('deleteBtn')) {
+    e.target.parentElement.remove();
+  }
+}
+document.onclick = handleDeleteItem;
+
+// 5
+function changeMainImage() {
+  mainImage.src = 'images/thumb2.jpg';
+}
+changeImageBtn.onclick = changeMainImage;
+
+// 6
+function handleSubmitUsername() {
+  alert(usernameInput.value);
+}
+submitUsername.onclick = handleSubmitUsername;
+
+// 7
+function handleColorBtnClick(e) {
+  alert(e.target.textContent);
+}
+document.querySelectorAll('.colorBtn').forEach(btn => btn.onclick = handleColorBtnClick);
+
+// 8
+const hoverBox = document.querySelector('.hoverBox');
+function handleHoverBoxEnter() {
+  hoverBox.style.backgroundColor = 'lightblue';
+}
+function handleHoverBoxLeave() {
+  hoverBox.style.backgroundColor = 'lightgray';
+}
+hoverBox.onmouseenter = handleHoverBoxEnter;
+hoverBox.onmouseleave = handleHoverBoxLeave;
+
+// 9
+function updateClock() {
+  clockDisplay.innerText = new Date().toLocaleTimeString();
+}
+setInterval(updateClock, 1000);
+
+// 10
+function handleValidateEmail() {
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  errorMessage.innerText = regex.test(emailInput.value) ? '' : 'Invalid email address.';
+}
+validateBtn.onclick = handleValidateEmail;
+
+// 11
+function handleHidePara() {
+  infoPara.style.display = 'none';
+}
+hideParaBtn.onclick = handleHidePara;
+
+// 12
+function showGreeting() {
+  const hour = new Date().getHours();
+  greetingText.innerText = hour < 12 ? 'Good Morning' : hour < 18 ? 'Good Afternoon' : 'Good Evening';
+}
+document.addEventListener('DOMContentLoaded', showGreeting);
+
+// 13
+function handleFormSubmit() {
+  if (!nameInput.value.trim()) {
+    nameInput.style.border = '1px solid red';
+    nameError.innerText = 'Name is required.';
+  } else {
+    nameInput.style.border = '';
+    nameError.innerText = '';
+  }
+}
+formSubmit.onclick = handleFormSubmit;
+
+// 14
+function handleOnceBtn(e) {
+  e.target.disabled = true;
+}
+onceBtn.onclick = handleOnceBtn;
+
+// 15
+function handleBioInput() {
+  charCount.innerText = `${200 - bioInput.value.length} characters left`;
+}
+bioInput.oninput = handleBioInput;
+
+// 16
+function handleAddBox() {
+  const box = document.createElement('div');
+  box.style.width = '50px'; box.style.height = '50px';
+  box.style.background = 'skyblue'; box.style.margin = '5px';
+  boxContainer.appendChild(box);
+}
+addBoxBtn.onclick = handleAddBox;
+
+// 17
+function handleTodoListClick(e) {
+  if (e.target.tagName === 'LI') e.target.classList.toggle('strike');
+}
+todoList.onclick = handleTodoListClick;
+
+// 18
+function handleTogglePassword() {
+  passwordInput.type = togglePassword.checked ? 'text' : 'password';
+}
+togglePassword.onchange = handleTogglePassword;
+
+// 19
+function handleOptionBoxChange() {
+  checkedCount.innerText = document.querySelectorAll('.optionBox:checked').length;
+}
+document.querySelectorAll('.optionBox').forEach(cb => cb.onchange = handleOptionBoxChange);
+
+// 20
+function handleThumbnailClick(e) {
+  mainPhoto.src = e.target.src;
+}
+document.querySelectorAll('.thumbnail').forEach(img => img.onclick = handleThumbnailClick);
+</script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>To-Do & Notes Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Dashboard</h1>
+      <div id="clock"></div>
+      <div id="greeting"></div>
+      <button id="themeToggle">🌙</button>
+    </header>
+
+    <!-- To-Do Section -->
+    <section class="todo-section">
+      <h2>To-Do List</h2>
+      <input type="text" id="todoInput" placeholder="Enter a task" />
+      <button id="addTodoBtn">Add Task</button>
+      <div id="todoError" class="error"></div>
+
+      <div class="filters">
+        Filters: 
+        <button data-filter="all">All</button>
+        <button data-filter="completed">Completed</button>
+        <button data-filter="incomplete">Incomplete</button>
+      </div>
+
+      <ul id="todoList"></ul>
+    </section>
+
+    <!-- Notes Section -->
+    <section class="notes-section">
+      <h2>Sticky Notes</h2>
+      <input type="text" id="noteInput" placeholder="Write a note..." />
+      <button id="addNoteBtn">Add Note</button>
+      <div id="noteError" class="error"></div>
+      <div id="notesContainer"></div>
+    </section>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

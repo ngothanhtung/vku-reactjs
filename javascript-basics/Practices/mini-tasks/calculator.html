@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript DOM Tasks + Calculator</title>
+  <style>
+    .box, .hoverBox {
+      width: 100px; height: 100px; background-color: lightgray; margin: 10px;
+    }
+    .highlight { background-color: yellow; }
+    .thumbnail { width: 50px; cursor: pointer; margin-right: 5px; }
+    .strike { text-decoration: line-through; }
+    .calculator {
+      width: 220px;
+      border: 1px solid #ccc;
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+    .calculator-screen {
+      grid-column: span 4;
+      height: 40px;
+      text-align: right;
+      padding: 5px;
+      font-size: 1.2em;
+    }
+    .calculator button {
+      padding: 10px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+    .operator {
+      background-color: #f0ad4e;
+      color: white;
+    }
+    .equal-sign {
+      background-color: #5cb85c;
+      color: white;
+      grid-column: span 4;
+    }
+  </style>
+</head>
+<body>
+
+<h3>Calculator</h3>
+<div class="calculator">
+  <input type="text" id="calcDisplay" class="calculator-screen" disabled>
+  <button onclick="appendNumber('7')">7</button>
+  <button onclick="appendNumber('8')">8</button>
+  <button onclick="appendNumber('9')">9</button>
+  <button onclick="chooseOperator('/')" class="operator">÷</button>
+
+  <button onclick="appendNumber('4')">4</button>
+  <button onclick="appendNumber('5')">5</button>
+  <button onclick="appendNumber('6')">6</button>
+  <button onclick="chooseOperator('*')" class="operator">×</button>
+
+  <button onclick="appendNumber('1')">1</button>
+  <button onclick="appendNumber('2')">2</button>
+  <button onclick="appendNumber('3')">3</button>
+  <button onclick="chooseOperator('-')" class="operator">−</button>
+
+  <button onclick="appendNumber('0')">0</button>
+  <button onclick="appendNumber('.')">.</button>
+  <button onclick="clearDisplay()">C</button>
+  <button onclick="chooseOperator('+')" class="operator">+</button>
+
+  <button onclick="compute()" class="equal-sign">=</button>
+</div>
+
+<script>
+
+// Calculator Logic
+let currentOperand = '';
+let previousOperand = '';
+let operator = null;
+
+function appendNumber(number) {
+  if (number === '.' && currentOperand.includes('.')) return;
+  currentOperand += number;
+  updateDisplay();
+}
+
+function chooseOperator(op) {
+  if (currentOperand === '') return;
+  if (previousOperand !== '') compute();
+  operator = op;
+  previousOperand = currentOperand;
+  currentOperand = '';
+  updateDisplay();
+}
+
+function compute() {
+  let result;
+  const prev = parseFloat(previousOperand);
+  const curr = parseFloat(currentOperand);
+  if (isNaN(prev) || isNaN(curr)) return;
+  switch(operator) {
+    case '+': result = prev + curr; break;
+    case '-': result = prev - curr; break;
+    case '*': result = prev * curr; break;
+    case '/': result = curr !== 0 ? prev / curr : 'Error'; break;
+    default: return;
+  }
+  currentOperand = result.toString();
+  operator = null;
+  previousOperand = '';
+  updateDisplay();
+}
+
+function clearDisplay() {
+  currentOperand = '';
+  previousOperand = '';
+  operator = null;
+  updateDisplay();
+}
+
+function updateDisplay() {
+  const expr = previousOperand && operator ? `${previousOperand} ${operator} ${currentOperand}` : currentOperand;
+  document.getElementById('calcDisplay').value = expr;
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Registration</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+  <style>
+    .is-invalid {
+      border-color: #dc3545;
+    }
+
+    .invalid-feedback {
+      display: none;
+    }
+
+    .is-invalid + .invalid-feedback,
+    .invalid-feedback.d-block {
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container mt-5">
+    <h2>User Registration Form</h2>
+    <form id="registrationForm" novalidate>
+
+      <div class="mb-3">
+        <label class="form-label">Full Name</label>
+        <input type="text" class="form-control" id="fullName" required>
+        <div class="invalid-feedback">Full Name must be at least 3 characters.</div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input type="email" class="form-control" id="email" required>
+        <div class="invalid-feedback">Please enter a valid email.</div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Password</label>
+        <input type="password" class="form-control" id="password" required>
+        <div class="invalid-feedback">Password must be at least 8 characters, contain letters and numbers.</div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Confirm Password</label>
+        <input type="password" class="form-control" id="confirmPassword" required>
+        <div class="invalid-feedback">Passwords do not match.</div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Phone Number</label>
+        <input type="tel" class="form-control" id="phone" required>
+        <div class="invalid-feedback">Phone must be at least 10 digits.</div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label d-block">Gender</label>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="gender" value="Male" id="genderMale">
+          <label class="form-check-label" for="genderMale">Male</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="gender" value="Female" id="genderFemale">
+          <label class="form-check-label" for="genderFemale">Female</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="gender" value="Other" id="genderOther">
+          <label class="form-check-label" for="genderOther">Other</label>
+        </div>
+        <div class="invalid-feedback" id="genderError">Please select a gender.</div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Date of Birth</label>
+        <input type="date" class="form-control" id="dob" required>
+        <div class="invalid-feedback">You must be at least 18 years old.</div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Country</label>
+        <select class="form-select" id="country" required>
+          <option value="">Select Country</option>
+          <option>Vietnam</option>
+          <option>USA</option>
+          <option>UK</option>
+          <option>Canada</option>
+        </select>
+        <div class="invalid-feedback">Please select a country.</div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label d-block">Hobbies</label>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="Reading" id="hobby1">
+          <label class="form-check-label" for="hobby1">Reading</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="Traveling" id="hobby2">
+          <label class="form-check-label" for="hobby2">Traveling</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="Gaming" id="hobby3">
+          <label class="form-check-label" for="hobby3">Gaming</label>
+        </div>
+        <div class="invalid-feedback" id="hobbyError">Select at least one hobby.</div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Profile Picture (jpg/jpeg/png)</label>
+        <input type="file" class="form-control" id="profilePic" accept=".jpg,.jpeg,.png">
+        <div class="invalid-feedback">Invalid image file.</div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Bio / About You</label>
+        <textarea class="form-control" id="bio" maxlength="300" rows="3"></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Register</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("registrationForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      let valid = true;
+
+      // Full Name
+      const fullName = document.getElementById("fullName");
+      if (fullName.value.trim().length < 3) {
+        setInvalid(fullName);
+        valid = false;
+      } else setValid(fullName);
+
+      // Email
+      const email = document.getElementById("email");
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailPattern.test(email.value)) {
+        setInvalid(email);
+        valid = false;
+      } else setValid(email);
+
+      // Password
+      const password = document.getElementById("password");
+      const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
+      if (!passwordPattern.test(password.value)) {
+        setInvalid(password);
+        valid = false;
+      } else setValid(password);
+
+      // Confirm Password
+      const confirmPassword = document.getElementById("confirmPassword");
+      if (confirmPassword.value !== password.value || confirmPassword.value === "") {
+        setInvalid(confirmPassword);
+        valid = false;
+      } else setValid(confirmPassword);
+
+      // Phone
+      const phone = document.getElementById("phone");
+      const phoneDigits = phone.value.replace(/\D/g, "");
+      if (phoneDigits.length < 10) {
+        setInvalid(phone);
+        valid = false;
+      } else setValid(phone);
+
+      // Gender
+      const genderRadios = document.querySelectorAll("input[name='gender']");
+      let genderSelected = false;
+      genderRadios.forEach((radio) => {
+        if (radio.checked) genderSelected = true;
+      });
+      const genderError = document.getElementById("genderError");
+      if (!genderSelected) {
+        genderError.classList.add("d-block");
+        valid = false;
+      } else {
+        genderError.classList.remove("d-block");
+      }
+
+      // Date of Birth
+      const dob = document.getElementById("dob");
+      const age = getAge(dob.value);
+      if (!dob.value || age < 18) {
+        setInvalid(dob);
+        valid = false;
+      } else setValid(dob);
+
+      // Country
+      const country = document.getElementById("country");
+      if (!country.value) {
+        setInvalid(country);
+        valid = false;
+      } else setValid(country);
+
+      // Hobbies
+      const hobbies = document.querySelectorAll("input[type='checkbox']");
+      let hobbyChecked = Array.from(hobbies).some((box) => box.checked);
+      const hobbyError = document.getElementById("hobbyError");
+      if (!hobbyChecked) {
+        hobbyError.classList.add("d-block");
+        valid = false;
+      } else {
+        hobbyError.classList.remove("d-block");
+      }
+
+      // Profile Picture
+      const profilePic = document.getElementById("profilePic");
+      const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
+      if (profilePic.files.length > 0 && !allowedTypes.includes(profilePic.files[0].type)) {
+        setInvalid(profilePic);
+        valid = false;
+      } else setValid(profilePic);
+
+      if (valid) {
+        alert("Form submitted successfully!");
+        this.reset();
+      }
+    });
+
+    function setInvalid(field) {
+      field.classList.add("is-invalid");
+    }
+    function setValid(field) {
+      field.classList.remove("is-invalid");
+    }
+
+    function getAge(dateString) {
+      const today = new Date();
+      const birthDate = new Date(dateString);
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const m = today.getMonth() - birthDate.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+      }
+      return age;
+    }
+  </script>
+</body>
+
+</html>
