@@ -13,8 +13,8 @@ import FillInTheBlank from './Lesson04/FillInTheBlankQuestion';
 
 // Fill in the blank question example
 const question = {
-  title: 'The capital of France is ___. And the captical of Japan is ___.',
-  correctAnswers: ['Paris'],
+  title: 'The capital of France is ___.',
+  correctAnswer: 'Paris',
 };
 function App() {
   return (
