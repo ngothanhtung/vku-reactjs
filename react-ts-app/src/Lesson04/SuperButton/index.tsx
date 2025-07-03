@@ -55,7 +55,11 @@ export default function SuperButton({ children, loading, disabled, icon, size = 
         ...style,
       }}
     >
-      {loading && <IoReload className={styles.iconAnimation} />}
+      {loading && (
+        <div className={styles.icon} style={{ ...iconStyle }}>
+          <IoReload className={styles.iconAnimation} />
+        </div>
+      )}
       {icon && !loading && (
         <div className={styles.icon} style={{ ...iconStyle }}>
           {icon}

@@ -12,6 +12,19 @@
   color: white;
 }
 
+@keyframes icon-rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
+
+.iconAnimation {
+  animation: icon-rotation 1s infinite linear;
+}
+
 .primary {
   background-color: rgb(50, 81, 255);
 }
@@ -26,11 +39,6 @@
 }
 .info {
   background-color: rgb(50, 150, 255);
-}
-
-.iconAnimation {
-  animation: rotate 1s linear infinite;
-  padding-right: 8px;
 }
 
 .disabled {
