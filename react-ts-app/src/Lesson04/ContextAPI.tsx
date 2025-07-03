@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useState } from 'react';
-const ThemeContext = createContext();
+import { createContext, useContext, useState } from 'react';
+const ThemeContext = createContext<string>('light');
 
 export default function ContextAPI() {
   const [theme, setTheme] = useState('light');
