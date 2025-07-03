@@ -1,0 +1,44 @@
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background-color: rgb(207, 207, 207);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  height: 48px;
+  padding: 6px 16px;
+  color: white;
+}
+
+.primary {
+  background-color: rgb(50, 81, 255);
+}
+.danger {
+  background-color: rgb(255, 50, 50);
+}
+.warning {
+  background-color: rgb(255, 150, 50);
+}
+.success {
+  background-color: rgb(50, 255, 50);
+}
+.info {
+  background-color: rgb(50, 150, 255);
+}
+
+.iconAnimation {
+  animation: rotate 1s linear infinite;
+  padding-right: 8px;
+}
+
+.disabled {
+  background-color: rgb(200, 200, 200);
+  cursor: not-allowed;
+}
+
+.icon {
+  padding-right: 8px;
+  margin-top: 2px;
+}

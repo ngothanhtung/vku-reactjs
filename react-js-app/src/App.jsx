@@ -7,6 +7,13 @@ import Blocks from './Lesson03/Blocks';
 import LikeButton from './Lesson03/LikeButton';
 import PictureViewer from './Lesson03/PictureViewer';
 import ToDoList from './Lesson03/ToDoList';
+import ConditionalRendering from './Lesson04/ConditionalRendering';
+import LoopInJsx from './Lesson04/LoopInJsx';
+import TooLargeArrayLoop from './Lesson04/TooLargeArrayLoop';
+import PropsDataTypes from './Lesson04/PropsDataTypes';
+
+import ButtonWithPropTypes from './Lesson04/ButtonWithPropTypes';
+import Greeting from './Lesson04/Greeting';
 
 const marketingItems = [
   {
@@ -90,7 +97,22 @@ function App() {
       </div> */}
       <div>
         {/* <PictureViewer /> */}
-        <ToDoList />
+        {/* <ToDoList /> */}
+
+        {/* <ConditionalRendering /> */}
+        {/* <LoopInJsx /> */}
+        {/* <TooLargeArrayLoop /> */}
+        {/* <PropsDataTypes /> */}
+        <ButtonWithPropTypes />
+
+        {/* This will show PropTypes warning - missing required 'name' prop */}
+        <Greeting />
+
+        {/* This will show PropTypes warning - wrong data type for 'age' */}
+        <Greeting name='Alice' age='25' isStudent={true} />
+
+        {/* This is correct usage - no warnings */}
+        <Greeting name='Bob' age={30} isStudent={false} />
       </div>
     </React.Fragment>
   );
