@@ -41,8 +41,10 @@ export default function Songs({ songs, selectedSong, playing, onClick }: Props) 
             </div>
 
             <div className={styles.song_text_container} onClick={handleOnClick(song)}>
-              <div style={{ fontSize: 14, color: isSelected ? '#4834d4' : 'inherit', fontWeight: '600' }}>{song.title}</div>
-              <div style={{ fontSize: 12, marginTop: 2 }}>{song.artist}</div>
+              <div className={styles.song_text} style={{ color: isSelected ? '#4834d4' : 'inherit', fontWeight: isSelected ? '600' : '400' }}>
+                {song.title}
+              </div>
+              <div style={{ fontSize: 12, marginTop: 2, fontFamily: 'Roboto, sans-serif' }}>{song.artist}</div>
             </div>
             <div className={styles.song_duration_container}>
               <span className={styles.song_duration_text}>{formatDuration(song.duration)}</span>
