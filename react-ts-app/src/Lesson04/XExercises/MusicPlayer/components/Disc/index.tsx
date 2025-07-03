@@ -1,13 +1,18 @@
-import React from 'react';
+import { useContext } from 'react';
+
+import { songs } from '../../data';
+import PlayerContext from '../Context';
 import styles from './disc.module.css';
 
-type Props = {
-  song: any;
-  playing: boolean;
-};
+import type { Song } from '../types';
+// Use ContextAPI
 
-export default function Disc({ song, playing }: Props) {
+export default function Disc() {
+  const { playing } = useContext(PlayerContext);
   const className = [styles.disc, playing ? styles.disc_rotation : null].join(' ');
+
+  const { selectedSongIndex } = useContext(PlayerContext);
+  const song: Song = songs[selectedSongIndex];
 
   return (
     <div className={styles.disc_container}>
@@ -16,8 +21,8 @@ export default function Disc({ song, playing }: Props) {
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'center', paddingTop: 24 }}>
-        <span style={{ fontWeight: 700, fontSize: 20, color: '#2c3e50', fontFamily: 'Roboto, sans-serif' }}>{song.title}</span>
-        <span style={{ fontWeight: 500, fontSize: 15, color: '#b2bec3', marginTop: 4, fontFamily: 'Roboto, sans-serif' }}>{song.artist}</span>
+        <span className={styles.song_title}>{song.title}</span>
+        <span className={styles.song_artist}>{song.artist}</span>
       </div>
     </div>
   );
