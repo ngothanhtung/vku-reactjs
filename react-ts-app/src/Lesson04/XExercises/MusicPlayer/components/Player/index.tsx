@@ -1,14 +1,45 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { IoIosPause, IoIosPlay, IoIosRepeat, IoIosShuffle, IoIosSkipBackward, IoIosSkipForward } from 'react-icons/io';
+
+import PlayerContext from '../Context';
 import Slider from '../Slider';
+import styles from './player.module.css';
 
 type Props = {
-  selectedSong: any;
   onEnded?: () => void;
   onPlaying?: () => void;
 };
 
-const Player = React.forwardRef<HTMLAudioElement, Props>(({ selectedSong, onEnded, onPlaying }: Props, ref) => {
+const Player = React.forwardRef<HTMLAudioElement, Props>(({ onEnded, onPlaying }: Props, ref) => {
+  const { refPlayer, playing, selectedSongIndex, setSelectedSongIndex, songs, setPlaying } = useContext(PlayerContext);
+  const selectedSong = songs[selectedSongIndex] || null;
   const [currentTime, setCurrentTime] = React.useState(0);
+
+  const handleOnClick = (actionName: string) => {
+    switch (actionName) {
+      case 'play':
+        if (refPlayer && typeof refPlayer !== 'function' && refPlayer.current) {
+          refPlayer.current.play();
+          setPlaying(true);
+        }
+        break;
+      case 'pause':
+        if (refPlayer && typeof refPlayer !== 'function' && refPlayer.current) {
+          refPlayer.current.pause();
+          setPlaying(false);
+        }
+        break;
+
+      case 'previous':
+        setSelectedSongIndex(selectedSongIndex - 1);
+        break;
+      case 'next':
+        setSelectedSongIndex(selectedSongIndex + 1);
+        break;
+      default:
+        break;
+    }
+  };
   return (
     <div>
       {/* SLIDER */}
@@ -26,12 +57,12 @@ const Player = React.forwardRef<HTMLAudioElement, Props>(({ selectedSong, onEnde
         style={{ display: 'none' }}
         controls
         src={selectedSong.audioUrl}
-        autoPlay={selectedSong}
+        autoPlay={!!selectedSong}
         preload='auto'
-        ref={ref}
+        ref={refPlayer}
         onTimeUpdate={() => {
-          if (typeof ref !== 'function' && ref && ref.current) {
-            setCurrentTime(ref.current.currentTime);
+          if (typeof refPlayer !== 'function' && refPlayer && refPlayer.current) {
+            setCurrentTime(refPlayer.current.currentTime);
           }
         }}
         onEnded={() => {
@@ -46,6 +77,34 @@ const Player = React.forwardRef<HTMLAudioElement, Props>(({ selectedSong, onEnde
           }
         }}
       />
+      <div>
+        <div style={{ display: 'flex', flex: 1, justifyContent: 'center', marginBottom: 24 }}>
+          <div style={{ display: 'flex', flex: 1, justifyContent: 'space-around', maxWidth: 320, alignItems: 'center' }}>
+            <button className={styles.button} onClick={() => {}}>
+              <IoIosShuffle />
+            </button>
+            <button className={styles.button} onClick={() => handleOnClick('previous')}>
+              <IoIosSkipBackward />
+            </button>
+            {!playing && (
+              <button className={styles.button_play} onClick={() => handleOnClick('play')}>
+                <IoIosPlay />
+              </button>
+            )}
+            {playing && (
+              <button className={[styles.button_play, styles.playing].join(' ')} onClick={() => handleOnClick('pause')}>
+                <IoIosPause />
+              </button>
+            )}
+            <button className={styles.button} onClick={() => handleOnClick('next')}>
+              <IoIosSkipForward />
+            </button>
+            <button className={styles.button} onClick={() => handleOnClick('repeat')}>
+              <IoIosRepeat />
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 });

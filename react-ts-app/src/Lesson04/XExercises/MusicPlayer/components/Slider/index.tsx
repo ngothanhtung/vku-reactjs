@@ -7,6 +7,7 @@ type Props = {
   onChange?: (value: number) => void;
 };
 
+// Use PlayerContext to get currentValue, min, max, onChange
 export default function Slider({ currentValue = 0, min = 0, max = 100, onChange }: Props) {
   const ref = React.useRef<HTMLInputElement>(null);
 

@@ -1,24 +1,31 @@
-import React from 'react';
 import Equalizer from '../Equalizer';
 import LoveButton from '../LoveButton';
 import styles from './songs.module.css';
 
+import type { Song } from '../types';
+import PlayerContext from '../Context';
+import { useContext } from 'react';
+
+// Use ContextAPI
+
 type Props = {
-  songs: any[];
-  selectedSong: any;
-  playing: boolean;
-  onClick?: (song: any) => void;
+  onClick?: () => void;
 };
 
 // Danh sách các bài hát
-export default function Songs({ songs, selectedSong, playing, onClick }: Props) {
-  const handleOnClick = (song: any) => () => {
+export default function Songs({ onClick }: Props) {
+  const { playing, songs, selectedSongIndex, setSelectedSongIndex } = useContext(PlayerContext);
+  const selectedSong = songs[selectedSongIndex] || null;
+
+  const handleOnClick = (song: Song) => () => {
+    const i = songs.findIndex((s) => s.id === song.id);
+    setSelectedSongIndex(i);
     if (onClick && typeof onClick === 'function') {
-      onClick(song);
+      onClick();
     }
   };
 
-  const formatDuration = (duration: any) => {
+  const formatDuration = (duration: number) => {
     const minutes = Math.floor(duration / 60);
     const seconds = duration - minutes * 60;
 
@@ -28,13 +35,13 @@ export default function Songs({ songs, selectedSong, playing, onClick }: Props) 
   return (
     <div>
       {songs.map((song, index) => {
-        const isSelected = selectedSong.id === song.id;
+        const isSelected = selectedSong && selectedSong.id === song.id;
 
         return (
           <div key={`song-${song.id}`} className={styles.song_container}>
-            <div style={{ display: 'flex', alignItems: 'center', paddingLeft: 8, width: 40 }}>
+            <div style={{ display: 'flex', alignItems: 'center', width: 40 }}>
               {isSelected && playing && <Equalizer />}
-              {!isSelected && <div className={styles.number}>{index + 1}</div>}
+              {!isSelected && <span className={styles.number}>{index + 1}</span>}
             </div>
             <div style={{ paddingRight: 4 }}>
               <img src={song.imageUrl} style={{ height: 48, width: 48 }} alt='' onClick={handleOnClick(song)} />
