@@ -1,37 +1,28 @@
-// import './App.css';
-import AudioPlayer from './Lesson04/AudioPlayer';
-import Gallery from './Lesson04/Gallery';
-import Rating from './Lesson04/Rating';
-import StateExample from './Lesson04/StateExample';
-import SuperButton from './Lesson04/SuperButton';
-import { IoSaveOutline, IoHomeOutline } from 'react-icons/io5';
-import MusicPlayer from './Lesson04/XExercises/MusicPlayer';
-import OneChoice from './Lesson04/Quiz/OneChoice';
-import OneChoiceQuestion from './Lesson04/OneChoiceQuestion';
-import OneChoiceQuestions from './Lesson04/OneChoiceQuestions';
-import FillInTheBlank from './Lesson04/FillInTheBlankQuestion';
+import './App.css';
+import ArticlesList from './ArticlesList';
 
-// Fill in the blank question example
-const question = {
-  title: 'The capital of France is ___.',
-  correctAnswer: 'Paris',
-};
+const articles = [
+  {id: 1, title: 'Ấn tượng đầu tiên Samsung Galaxy A32 4G: Với hơn 6 triệu đã có màn hình Super AMOLED 90Hz', thumbnail: 'images/1.jpeg', addTime: '4 năm trước'},
+  {id: 2, title: 'Google Pixel 5a dự kiến sẽ được ra mắt cùng thời điểm với Android 12', thumbnail: 'images/2.jpeg', addTime: '4 năm trước'},
+  {id: 2, title: 'Google Pixel 5a dự kiến sẽ được ra mắt cùng thời điểm với Android 12', thumbnail: 'images/3.jpeg', addTime: '4 năm trước'},
+  {id: 4, title: 'Galaxy A82 5G chuẩn bị ra mắt với chip flagship và màn hình trượt độc đáo, Samfans gom lúa đi là vừa', thumbnail: 'images/4.jpeg', addTime: '4 năm trước'}
+]
+
 function App() {
   return (
-    <>
-      {/* <SuperButton type='warning' shape='square' style={{ backgroundColor: 'pink' }} textStyle={{ color: 'red' }} iconStyle={{ paddingRight: 20 }} loading={true} disabled={false} icon={<IoSaveOutline />} size='large'>
-        <span>Click Me!</span>
-      </SuperButton> */}
-
-      {/* <StateExample /> */}
-      {/* <AudioPlayer src='/assets/Song-Xa-Anh-Chang-De-Dang-Bao-Anh.mp3' /> */}
-      {/* <Rating /> */}
-      {/* <Gallery /> */}
-
-      {/* <OneChoiceQuestions /> */}
-      <FillInTheBlank question={question} />
-      {/* <MusicPlayer /> */}
-    </>
+    <main className='container'>
+     <section className='section'>
+        <div className="section_header">
+            <h2 className="section_title">Tin tức</h2>
+            <div className="section_extra">
+              <a href="#">Xem tất cả</a>
+            </div>
+        </div>
+        <div className="section_body">
+          <ArticlesList data={articles} />
+        </div>
+     </section>
+    </main>
   );
 }
 

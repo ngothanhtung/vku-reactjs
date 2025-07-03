@@ -1,42 +1,49 @@
-#root {
-  max-width: 1280px;
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body{
+  font-family: "Lato", sans-serif;
+  line-height: 1.4;
+  font-size: 14px;
+  color: #111;
+}
+
+a{
+  text-decoration: none;
+}
+
+.container {
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+.section{
+  background: #fff;
+  padding: 10px;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+.section .section_header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
 }
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.section .section_header .section_title{
+  text-transform: uppercase;
+  color: #333;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.section .section_header .section_extra{
+  display: flex;
+  column-gap: 15px;
+  align-items: center;
 }
 
-.card {
-  padding: 2em;
+.section .section_header .section_extra a{
+  color: #333;
 }
-
-.read-the-docs {
-  color: #888;
+.section .section_header .section_extra a:hover{
+  font-weight: bold;
 }
