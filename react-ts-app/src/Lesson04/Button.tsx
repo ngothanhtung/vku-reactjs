@@ -6,7 +6,7 @@ type Props = {
   disabled?: boolean;
   style?: React.CSSProperties;
   array?: string[];
-  object?: { [key: string]: any };
+  object?: { [key: string]: unknown };
   children?: React.ReactNode;
 };
 
