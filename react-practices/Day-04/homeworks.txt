@@ -1,1 +1,11 @@
-Làm UI như link sau: https://nhannn87dn.github.io/react-app/
+Làm các UI (bắt buộc):
+
+1.LikeButton
+2.Slide with Thumb
+3.Button Tabs
+4.Button Accordtions
+
+như link sau: https://nhannn87dn.github.io/react-app/
+
+Còn lại ai có kỹ năng hơn có thể làm hết.
+
