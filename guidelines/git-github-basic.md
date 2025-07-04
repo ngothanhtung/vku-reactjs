@@ -1,5 +1,3 @@
-Dưới đây là danh sách các lệnh Git cơ bản và cách chúng tương ứng với các thao tác Source Control trong Visual Studio Code (VSCode). VSCode tích hợp sẵn Git, cho phép bạn thực hiện hầu hết các thao tác Git thông qua giao diện đồ họa (GUI) mà không cần gõ lệnh trực tiếp. Tuy nhiên, tôi sẽ liệt kê cả lệnh Git dòng lệnh (CLI) và cách thực hiện tương ứng trong VSCode.
-
 ### 1. Khởi tạo và cấu hình Git
 
 | **Lệnh Git (CLI)**                                   | **Mô tả**                                        | **Thao tác trong VSCode**                                                                                                    |
@@ -65,5 +63,3 @@ Dưới đây là danh sách các lệnh Git cơ bản và cách chúng tương 
 - **Terminal tích hợp**: Nếu cần chạy lệnh Git phức tạp, sử dụng **Terminal** trong VSCode (Ctrl+`).
 - **Extension hỗ trợ**: Cài đặt các extension như **GitLens** hoặc **Git Graph** để có trải nghiệm Git mạnh mẽ hơn (xem lịch sử, biểu đồ branch, v.v.).
 - **Cập nhật Git**: Đảm bảo Git được cài đặt trên máy và cấu hình đúng để VSCode nhận diện.
-
-Nếu bạn cần giải thích chi tiết hơn về lệnh cụ thể hoặc cách xử lý tình huống cụ thể trong VSCode, hãy cho tôi biết!
