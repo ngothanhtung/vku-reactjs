@@ -127,12 +127,6 @@ src/
 
 ## 3. Build a Simple Shopping Cart in React + TypeScript
 
-Dưới đây là **đề bài bằng tiếng Anh** cho bài tập lập trình **giỏ hàng đơn giản** sử dụng **React + TypeScript + CSS Modules**, mô phỏng theo hình ảnh bạn cung cấp.
-
----
-
-## 🛒 Assignment: Build a Simple Shopping Cart in React + TypeScript
-
 Create a shopping cart UI that displays a grid of products and allows users to add/remove items from the cart. Clicking the cart icon should show a dropdown with the selected items, their quantity, and total price.
 
 Example Demo:
