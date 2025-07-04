@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from 'react';
+
 const ThemeContext = createContext<string>('light');
 
 export default function ContextAPI() {
@@ -9,6 +10,7 @@ export default function ContextAPI() {
       <ThemeContext.Provider value={theme}>
         <button onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>Toggle Theme</button>
         <Child />
+        <p>Current Theme: {theme}</p>
       </ThemeContext.Provider>
     </div>
   );

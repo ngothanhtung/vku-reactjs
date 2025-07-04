@@ -3,29 +3,39 @@ import React, { useState } from 'react';
 export default function LiftingStateUp() {
   const [count, setCount] = useState(0);
 
-  const handleIncrement = () => setCount(count + 1);
-  const handleDecrement = () => setCount(count - 1);
+  const onIncrement = () => setCount(count + 1);
+  const onDecrement = () => setCount(count - 1);
 
   return (
     <div>
       <h1>Counter App</h1>
       <Label text={count} />
-      <Counter count={count} onIncrement={handleIncrement} onDecrement={handleDecrement} />
+      <Counter count={count} onIncrement={onIncrement} onDecrement={onDecrement} />
     </div>
   );
 }
 
 // Counter component
-const Counter = ({ count, onIncrement, onDecrement }) => {
+
+type CounterProps = {
+  count: number;
+  onIncrement: () => void;
+  onDecrement: () => void;
+};
+
+const Counter = ({ count, onIncrement, onDecrement }: CounterProps) => {
   return (
     <div>
-      <p>Count: {count}</p>
+      <h4>{count}</h4>
       <button onClick={onIncrement}>+</button>
       <button onClick={onDecrement}>-</button>
     </div>
   );
 };
 
-const Label = ({ text }) => {
-  return <h2>{text}</h2>;
+type LabelProps = {
+  text: string | number;
+};
+const Label = ({ text }: LabelProps) => {
+  return <h1>Label:{text}</h1>;
 };
