@@ -1,11 +1,21 @@
-function Button({ text, width, disabled, style, khiClickChuot }: any) {
+import React from 'react';
+
+type Props = {
+  text: string;
+  width?: number;
+  disabled?: boolean;
+  style?: React.CSSProperties;
+  onClick?: () => void;
+};
+
+function Button({ text, width, disabled, style, onClick }: Props) {
   return (
     <button
       style={{ width, ...style }}
       disabled={disabled}
       onClick={() => {
-        if (khiClickChuot && typeof khiClickChuot === 'function') {
-          khiClickChuot();
+        if (onClick && typeof onClick === 'function') {
+          onClick();
         }
       }}
     >
@@ -37,7 +47,12 @@ const items = [
   },
 ];
 
-function Weather({ items }) {
+type WeatherItem = {
+  day: string;
+  image: string;
+};
+
+function Weather({ items }: { items: WeatherItem[] }) {
   return (
     <div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center', width: 300, height: 100, borderRadius: 20, boxShadow: '0px 1px 2px 0px rgba(0, 0, 0, 0.12)' }}>
       {items.map((item) => (
@@ -59,7 +74,7 @@ export default function PropsDataTypes() {
 
   return (
     <div>
-      <Button khiClickChuot={handleClick} width={100} disabled={false} style={{ backgroundColor: 'blue', color: 'white', height: 80, border: 'none', borderRadius: 8 }} />
+      <Button onClick={handleClick} width={100} disabled={false} style={{ backgroundColor: 'blue', color: 'white', height: 80, border: 'none', borderRadius: 8 }} text={'Click me'} />
       <Weather items={items} />
     </div>
   );
