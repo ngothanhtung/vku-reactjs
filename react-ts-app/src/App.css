@@ -5,10 +5,57 @@
 }
 
 body{
+  background-color: #f8f8f8;
   font-family: "Lato", sans-serif;
   line-height: 1.4;
   font-size: 14px;
   color: #111;
+}
+
+button {
+  padding: 8px 16px;
+  text-align: center;
+  border: none;
+  outline: none;
+  background-color: #111;
+  color: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+}
+button:hover {
+  background-color: #333;
+}
+
+ul{
+  margin-left: 20px;
+}
+
+button:disabled{
+  opacity: .5;
+}
+
+input, select, textarea {
+  padding: 8px 10px;
+  border: 1px solid #111;
+  outline: none;
+  background-color: #fff;
+  color: #111;
+  border-radius: 6px;
+}
+input:disabled {
+  opacity: 0.5;
+}
+input[type='radio'],
+input[type='checkbox']{
+  margin-right: 5px;
+  height: 16px;
+  width: 16px;
+  vertical-align: middle;
+}
+input[type='radio']:checked,
+input[type='checkbox']:checked{
+  background-color: #111;
+  color: #fff;
 }
 
 a{
@@ -23,6 +70,7 @@ a{
 .section{
   background: #fff;
   padding: 10px;
+  margin: 10px 0;
 }
 .section .section_header{
   display: flex;
