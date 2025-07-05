@@ -12,9 +12,14 @@ function DoubleClickMessage() {
 
   return (
     <section className='section'>
-      <button onClick={()=>{
-        console.log('single Clicked');
-      }} onDoubleClick={handleDoubleClick}>Double Click Me</button>
+      <button
+        onClick={() => {
+          console.log('single Clicked');
+        }}
+        onDoubleClick={handleDoubleClick}
+      >
+        Double Click Me
+      </button>
       {showMessage && <p>Double-clicked!</p>}
     </section>
   );

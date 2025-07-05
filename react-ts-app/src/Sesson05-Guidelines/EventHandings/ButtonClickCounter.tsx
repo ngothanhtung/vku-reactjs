@@ -1,4 +1,4 @@
-import  { useState } from 'react';
+import { useState } from 'react';
 
 function ButtonClickCounter() {
   const [count, setCount] = useState(0);

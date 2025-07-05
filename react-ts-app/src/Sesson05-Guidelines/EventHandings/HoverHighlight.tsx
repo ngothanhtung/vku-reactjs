@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 function HoverHighlight() {
   const [isHovered, setIsHovered] = useState(false);
@@ -12,13 +12,13 @@ function HoverHighlight() {
   };
 
   return (
-    <section className="section">
+    <section className='section'>
       <div
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         style={{
-          backgroundColor: isHovered ? "yellow" : "white",
-          padding: "20px",
+          backgroundColor: isHovered ? 'yellow' : 'white',
+          padding: '20px',
         }}
       >
         Hover me!
