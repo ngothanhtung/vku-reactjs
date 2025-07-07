@@ -1,8 +1,6 @@
-import React, { use, useEffect } from 'react';
+import { useEffect } from 'react';
 
-type Props = {};
-
-export default function DomUpdateExamples({}: Props) {
+export default function DomUpdateExamples() {
   useEffect(() => {
     // Update title
     document.title = 'DomUpdateExamples';
