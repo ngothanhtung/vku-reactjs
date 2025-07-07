@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 
-function useFetch(url: string) {
+function useFetchUsers() {
+  const [loading, setLoading] = useState(true);
   const [data, setData] = useState<any>(null);
   useEffect(() => {
-    fetch(url)
+    fetch('https://jsonplaceholder.typicode.com/users')
       .then((res) => res.json())
-      .then(setData);
-  }, [url]);
-  return data;
+      .then(setData)
+      .finally(() => setLoading(false));
+  }, []);
+
+  return [data, loading];
 }
 
-export default function CustomHooks() {
-  const data = useFetch('https://api.example.com/data');
-  return <div>{data ? data : 'Loading'}</div>;
-}
+export default useFetchUsers;

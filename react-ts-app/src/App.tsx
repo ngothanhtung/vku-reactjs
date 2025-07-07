@@ -1,4 +1,7 @@
+import React, { useState } from 'react';
 import './App.css';
+import SubscriptionExamples from './Lesson06/SubscriptionExamples';
+import UseEffectHookExamples from './Lesson06/UseEffectHookExamples';
 import ButtonClickCounter from './Sesson05-Guidelines/EventHandings/ButtonClickCounter';
 import CheckboxToggle from './Sesson05-Guidelines/EventHandings/CheckboxToggle';
 import DoubleClickMessage from './Sesson05-Guidelines/EventHandings/DoubleClickMessage';
@@ -9,11 +12,13 @@ import InputFieldTracker from './Sesson05-Guidelines/EventHandings/InputFieldTra
 import KeyPressDisplay from './Sesson05-Guidelines/EventHandings/KeyPressDisplay';
 import SearchFilter from './Sesson05-Guidelines/EventHandings/SearchFilter';
 import ToggleSwitch from './Sesson05-Guidelines/EventHandings/ToggleSwitch';
+import DomUpdateExamples from './Lesson06/DomUpdateExamples';
 
 function App() {
+  const [mounted, setMounted] = useState(true);
   return (
     <main className='container'>
-      <ButtonClickCounter />
+      {/* <ButtonClickCounter />
       <InputFieldTracker />
       <ToggleSwitch />
       <HoverHighlight />
@@ -22,7 +27,12 @@ function App() {
       <DoubleClickMessage />
       <DropdownSelection />
       <CheckboxToggle />
-      <SearchFilter />
+      <SearchFilter /> */}
+      <UseEffectHookExamples />
+      {/* {mounted && <SubscriptionExamples />}
+      <button onClick={() => setMounted(!mounted)}>Mount / Unmount</button> */}
+
+      {/* <DomUpdateExamples /> */}
     </main>
   );
 }
