@@ -73,7 +73,7 @@ export default function Create({ onCreated }: Props) {
     <div>
       {/* Create tailwindcss Form (firstName, lastName, email, phoneNumber, address, birthday) */}
 
-      <form className='w-full p-4 bg-white rounded shadow' onSubmit={handleSubmit}>
+      <form className='w-full p-4 bg-white rounded shadow mb-4' onSubmit={handleSubmit}>
         <h2 className='text-xl font-bold mb-4'>Create Customer</h2>
         <div className='mb-4'>
           <label className='block text-sm font-medium text-gray-700 mb-1' htmlFor='firstName'>

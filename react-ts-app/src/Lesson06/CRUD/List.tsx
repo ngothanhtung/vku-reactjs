@@ -57,11 +57,12 @@ export default function List({ reload = 0 }: Props) {
 
   const handleOnUpdated = (customer: any) => {
     setCustomers((prev) => prev.map((c: any) => (c.id === customer.id ? customer : c)));
+    // Close the update form after updating
     setSelectedCustomer(null);
   };
 
   return (
-    <div>
+    <div className='container mx-auto bg-white rounded shadow mb-4 p-4'>
       {loading && <p>Loading...</p>}
       <table className='table-auto w-full border-collapse border border-gray-200 table-hover'>
         <thead>

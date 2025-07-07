@@ -2,9 +2,7 @@ import React from 'react';
 import List from './List';
 import Create from './Create';
 
-type Props = {};
-
-export default function Customers({}: Props) {
+export default function Customers() {
   const [reload, setReload] = React.useState(0);
 
   const handleOnCreated = (customer: any) => {
