@@ -14,6 +14,10 @@ import SearchFilter from './Sesson05-Guidelines/EventHandings/SearchFilter';
 import ToggleSwitch from './Sesson05-Guidelines/EventHandings/ToggleSwitch';
 import DomUpdateExamples from './Lesson06/DomUpdateExamples';
 import Customers from './Lesson06/CRUD';
+import SpaExample from './Lesson07/SpaExample';
+import SpaDataRouting from './Lesson07/SpaDataRouting';
+import NestedRoutes from './Lesson07/NestedRoutes';
+import DynamicRouting from './Lesson07/DynamicRouting';
 
 function App() {
   const [mounted, setMounted] = useState(true);
@@ -35,7 +39,11 @@ function App() {
 
       {/* <DomUpdateExamples /> */}
 
-      <Customers />
+      {/* <Customers /> */}
+      {/* <SpaExample /> */}
+      {/* <SpaDataRouting /> */}
+      {/* <NestedRoutes /> */}
+      <DynamicRouting />
     </main>
   );
 }
