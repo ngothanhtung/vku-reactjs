@@ -34,6 +34,15 @@ button:disabled{
   opacity: .5;
 }
 
+.btn_ghost {
+  background-color: transparent;
+  border: none;
+  color: #111;
+}
+.btn_ghost:hover{
+  background-color: transparent;
+}
+
 input, select, textarea {
   padding: 8px 10px;
   border: 1px solid #111;
