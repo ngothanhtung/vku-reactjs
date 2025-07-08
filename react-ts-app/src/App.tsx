@@ -18,6 +18,12 @@ import SpaExample from './Lesson07/SpaExample';
 import SpaDataRouting from './Lesson07/SpaDataRouting';
 import NestedRoutes from './Lesson07/NestedRoutes';
 import DynamicRouting from './Lesson07/DynamicRouting';
+import DataLoaders from './Lesson07/DataLoaders';
+import ErrorHandling from './Lesson07/ErrorHandling';
+import SuspenseIntegration from './Lesson07/SuspenseIntegration';
+import ProtectedRoutes from './Lesson07/ProtectedRoutes';
+import LazyLoadingRoutes from './Lesson07/LazyLoadingRoutes';
+import PerformanceOptimization from './Lesson07/PerformanceOptimization';
 
 function App() {
   const [mounted, setMounted] = useState(true);
@@ -43,7 +49,13 @@ function App() {
       {/* <SpaExample /> */}
       {/* <SpaDataRouting /> */}
       {/* <NestedRoutes /> */}
-      <DynamicRouting />
+      {/* <DynamicRouting /> */}
+      {/* <DataLoaders /> */}
+      {/* <ErrorHandling /> */}
+      {/* <SuspenseIntegration /> */}
+      {/* <ProtectedRoutes /> */}
+      {/* <LazyLoadingRoutes /> */}
+      <PerformanceOptimization />
     </main>
   );
 }
