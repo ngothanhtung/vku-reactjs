@@ -62,33 +62,36 @@ export default function List({ reload = 0 }: Props) {
   };
 
   return (
-    <div className='container mx-auto bg-white rounded shadow mb-4 p-4'>
+    <div className="container mx-auto bg-white rounded shadow mb-4 p-4">
       {loading && <p>Loading...</p>}
-      <table className='table-auto w-full border-collapse border border-gray-200 table-hover'>
+      <table className="table-auto w-full border-collapse border border-gray-200 table-hover">
         <thead>
           <tr>
-            <th className='border border-gray-300 p-2'>ID</th>
-            <th className='border border-gray-300 p-2'>Name</th>
-            <th className='border border-gray-300 p-2'>Email</th>
-            <th className='border border-gray-300 p-2'>Phone</th>
-            <th className='border border-gray-300 p-2'>Address</th>
-            <th className='border border-gray-300 p-2'>Birthday</th>
-            <th className='border border-gray-300 p-2'>Actions</th>
+            <th className="border border-gray-300 p-2">ID</th>
+            <th className="border border-gray-300 p-2">Name</th>
+            <th className="border border-gray-300 p-2">Email</th>
+            <th className="border border-gray-300 p-2">Phone</th>
+            <th className="border border-gray-300 p-2">Address</th>
+            <th className="border border-gray-300 p-2">Birthday</th>
+            <th className="border border-gray-300 p-2">Actions</th>
           </tr>
         </thead>
         <tbody>
           {customers?.map((customer: any, index) => {
             return (
-              <tr key={index} className='hover:bg-gray-200'>
-                <td className='border border-gray-300 p-2 text-right'>{customer.id}</td>
-                <td className='border border-gray-300 p-2 font-bold'>{customer.firstName + ' ' + customer.lastName}</td>
-                <td className='border border-gray-300 p-2'>{customer.email}</td>
-                <td className='border border-gray-300 p-2'>{customer.phoneNumber}</td>
-                <td className='border border-gray-300 p-2 whitespace-nowrap'>{customer.address}</td>
-                <td className='border border-gray-300 p-2 whitespace-nowrap'>{customer.birthday}</td>
-                <td className='w-1 border border-gray-300 p-2 whitespace-nowrap'>
-                  <div className='flex justify-end'>
-                    <button onClick={() => handleOnSelect(customer)} className='bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-600 transition-colors mr-2'>
+              <tr key={index} className="hover:bg-gray-200">
+                <td className="border border-gray-300 p-2 text-right">{customer.id}</td>
+                <td className="border border-gray-300 p-2 font-bold">{customer.firstName + ' ' + customer.lastName}</td>
+                <td className="border border-gray-300 p-2">{customer.email}</td>
+                <td className="border border-gray-300 p-2">{customer.phoneNumber}</td>
+                <td className="border border-gray-300 p-2 whitespace-nowrap">{customer.address}</td>
+                <td className="border border-gray-300 p-2 whitespace-nowrap">{customer.birthday}</td>
+                <td className="w-1 border border-gray-300 p-2 whitespace-nowrap">
+                  <div className="flex justify-end">
+                    <button
+                      onClick={() => handleOnSelect(customer)}
+                      className="bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-600 transition-colors mr-2"
+                    >
                       Edit
                     </button>
                     <Delete
@@ -105,7 +108,13 @@ export default function List({ reload = 0 }: Props) {
         </tbody>
       </table>
 
-      {selectedCustomer && <Update customerId={selectedCustomer.id} onUpdated={handleOnUpdated} onClose={() => setSelectedCustomer(null)} />}
+      {selectedCustomer && (
+        <Update
+          customerId={selectedCustomer.id}
+          onUpdated={handleOnUpdated}
+          onClose={() => setSelectedCustomer(null)}
+        />
+      )}
     </div>
   );
 }
