@@ -6,9 +6,10 @@ import TaskList from '../components/TaskList';
 import { filterTasks } from '../utils';
 
 import type { Filter, Task } from '../types';
-import { getTasks } from '../services';
+import { getTasksByAssignee } from '../services';
 
-export default function Tasks() {
+export default function AssigneeMe() {
+  const assigneeId = 1;
   const navigate = useNavigate();
   // Mock data for demonstration
   const [tasks, setTasks] = React.useState<Task[]>([]);
@@ -17,7 +18,7 @@ export default function Tasks() {
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        const data = await getTasks();
+        const data = await getTasksByAssignee(assigneeId);
         setTasks(data);
       } catch (error) {
         console.error('Error fetching tasks:', error);

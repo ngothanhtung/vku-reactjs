@@ -1,302 +1,103 @@
-import React from 'react';
 import { useForm } from 'react-hook-form';
-import type { Task } from '../types';
+import type { Filter } from '../types';
 
 // Filter form data interface
-interface TaskFilterData {
+interface FormData {
   status: string;
   priority: string;
-  dueDateFrom: string;
-  dueDateTo: string;
-  assigneeId: string;
 }
 
 // Filter criteria interface for parent component
-export interface FilterCriteria {
-  status?: Task['status'];
-  priority?: Task['priority'];
-  dueDateFrom?: Date;
-  dueDateTo?: Date;
-  assigneeId?: string;
-}
 
 type Props = {
-  onSearch: (filters: FilterCriteria) => void;
-  onClearFilters: () => void;
-  initialFilters?: FilterCriteria;
+  onSearch: (filters: Filter) => void;
 };
 
-export default function TaskFilterForm({ onSearch, onClearFilters, initialFilters }: Props) {
+export default function TaskFilterForm({ onSearch }: Props) {
   const {
     register,
     formState: { errors, isSubmitting },
-    reset,
+
     handleSubmit,
-  } = useForm<TaskFilterData>({
+  } = useForm<FormData>({
     mode: 'onChange',
     defaultValues: {
-      status: initialFilters?.status || '',
-      priority: initialFilters?.priority || '',
-      dueDateFrom: initialFilters?.dueDateFrom?.toISOString().split('T')[0] || '',
-      dueDateTo: initialFilters?.dueDateTo?.toISOString().split('T')[0] || '',
-      assigneeId: initialFilters?.assigneeId || '',
+      status: '',
+      priority: '',
     },
   });
 
-  // State to track submitted filters for display
-  const [submittedFilters, setSubmittedFilters] = React.useState<FilterCriteria>(initialFilters || {});
-
-  // State to control form visibility
-  const [isFormExpanded, setIsFormExpanded] = React.useState(false);
-
   // Handle form submission to apply filters
-  const onSubmit = async (data: TaskFilterData) => {
+  const onSubmit = async (data: FormData) => {
     // Convert form data to filter criteria
-    const filters: FilterCriteria = {};
+    const filters: Filter = {};
 
     if (data.status && data.status !== '') {
-      filters.status = data.status as Task['status'];
+      filters.status = data.status;
     }
 
     if (data.priority && data.priority !== '') {
-      filters.priority = data.priority as Task['priority'];
+      filters.priority = data.priority;
     }
-
-    if (data.dueDateFrom) {
-      filters.dueDateFrom = new Date(data.dueDateFrom);
-    }
-
-    if (data.dueDateTo) {
-      filters.dueDateTo = new Date(data.dueDateTo);
-    }
-
-    if (data.assigneeId && data.assigneeId.trim() !== '') {
-      filters.assigneeId = data.assigneeId.trim();
-    }
-
-    // Small delay to show loading state
-    await new Promise((resolve) => setTimeout(resolve, 200));
-
-    // Update submitted filters for display
-    setSubmittedFilters(filters);
-
-    // Auto-collapse form after successful search
-    setIsFormExpanded(false);
 
     onSearch(filters);
   };
 
-  const handleClearFilters = () => {
-    reset({
-      status: '',
-      priority: '',
-      dueDateFrom: '',
-      dueDateTo: '',
-      assigneeId: '',
-    });
-    setSubmittedFilters({});
-    setIsFormExpanded(true); // Expand form after clearing filters
-    onClearFilters();
-  };
-
-  const hasActiveFilters = Object.keys(submittedFilters).length > 0;
-
-  // Helper function to check if there are any applied filters to display
-  const hasAppliedFilters = () => {
-    return (
-      submittedFilters.status ||
-      submittedFilters.priority ||
-      submittedFilters.dueDateFrom ||
-      submittedFilters.dueDateTo ||
-      (submittedFilters.assigneeId && submittedFilters.assigneeId.trim() !== '')
-    );
-  };
-
   return (
     <div className="bg-white p-6">
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex flex-1 items-center space-x-4">
-          <div>
-            <h3 className="text-lg font-semibold text-gray-800">Filter Tasks</h3>
-            {!isFormExpanded && (
-              <p className="text-sm text-gray-600 mt-1">Click "Show Filters" to set your search criteria</p>
-            )}
-          </div>
-        </div>
-        {hasActiveFilters && (
-          <button
-            type="button"
-            onClick={handleClearFilters}
-            className="text-sm px-3 py-1 bg-gray-100 text-blue-600 hover:text-blue-800 hover:bg-gray-200 rounded-md transition-colors"
-          >
-            Clear All Filters
-          </button>
-        )}
-        <button
-          type="button"
-          onClick={() => setIsFormExpanded(!isFormExpanded)}
-          className="text-sm ml-3 px-3 py-1 bg-gray-100 text-blue-600 hover:text-blue-800 hover:bg-gray-200 rounded-md transition-colors"
-        >
-          {isFormExpanded ? 'Hide Filters' : 'Show Filters'}
-          {hasActiveFilters && !isFormExpanded && (
-            <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-              {Object.keys(submittedFilters).length}
-            </span>
-          )}
-        </button>
-      </div>
-
-      {isFormExpanded && (
-        <div className="mt-4 transition-all duration-300 ease-in-out">
-          <p className="text-sm text-gray-600 mb-4">Set your filters and click Search to apply them</p>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            {/* Status and Priority Row */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* Status Filter */}
-              <div>
-                <label htmlFor="status" className="block text-sm font-medium text-gray-700 mb-2">
-                  Status
-                </label>
-                <select
-                  id="status"
-                  {...register('status')}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                >
-                  <option value="">All Statuses</option>
-                  <option value="todo">To Do</option>
-                  <option value="in-progress">In Progress</option>
-                  <option value="done">Done</option>
-                </select>
-                {errors.status && <p className="text-red-500 text-sm mt-1">{errors.status.message}</p>}
-              </div>
-
-              {/* Priority Filter */}
-              <div>
-                <label htmlFor="priority" className="block text-sm font-medium text-gray-700 mb-2">
-                  Priority
-                </label>
-                <select
-                  id="priority"
-                  {...register('priority')}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                >
-                  <option value="">All Priorities</option>
-                  <option value="low">Low</option>
-                  <option value="medium">Medium</option>
-                  <option value="high">High</option>
-                </select>
-                {errors.priority && <p className="text-red-500 text-sm mt-1">{errors.priority.message}</p>}
-              </div>
-            </div>
-
-            {/* Due Date Range */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Due Date Range</label>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {/* From Date */}
-                <div>
-                  <label htmlFor="dueDateFrom" className="block text-xs text-gray-500 mb-1">
-                    From (mm/dd/yyyy)
-                  </label>
-                  <input
-                    type="date"
-                    id="dueDateFrom"
-                    {...register('dueDateFrom')}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                  />
-                  {errors.dueDateFrom && <p className="text-red-500 text-sm mt-1">{errors.dueDateFrom.message}</p>}
-                </div>
-
-                {/* To Date */}
-                <div>
-                  <label htmlFor="dueDateTo" className="block text-xs text-gray-500 mb-1">
-                    To (mm/dd/yyyy)
-                  </label>
-                  <input
-                    type="date"
-                    id="dueDateTo"
-                    {...register('dueDateTo')}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                  />
-                  {errors.dueDateTo && <p className="text-red-500 text-sm mt-1">{errors.dueDateTo.message}</p>}
-                </div>
-              </div>
-            </div>
-
-            {/* Assignee Filter */}
-            <div>
-              <label htmlFor="assigneeId" className="block text-sm font-medium text-gray-700 mb-2">
-                Assignee
+      <div className="mt-4 transition-all duration-300 ease-in-out">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          {/* Horizontal Filter Form */}
+          <div className="flex flex-col lg:flex-row lg:items-end lg:space-x-4 space-y-4 lg:space-y-0">
+            {/* Status Filter */}
+            <div className="flex-1 min-w-0">
+              <label htmlFor="status" className="block text-sm font-medium text-gray-700 mb-2">
+                Status
               </label>
-              <input
-                type="text"
-                id="assigneeId"
-                {...register('assigneeId')}
+              <select
+                id="status"
+                {...register('status')}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                placeholder="Enter assignee ID or name"
-              />
-              {errors.assigneeId && <p className="text-red-500 text-sm mt-1">{errors.assigneeId.message}</p>}
+              >
+                <option value="">All Statuses</option>
+                <option value="to_do">To Do</option>
+                <option value="in_progress">In Progress</option>
+                <option value="done">Done</option>
+              </select>
+              {errors.status && <p className="text-red-500 text-sm mt-1">{errors.status.message}</p>}
+            </div>
+
+            {/* Priority Filter */}
+            <div className="flex-1 min-w-0">
+              <label htmlFor="priority" className="block text-sm font-medium text-gray-700 mb-2">
+                Priority
+              </label>
+              <select
+                id="priority"
+                {...register('priority')}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+              >
+                <option value="">All Priorities</option>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+              </select>
+              {errors.priority && <p className="text-red-500 text-sm mt-1">{errors.priority.message}</p>}
             </div>
 
             {/* Action Buttons */}
-            <div className="flex justify-end space-x-3 pt-4 border-t border-gray-200">
-              <button
-                type="button"
-                onClick={handleClearFilters}
-                className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors"
-              >
-                Clear Filters
-              </button>
+            <div className="flex-shrink-0">
               <button
                 type="submit"
-                className="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                disabled={isSubmitting} // Disable button while submitting
+                className="w-full lg:w-auto px-6 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={isSubmitting}
               >
-                Search
+                {isSubmitting ? 'Searching...' : 'Search'}
               </button>
             </div>
-          </form>
-        </div>
-      )}
-
-      {/* Applied Filters - Always visible when filters are applied */}
-      {hasAppliedFilters() && (
-        <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-md">
-          <p className="text-sm text-blue-800 font-medium mb-2">Applied Filters:</p>
-          <div className="flex flex-wrap gap-2">
-            {submittedFilters.status && (
-              <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                Status:{' '}
-                {submittedFilters.status === 'todo'
-                  ? 'To Do'
-                  : submittedFilters.status === 'in-progress'
-                  ? 'In Progress'
-                  : 'Done'}
-              </span>
-            )}
-            {submittedFilters.priority && (
-              <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                Priority: {submittedFilters.priority.charAt(0).toUpperCase() + submittedFilters.priority.slice(1)}
-              </span>
-            )}
-            {submittedFilters.dueDateFrom && (
-              <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                From: {submittedFilters.dueDateFrom.toLocaleDateString()}
-              </span>
-            )}
-            {submittedFilters.dueDateTo && (
-              <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                To: {submittedFilters.dueDateTo.toLocaleDateString()}
-              </span>
-            )}
-            {submittedFilters.assigneeId && submittedFilters.assigneeId.trim() !== '' && (
-              <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
-                Assignee: {submittedFilters.assigneeId}
-              </span>
-            )}
           </div>
-        </div>
-      )}
+        </form>
+      </div>
     </div>
   );
 }

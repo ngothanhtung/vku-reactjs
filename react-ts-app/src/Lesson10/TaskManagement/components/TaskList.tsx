@@ -6,7 +6,7 @@ import TaskTitle from './TaskTitle';
 
 type Props = {
   tasks: Task[];
-  onEdit?: (taskId: string) => void;
+  onEdit?: (taskId: string | number | undefined) => void;
 };
 
 export default function TaskList({ tasks, onEdit }: Props) {
@@ -19,6 +19,9 @@ export default function TaskList({ tasks, onEdit }: Props) {
           <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Priority</th>
           <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Start Date</th>
           <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Due Date</th>
+          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Completed Date
+          </th>
           <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Assignee</th>
           <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
         </tr>
@@ -36,12 +39,15 @@ export default function TaskList({ tasks, onEdit }: Props) {
               <TaskPriority priority={task.priority} />
             </td>
             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-              <TaskDate date={task.startDate} />
+              <TaskDate date={task.start_date} />
             </td>
             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-              <TaskDate date={task.dueDate} />
+              <TaskDate date={task.due_date} />
             </td>
-            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{task.assigneeId || 'Unassigned'}</td>
+            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+              <TaskDate date={task.completed_date} />
+            </td>
+            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{task.assignee_id || 'Unassigned'}</td>
             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
               <button
                 onClick={() => onEdit?.(task.id)}

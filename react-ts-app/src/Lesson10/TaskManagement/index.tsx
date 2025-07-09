@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes, Link, useLocation } from 'react-router';
 import CreateTask from './pages/CreateTask';
 import Tasks from './pages/Tasks';
 import UpdateTask from './pages/UpdateTask';
+import AssigneeMe from './pages/AssigneeMe';
 
 // Navigation Component
 const Navigation = () => {
@@ -60,8 +61,10 @@ export default function TaskManagement() {
         <div className="container-fluid mx-auto px-8 py-4">
           <Routes>
             <Route index element={<Tasks />} />
+            <Route path="/tasks" element={<Tasks />} />
             <Route path="/create" element={<CreateTask />} />
             <Route path="/update/:id" element={<UpdateTask />} />
+            <Route path="/assignee-me" element={<AssigneeMe />} />
             <Route
               path="/assignee-me"
               element={

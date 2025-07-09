@@ -1,14 +1,26 @@
 export interface Task {
-  id: string;
+  id?: string | number;
+
   title: string;
-  startDate: Date;
-  dueDate?: Date;
   description?: string;
-  status: 'todo' | 'in-progress' | 'done';
+
+  start_date: Date;
+  due_date?: Date;
+
+  status: 'to_do' | 'in_progress' | 'done';
+  completed_date?: Date;
   priority: 'low' | 'medium' | 'high';
-  assigneeId?: string;
-  completed?: boolean;
-  completedAt?: Date;
-  createdAt: Date;
-  updatedAt: Date;
+
+  assignee_id?: number;
+
+  created_by?: number;
+  created_time: Date;
+
+  updated_by?: number;
+  updated_time: Date;
+}
+
+export interface Filter {
+  status?: string;
+  priority?: string;
 }

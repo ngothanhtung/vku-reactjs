@@ -1,22 +1,22 @@
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { useNavigate, useParams } from 'react-router';
 import * as yup from 'yup';
+
+import { yupResolver } from '@hookform/resolvers/yup';
+
+import { getTaskById, updateTask } from '../services';
+
 import type { Task } from '../types';
-
-type Props = {
-  task?: Task; // Task to update
-  onTaskUpdated?: (task: Task) => void;
-};
-
 // Form data interface (excluding auto-generated fields)
 interface TaskFormData {
   title: string;
-  startDate: string;
-  dueDate?: string;
+  start_date: string;
+  due_date?: string;
   description?: string;
-  status: 'todo' | 'in-progress' | 'done';
+  status: 'to_do' | 'in_progress' | 'done';
   priority: 'low' | 'medium' | 'high';
-  assigneeId?: string;
+  assignee_id?: number | string;
 }
 
 // Yup validation schema
@@ -26,48 +26,35 @@ const validationSchema: yup.ObjectSchema<TaskFormData> = yup.object({
     .required('Title is required')
     .min(3, 'Title must be at least 3 characters')
     .max(100, 'Title must be less than 100 characters'),
-  startDate: yup
+  start_date: yup
     .string()
     .required('Start date is required')
     .matches(/^\d{4}-\d{2}-\d{2}$/, 'Please enter a valid date'),
-  dueDate: yup
+  due_date: yup
     .string()
     .optional()
     .matches(/^\d{4}-\d{2}-\d{2}$/, 'Please enter a valid date')
-    .test('dueDate-after-startDate', 'Due date must be after start date', function (value) {
+    .test('due_date-after-start_date', 'Due date must be after start date', function (value) {
       if (!value) return true;
-      const { startDate } = this.parent;
-      return new Date(value) >= new Date(startDate);
+      const { start_date } = this.parent;
+      return new Date(value) >= new Date(start_date);
     }),
   description: yup.string().optional().max(500, 'Description must be less than 500 characters'),
   status: yup
-    .mixed<'todo' | 'in-progress' | 'done'>()
+    .mixed<'to_do' | 'in_progress' | 'done'>()
     .required('Status is required')
-    .oneOf(['todo', 'in-progress', 'done'], 'Please select a valid status'),
+    .oneOf(['to_do', 'in_progress', 'done'], 'Please select a valid status'),
   priority: yup
     .mixed<'low' | 'medium' | 'high'>()
     .required('Priority is required')
     .oneOf(['low', 'medium', 'high'], 'Please select a valid priority'),
-  assigneeId: yup.string().optional().min(1, 'Assignee ID cannot be empty if provided'),
+  assignee_id: yup.number().optional().min(1, 'Assignee ID must be a positive number'),
 });
 
-export default function UpdateTask({ task, onTaskUpdated }: Props) {
-  // Mock task data if none provided (for demonstration)
-  const mockTask: Task = {
-    id: '1',
-    title: 'Sample Task to Update',
-    startDate: new Date('2024-01-15'),
-    dueDate: new Date('2024-01-25'),
-    description: 'This is a sample task for updating',
-    status: 'in-progress',
-    priority: 'high',
-    assigneeId: 'user123',
-    completed: false,
-    createdAt: new Date('2024-01-10'),
-    updatedAt: new Date('2024-01-15'),
-  };
-
-  const taskToUpdate = task || mockTask;
+export default function UpdateTask() {
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const [task, setTask] = React.useState<Task | null>(null);
 
   const {
     register,
@@ -77,93 +64,68 @@ export default function UpdateTask({ task, onTaskUpdated }: Props) {
   } = useForm<TaskFormData>({
     resolver: yupResolver(validationSchema),
     mode: 'onChange',
-    defaultValues: {
-      title: taskToUpdate.title,
-      startDate: taskToUpdate.startDate.toISOString().split('T')[0],
-      dueDate: taskToUpdate.dueDate?.toISOString().split('T')[0] || '',
-      description: taskToUpdate.description || '',
-      status: taskToUpdate.status,
-      priority: taskToUpdate.priority,
-      assigneeId: taskToUpdate.assigneeId || '',
-    },
   });
+
+  useEffect(() => {
+    const fetchTask = async () => {
+      if (id !== undefined) {
+        try {
+          const data = await getTaskById(id);
+          if (!data) {
+            throw new Error('Task not found');
+          }
+          // Convert Task to TaskFormData for reset
+          reset({
+            title: data.title || '',
+            start_date: data.start_date ? new Date(data.start_date).toISOString().split('T')[0] : '',
+            due_date: data.due_date ? new Date(data.due_date).toISOString().split('T')[0] : '',
+            description: data.description || '',
+            status: data.status,
+            priority: data.priority,
+            assignee_id: data.assignee_id ?? '',
+          });
+          setTask(data);
+        } catch (error) {
+          console.error('Error fetching task:', error);
+        }
+      }
+    };
+
+    fetchTask();
+  }, [id, reset]);
 
   const onSubmit = async (data: TaskFormData): Promise<void> => {
     try {
       // Convert form data to updated Task object
+      if (!task || !task.id || !task.created_time) {
+        throw new Error('Task data is incomplete.');
+      }
       const updatedTask: Task = {
-        ...taskToUpdate, // Keep existing fields like id, createdAt, etc.
+        ...task,
+        id: task.id,
         title: data.title,
-        startDate: new Date(data.startDate),
-        dueDate: data.dueDate ? new Date(data.dueDate) : undefined,
+        start_date: new Date(data.start_date),
+        due_date: data.due_date ? new Date(data.due_date) : undefined,
         description: data.description || undefined,
         status: data.status,
         priority: data.priority,
-        assigneeId: data.assigneeId || undefined,
-        completed: data.status === 'done',
-        completedAt: data.status === 'done' ? new Date() : taskToUpdate.completedAt,
-        updatedAt: new Date(), // Update the timestamp
+        assignee_id: data.assignee_id ? Number(data.assignee_id) : undefined,
+        completed_date: data.status === 'done' ? new Date() : undefined,
       };
 
-      console.log('Task updated:', updatedTask);
+      // Call the updateTask service
+      await updateTask(updatedTask);
 
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      // Call parent callback if provided
-      if (onTaskUpdated) {
-        onTaskUpdated(updatedTask);
-      }
-
-      alert('Task updated successfully!');
+      navigate('/tasks'); // Redirect to tasks list after update
     } catch (error) {
       console.error('Error updating task:', error);
       alert('Failed to update task. Please try again.');
     }
   };
 
-  const handleResetToOriginal = () => {
-    reset({
-      title: taskToUpdate.title,
-      startDate: taskToUpdate.startDate.toISOString().split('T')[0],
-      dueDate: taskToUpdate.dueDate?.toISOString().split('T')[0] || '',
-      description: taskToUpdate.description || '',
-      status: taskToUpdate.status,
-      priority: taskToUpdate.priority,
-      assigneeId: taskToUpdate.assigneeId || '',
-    });
-  };
-
   return (
     <div className="max-w-screen mx-auto p-6 bg-white rounded-lg shadow-lg">
       <h2 className="text-2xl font-bold text-gray-800 mb-6">Update Task</h2>
-
-      {/* Task Info */}
-      <div className="bg-gray-50 p-4 rounded-lg mb-6">
-        <h3 className="text-sm font-semibold text-gray-700 mb-2">Task Information</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-          <div>
-            <span className="font-medium text-gray-600">Task ID:</span> {taskToUpdate.id}
-          </div>
-          <div>
-            <span className="font-medium text-gray-600">Created:</span> {taskToUpdate.createdAt.toLocaleDateString()}
-          </div>
-          <div>
-            <span className="font-medium text-gray-600">Last Updated:</span>{' '}
-            {taskToUpdate.updatedAt.toLocaleDateString()}
-          </div>
-          <div>
-            <span className="font-medium text-gray-600">Status:</span>
-            <span
-              className={`ml-2 px-2 py-1 rounded text-xs ${
-                taskToUpdate.completed ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
-              }`}
-            >
-              {taskToUpdate.completed ? 'Completed' : 'In Progress'}
-            </span>
-          </div>
-        </div>
-      </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         {/* Title Field */}
@@ -191,42 +153,42 @@ export default function UpdateTask({ task, onTaskUpdated }: Props) {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Start Date */}
           <div>
-            <label htmlFor="startDate" className="block text-sm font-bold text-gray-700 mb-2">
+            <label htmlFor="start_date" className="block text-sm font-bold text-gray-700 mb-2">
               Start Date <span className="text-red-500">*</span>
             </label>
             <input
               type="date"
-              id="startDate"
-              {...register('startDate')}
+              id="start_date"
+              {...register('start_date')}
               className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 transition-colors ${
-                errors.startDate
+                errors.start_date
                   ? 'border-red-500 focus:border-red-500 focus:ring-red-200'
-                  : !errors.startDate && dirtyFields.startDate
+                  : !errors.start_date && dirtyFields.start_date
                   ? 'border-green-500 focus:border-green-500 focus:ring-green-200'
                   : 'border-gray-300 focus:border-blue-500 focus:ring-blue-200'
               }`}
             />
-            {errors.startDate && <p className="text-red-500 text-sm mt-1">{errors.startDate.message}</p>}
+            {errors.start_date && <p className="text-red-500 text-sm mt-1">{errors.start_date.message}</p>}
           </div>
 
           {/* Due Date */}
           <div>
-            <label htmlFor="dueDate" className="block text-sm font-bold text-gray-700 mb-2">
+            <label htmlFor="due_date" className="block text-sm font-bold text-gray-700 mb-2">
               Due Date
             </label>
             <input
               type="date"
-              id="dueDate"
-              {...register('dueDate')}
+              id="due_date"
+              {...register('due_date')}
               className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 transition-colors ${
-                errors.dueDate
+                errors.due_date
                   ? 'border-red-500 focus:border-red-500 focus:ring-red-200'
-                  : !errors.dueDate && dirtyFields.dueDate
+                  : !errors.due_date && dirtyFields.due_date
                   ? 'border-green-500 focus:border-green-500 focus:ring-green-200'
                   : 'border-gray-300 focus:border-blue-500 focus:ring-blue-200'
               }`}
             />
-            {errors.dueDate && <p className="text-red-500 text-sm mt-1">{errors.dueDate.message}</p>}
+            {errors.due_date && <p className="text-red-500 text-sm mt-1">{errors.due_date.message}</p>}
           </div>
         </div>
 
@@ -248,8 +210,8 @@ export default function UpdateTask({ task, onTaskUpdated }: Props) {
                   : 'border-gray-300 focus:border-blue-500 focus:ring-blue-200'
               }`}
             >
-              <option value="todo">To Do</option>
-              <option value="in-progress">In Progress</option>
+              <option value="to_do">To Do</option>
+              <option value="in_progress">In Progress</option>
               <option value="done">Done</option>
             </select>
             {errors.status && <p className="text-red-500 text-sm mt-1">{errors.status.message}</p>}
@@ -302,34 +264,27 @@ export default function UpdateTask({ task, onTaskUpdated }: Props) {
 
         {/* Assignee ID Field */}
         <div>
-          <label htmlFor="assigneeId" className="block text-sm font-bold text-gray-700 mb-2">
+          <label htmlFor="assignee_id" className="block text-sm font-bold text-gray-700 mb-2">
             Assignee ID
           </label>
           <input
             type="text"
-            id="assigneeId"
-            {...register('assigneeId')}
+            id="assignee_id"
+            {...register('assignee_id')}
             className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 transition-colors ${
-              errors.assigneeId
+              errors.assignee_id
                 ? 'border-red-500 focus:border-red-500 focus:ring-red-200'
-                : !errors.assigneeId && dirtyFields.assigneeId
+                : !errors.assignee_id && dirtyFields.assignee_id
                 ? 'border-green-500 focus:border-green-500 focus:ring-green-200'
                 : 'border-gray-300 focus:border-blue-500 focus:ring-blue-200'
             }`}
             placeholder="Enter assignee ID (optional)"
           />
-          {errors.assigneeId && <p className="text-red-500 text-sm mt-1">{errors.assigneeId.message}</p>}
+          {errors.assignee_id && <p className="text-red-500 text-sm mt-1">{errors.assignee_id.message}</p>}
         </div>
 
         {/* Submit Button */}
         <div className="flex justify-end space-x-4">
-          <button
-            type="button"
-            onClick={handleResetToOriginal}
-            className="px-6 py-2 border border-gray-300 rounded-md text-gray-700 bg-gray-100 hover:bg-gray-200 transition-colors"
-          >
-            Reset to Original
-          </button>
           <button
             type="submit"
             disabled={isSubmitting || !isValid}
