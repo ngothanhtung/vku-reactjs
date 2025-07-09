@@ -1,16 +1,27 @@
-import { BrowserRouter, Route, Routes, Link, useLocation } from 'react-router';
+// Create LoginContext to manage login state
+import { useContext, useState } from 'react';
+import { BrowserRouter, Link, Route, Routes, useNavigate } from 'react-router';
 
+import { LoginContext } from './context';
+import AssigneeMe from './pages/AssigneeMe';
 import CreateTask from './pages/CreateTask';
+import Login from './pages/Login';
 import Tasks from './pages/Tasks';
 import UpdateTask from './pages/UpdateTask';
-import AssigneeMe from './pages/AssigneeMe';
 
 // Navigation Component
 const Navigation = () => {
-  const location = useLocation();
+  const navigate = useNavigate();
+
+  const { user, setUser } = useContext(LoginContext);
+  console.log('Navigation user:', user);
+
+  if (!user) {
+    return null; // Hide navigation if user is not logged in
+  }
 
   const navItems = [
-    { path: '/', label: 'Tasks', exact: true },
+    { path: '/tasks', label: 'Tasks', exact: true },
     { path: '/create', label: 'Create Task', exact: false },
     { path: '/assignee-me', label: 'Assigned to Me', exact: false },
   ];
@@ -26,27 +37,37 @@ const Navigation = () => {
     <nav className="bg-white shadow-md border-b border-gray-200 mb-6">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          {/* Logo/Brand */}
           <div className="flex items-center">
-            <h1 className="text-xl font-bold text-gray-800">Task Management</h1>
+            <h1 className="text-xl font-bold text-gray-800">Tasks Management</h1>
           </div>
 
           {/* Navigation Links */}
-          <div className="flex space-x-1">
-            {navItems.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={`px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
-                  isActive(item.path, item.exact)
-                    ? 'bg-blue-500 text-white shadow-sm'
-                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
-                }`}
+          {
+            <div className="flex space-x-1">
+              {navItems.map((item) => (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={`px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
+                    isActive(item.path, item.exact)
+                      ? 'bg-blue-500 text-white shadow-sm'
+                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              ))}
+              <button
+                onClick={() => {
+                  setUser(null); // Clear user context on logout
+                  navigate('/login'); // Redirect to login page on logout
+                }}
+                className="px-4 py-2 rounded-md text-sm bg-red-500 font-medium transition-colors duration-200 text-white hover:bg-red-600"
               >
-                {item.label}
-              </Link>
-            ))}
-          </div>
+                Logout
+              </button>
+            </div>
+          }
         </div>
       </div>
     </nav>
@@ -54,29 +75,26 @@ const Navigation = () => {
 };
 
 export default function TaskManagement() {
+  const [user, setUser] = useState(null);
   return (
-    <div className="bg-gray-50">
-      <BrowserRouter>
-        <Navigation />
-        <div className="container-fluid mx-auto px-8 py-4">
-          <Routes>
-            <Route index element={<Tasks />} />
-            <Route path="/tasks" element={<Tasks />} />
-            <Route path="/create" element={<CreateTask />} />
-            <Route path="/update/:id" element={<UpdateTask />} />
-            <Route path="/assignee-me" element={<AssigneeMe />} />
-            <Route
-              path="/assignee-me"
-              element={
-                <div className="text-center py-12 bg-white rounded-lg shadow">
-                  <h2 className="text-2xl font-bold text-gray-800 mb-4">Assigned to Me</h2>
-                  <p className="text-gray-600">This page will show tasks assigned to you.</p>
-                </div>
-              }
-            />
-          </Routes>
-        </div>
-      </BrowserRouter>
-    </div>
+    <LoginContext.Provider value={{ user: user, setUser: setUser }}>
+      <div className="bg-gray-50">
+        <BrowserRouter>
+          <Navigation />
+          <div className="container-fluid mx-auto px-8 py-4">
+            <Routes>
+              <Route index element={<Login />} />
+              <Route path="/login" element={<Login />} />
+
+              {user && <Route path="/tasks" element={<Tasks />} />}
+              {user && <Route path="/create" element={<CreateTask />} />}
+              {user && <Route path="/update/:id" element={<UpdateTask />} />}
+              {user && <Route path="/assignee-me" element={<AssigneeMe />} />}
+              <Route path="*" element={<div className="text-center text-red-500">Access Denied</div>} />
+            </Routes>
+          </div>
+        </BrowserRouter>
+      </div>
+    </LoginContext.Provider>
   );
 }

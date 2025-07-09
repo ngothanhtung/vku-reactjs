@@ -2,6 +2,25 @@ import type { Task } from '../types';
 import { apiBaseUrl, defaultHeaders } from '../constants';
 
 /**
+ * Logs in a user with username and password
+ * @param username - User's username
+ * @param password - User's password
+ * @returns Promise that resolves to user data
+ * @throws Error if the request fails
+ */
+export const login = async (username: string, password: string): Promise<any> => {
+  const response = await fetch(`${apiBaseUrl}/auth/login`, {
+    method: 'POST',
+    headers: defaultHeaders,
+    body: JSON.stringify({ username, password }),
+  });
+  if (!response.ok) {
+    throw new Error('Login failed');
+  }
+  return await response.json();
+};
+
+/**
  * Creates a new task
  * @param task - The task object to create
  * @returns Promise that resolves to the created task
