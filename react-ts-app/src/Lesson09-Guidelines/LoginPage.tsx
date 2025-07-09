@@ -29,7 +29,7 @@ const validationSchema: yup.ObjectSchema<IFormInput> = yup.object({
     ),
 });
 
-const LoginPage: React.FC = () => {
+const LoginPage = () => {
   const {
     register,
     handleSubmit,
