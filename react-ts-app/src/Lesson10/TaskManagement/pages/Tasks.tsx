@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router';
 
 import TaskFilterForm from '../components/TaskFilterForm';
 import TaskList from '../components/TaskList';
-import { filterTasks } from '../utils';
+import { searchTasks } from '../utils';
 
 import type { Filter, Task } from '../types';
 import { getTasks } from '../services';
@@ -26,17 +26,12 @@ export default function Tasks() {
     fetchTasks();
   }, []);
 
-  const handleEdit = (taskId: string | number | undefined) => {
-    navigate(`/update/${taskId}`);
-  };
-
-  // Filter tasks based on current filter criteria
-  const filteredTasks = React.useMemo(() => {
-    return filterTasks(tasks, filters);
-  }, [tasks, filters]);
-
   const handleSearch = (newFilters: Filter) => {
     setFilters(newFilters);
+  };
+
+  const handleEdit = (taskId: string | number | undefined) => {
+    navigate(`/update/${taskId}`);
   };
 
   return (
@@ -52,15 +47,15 @@ export default function Tasks() {
         <section className="px-6 py-4 border-b border-gray-200">
           <div className="flex justify-between items-center">
             <div>
-              <h2 className="text-2xl font-bold text-gray-800">Results</h2>
-              <p className="text-gray-600 mt-1">Manage and track all your tasks</p>
+              <h2 className="text-2xl font-bold text-gray-800">Our tasks</h2>
+              <p className="text-gray-600 mt-1">Manage and track all our tasks</p>
             </div>
           </div>
         </section>
 
         <section>
           <div className="overflow-x-auto">
-            <TaskList tasks={filteredTasks} onEdit={handleEdit} />
+            <TaskList tasks={searchTasks(tasks, filters)} onEdit={handleEdit} />
           </div>
         </section>
       </section>

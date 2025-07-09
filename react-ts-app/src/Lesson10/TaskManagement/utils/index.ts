@@ -1,7 +1,6 @@
-import type { Task } from '../types';
-import type { Filter } from '../components/TaskFilterForm';
+import type { Filter, Task } from '../types';
 
-export const filterTasks = (tasks: Task[], filters: Filter): Task[] => {
+export const searchTasks = (tasks: Task[], filters: Filter): Task[] => {
   return tasks.filter((task) => {
     // Apply status filter
     if (filters.status && task.status !== filters.status) {
