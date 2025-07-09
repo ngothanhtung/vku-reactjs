@@ -24,7 +24,7 @@ export default function Tasks() {
     return filterTasks(tasks, filters);
   }, [tasks, filters]);
 
-  const handleFilterChange = (newFilters: FilterCriteria) => {
+  const handleSearch = (newFilters: FilterCriteria) => {
     setFilters(newFilters);
   };
 
@@ -35,11 +35,7 @@ export default function Tasks() {
   return (
     <div>
       <section className="bg-white rounded-lg shadow-lg overflow-hidden">
-        <TaskFilterForm
-          onFilterChange={handleFilterChange}
-          onClearFilters={handleClearFilters}
-          initialFilters={filters}
-        />
+        <TaskFilterForm onSearch={handleSearch} onClearFilters={handleClearFilters} initialFilters={filters} />
       </section>
       {/* Separation */}
 
