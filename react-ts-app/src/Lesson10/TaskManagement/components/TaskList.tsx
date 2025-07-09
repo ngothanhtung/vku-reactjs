@@ -2,7 +2,6 @@ import type { Task } from '../types';
 import TaskDate from './TaskDate';
 import TaskPriority from './TaskPriority';
 import TaskStatus from './TaskStatus';
-import TaskTags from './TaskTags';
 import TaskTitle from './TaskTitle';
 
 type Props = {
@@ -21,7 +20,6 @@ export default function TaskList({ tasks, onEdit }: Props) {
           <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Start Date</th>
           <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Due Date</th>
           <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Assignee</th>
-          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tags</th>
           <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
         </tr>
       </thead>
@@ -44,9 +42,6 @@ export default function TaskList({ tasks, onEdit }: Props) {
               <TaskDate date={task.dueDate} />
             </td>
             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{task.assigneeId || 'Unassigned'}</td>
-            <td className="px-6 py-4 whitespace-nowrap">
-              <TaskTags tags={task.tags} />
-            </td>
             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
               <button
                 onClick={() => onEdit?.(task.id)}

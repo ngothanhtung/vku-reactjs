@@ -16,7 +16,6 @@ interface TaskFormData {
   description?: string;
   status: 'todo' | 'in-progress' | 'done';
   priority: 'low' | 'medium' | 'high';
-  tags?: string;
   assigneeId?: string;
 }
 
@@ -49,7 +48,6 @@ const validationSchema: yup.ObjectSchema<TaskFormData> = yup.object({
     .mixed<'low' | 'medium' | 'high'>()
     .required('Priority is required')
     .oneOf(['low', 'medium', 'high'], 'Please select a valid priority'),
-  tags: yup.string().optional().max(200, 'Tags must be less than 200 characters'),
   assigneeId: yup.string().optional().min(1, 'Assignee ID cannot be empty if provided'),
 });
 
@@ -63,7 +61,6 @@ export default function UpdateTask({ task, onTaskUpdated }: Props) {
     description: 'This is a sample task for updating',
     status: 'in-progress',
     priority: 'high',
-    tags: ['sample', 'update', 'demo'],
     assigneeId: 'user123',
     completed: false,
     createdAt: new Date('2024-01-10'),
@@ -87,7 +84,6 @@ export default function UpdateTask({ task, onTaskUpdated }: Props) {
       description: taskToUpdate.description || '',
       status: taskToUpdate.status,
       priority: taskToUpdate.priority,
-      tags: taskToUpdate.tags?.join(', ') || '',
       assigneeId: taskToUpdate.assigneeId || '',
     },
   });
@@ -103,12 +99,6 @@ export default function UpdateTask({ task, onTaskUpdated }: Props) {
         description: data.description || undefined,
         status: data.status,
         priority: data.priority,
-        tags: data.tags
-          ? data.tags
-              .split(',')
-              .map((tag) => tag.trim())
-              .filter(Boolean)
-          : undefined,
         assigneeId: data.assigneeId || undefined,
         completed: data.status === 'done',
         completedAt: data.status === 'done' ? new Date() : taskToUpdate.completedAt,
@@ -140,7 +130,6 @@ export default function UpdateTask({ task, onTaskUpdated }: Props) {
       description: taskToUpdate.description || '',
       status: taskToUpdate.status,
       priority: taskToUpdate.priority,
-      tags: taskToUpdate.tags?.join(', ') || '',
       assigneeId: taskToUpdate.assigneeId || '',
     });
   };
@@ -309,27 +298,6 @@ export default function UpdateTask({ task, onTaskUpdated }: Props) {
             placeholder="Enter task description (optional)"
           />
           {errors.description && <p className="text-red-500 text-sm mt-1">{errors.description.message}</p>}
-        </div>
-
-        {/* Tags Field */}
-        <div>
-          <label htmlFor="tags" className="block text-sm font-bold text-gray-700 mb-2">
-            Tags
-          </label>
-          <input
-            type="text"
-            id="tags"
-            {...register('tags')}
-            className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 transition-colors ${
-              errors.tags
-                ? 'border-red-500 focus:border-red-500 focus:ring-red-200'
-                : !errors.tags && dirtyFields.tags
-                ? 'border-green-500 focus:border-green-500 focus:ring-green-200'
-                : 'border-gray-300 focus:border-blue-500 focus:ring-blue-200'
-            }`}
-            placeholder="Enter tags separated by commas (e.g., urgent, frontend, bug)"
-          />
-          {errors.tags && <p className="text-red-500 text-sm mt-1">{errors.tags.message}</p>}
         </div>
 
         {/* Assignee ID Field */}

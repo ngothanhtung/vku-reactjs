@@ -6,7 +6,6 @@ export interface Task {
   description?: string;
   status: 'todo' | 'in-progress' | 'done';
   priority: 'low' | 'medium' | 'high';
-  tags?: string[];
   assigneeId?: string;
   completed?: boolean;
   completedAt?: Date;
