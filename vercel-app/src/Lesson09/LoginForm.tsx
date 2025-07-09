@@ -40,13 +40,13 @@ export default function LoginForm() {
 
   console.log('errors', errors);
   return (
-    <div className='flex items-center justify-center w-screen h-screen'>
+    <div className='container mx-auto p-4'>
       {/* Create a login form using React + Tailwindcss (email, password, and submit button),
       include labels for each input field.
       Use Tailwindcss classes to style the form, inputs, and button.
       Ensure the form is responsive and looks good on both desktop and mobile devices.
       . */}
-      <form style={{ width: 400 }} className='max-w-md mx-auto p-4 bg-white rounded-lg shadow-md' onSubmit={handleSubmit(onSubmit)}>
+      <form className='max-w-md mx-auto p-4 bg-white rounded-lg shadow-md' onSubmit={handleSubmit(onSubmit)}>
         <h2 className='text-2xl font-bold mb-6 text-center'>Login</h2>
         <div className='mb-4'>
           <label htmlFor='email' className='block text-sm font-medium text-gray-700 font-bold text-left mb-1'>
