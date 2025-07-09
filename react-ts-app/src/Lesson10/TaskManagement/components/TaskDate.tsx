@@ -1,7 +1,5 @@
-import React from 'react';
-
 type Props = {
-  date: Date;
+  date?: Date;
   format?: 'short' | 'long';
 };
 
@@ -20,6 +18,6 @@ export default function TaskDate({ date, format }: Props) {
       day: 'numeric',
     });
   };
-  const formattedDate = formatDate(date, format);
+  const formattedDate = date ? formatDate(date, format) : '';
   return <div>{formattedDate}</div>;
 }
