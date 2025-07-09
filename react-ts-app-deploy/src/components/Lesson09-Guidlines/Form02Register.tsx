@@ -34,7 +34,7 @@ const schema = yup
       .string()
       .required("Confirm Password is required")
       .oneOf([yup.ref("password")], "Passwords must match"),
-    newsletter: yup.boolean().required(), // Optional
+    newsletter: yup.boolean().optional().default(false), // Optional
     agree: yup
       .boolean()
       .oneOf([true], "You must agree to the terms")
@@ -80,14 +80,14 @@ export default function Form02Register() {
           Manage all your lottery efficiently
         </p>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <form autoComplete="off" onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           {/* First Name + Last Name */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <input
                 type="text"
                 {...register("firstName")}
-                placeholder="John"
+                placeholder="First Name (*)"
                 className="w-full border border-gray-300 p-2 rounded"
               />
               {errors.firstName && (
@@ -100,7 +100,7 @@ export default function Form02Register() {
               <input
                 type="text"
                 {...register("lastName")}
-                placeholder="Doe"
+                placeholder="Last Name (*)"
                 className="w-full border border-gray-300 p-2 rounded"
               />
               {errors.lastName && (
@@ -116,8 +116,9 @@ export default function Form02Register() {
             <div>
               <input
                 type="tel"
+
                 {...register("phone")}
-                placeholder="0987654321"
+                placeholder="Phone Number (*)"
                 className="w-full border border-gray-300 p-2 rounded"
               />
               {errors.phone && (
@@ -128,7 +129,7 @@ export default function Form02Register() {
               <input
                 type="email"
                 {...register("email")}
-                placeholder="john.doe@example.com"
+                placeholder="Email (*)"
                 className="w-full border border-gray-300 p-2 rounded"
               />
               {errors.email && (
@@ -143,7 +144,7 @@ export default function Form02Register() {
               <input
                 type="password"
                 {...register("password")}
-                placeholder="Secret123"
+                placeholder="Password (*)"
                 className="w-full border border-gray-300 p-2 rounded"
               />
               {errors.password && (
@@ -156,7 +157,7 @@ export default function Form02Register() {
               <input
                 type="password"
                 {...register("confirmPassword")}
-                placeholder="Secret123"
+                placeholder="Confirm Password (*)"
                 className="w-full border border-gray-300 p-2 rounded"
               />
               {errors.confirmPassword && (
