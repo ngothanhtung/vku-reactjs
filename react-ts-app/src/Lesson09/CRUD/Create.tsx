@@ -83,8 +83,8 @@ export default function Create({ onCreated }: Props) {
   };
 
   return (
-    <div>
-      <form className="w-full p-4 bg-white rounded shadow mb-4" onSubmit={handleSubmit(onSubmit)}>
+    <div className="container mx-auto p-4">
+      <form className="max-w-md mx-auto p-4 bg-white rounded-lg shadow-md" onSubmit={handleSubmit(onSubmit)}>
         <h2 className="text-xl font-bold mb-4">Create Customer</h2>
 
         <div className="mb-4">
