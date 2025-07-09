@@ -1,20 +1,24 @@
 import './App.css';
-import { BrowserRouter, Routes, Route } from "react-router";
+
+import { BrowserRouter, Route, Routes } from 'react-router';
+
+import CustomerLayout from './layouts/CustomerLayout';
 import DefaultLayout from './layouts/DefaultLayout';
-import HomePage from './pages/HomePage';
 import BlogPage from './pages/BlogPage';
 import CategoryPage from './pages/CategoryPage';
-import NoPage from './pages/NoPage';
-import ProductPage from './pages/ProductPage';
-import ProductDetailsPage from './pages/ProductDetailsPage';
-import LoginPage from './pages/LoginPage';
 import CustomerDashboard from './pages/CustomerDashboard';
-import CustomerProfile from './pages/CustomerProfile';
-import CustomerLayout from './layouts/CustomerLayout';
 import CustomerOrders from './pages/CustomerOrders';
+import CustomerProfile from './pages/CustomerProfile';
+import HomePage from './pages/HomePage';
+import LoginPage from './pages/LoginPage';
+import NoPage from './pages/NoPage';
+import ProductDetailsPage from './pages/ProductDetailsPage';
+import ProductPage from './pages/ProductPage';
+
 function App() {
   return (
     <BrowserRouter>
+      <h1 className="text-3xl font-bold underline">Hello world!</h1>
       <Routes>
         <Route path="/" element={<DefaultLayout />}>
           <Route index element={<HomePage />} />
@@ -24,9 +28,9 @@ function App() {
           <Route path="products/:slug" element={<ProductDetailsPage />} />
           <Route path="login" element={<LoginPage />} />
           <Route path="customer/" element={<CustomerLayout />}>
-               <Route index element={<CustomerDashboard />} />
-               <Route path='orders' element={<CustomerOrders />} />
-               <Route path='profile' element={<CustomerProfile />} />
+            <Route index element={<CustomerDashboard />} />
+            <Route path="orders" element={<CustomerOrders />} />
+            <Route path="profile" element={<CustomerProfile />} />
           </Route>
           <Route path="*" element={<NoPage />} />
         </Route>
