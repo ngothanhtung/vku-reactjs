@@ -1,14 +1,15 @@
 import React from 'react';
+import type { Customer } from './types';
 
 type Props = {
-  onCreated?: (customer: any) => void; // Optional callback when a customer is created
+  onCreated?: (customer: Customer) => void; // Optional callback when a customer is created
 };
 
 const url = 'https://server.aptech.io/online-shop/customers';
 
 export default function Create({ onCreated }: Props) {
   // State to hold form data
-  const [formData, setFormData] = React.useState({
+  const [formData, setFormData] = React.useState<Customer>({
     firstName: '',
     lastName: '',
     email: '',
@@ -20,7 +21,6 @@ export default function Create({ onCreated }: Props) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
 
-    console.log(`Input changed: ${id} = ${value}`);
     setFormData((prev) => ({
       ...prev,
       [id]: value,
@@ -29,7 +29,6 @@ export default function Create({ onCreated }: Props) {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log('Form submitted:', formData);
 
     // Send a POST request to create a new customer
     try {
@@ -65,8 +64,6 @@ export default function Create({ onCreated }: Props) {
 
   return (
     <div>
-      {/* Create tailwindcss Form (firstName, lastName, email, phoneNumber, address, birthday) */}
-
       <form className="w-full p-4 bg-white rounded shadow mb-4" onSubmit={handleSubmit}>
         <h2 className="text-xl font-bold mb-4">Create Customer</h2>
         <div className="mb-4">

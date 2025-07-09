@@ -2,19 +2,9 @@
 import React, { useEffect } from 'react';
 import Delete from './Delete';
 import Update from './Update';
+import type { Customer } from './types';
 
 const url = 'https://server.aptech.io/online-shop/customers';
-
-type Customer = {
-  id: number;
-  firstName: string;
-  lastName: string;
-  email: string;
-  phoneNumber: string;
-  address: string;
-  birthday: string;
-  // Add other fields if needed
-};
 
 type Props = {
   reload?: number; // Optional prop to trigger reload

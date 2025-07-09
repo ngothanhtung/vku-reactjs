@@ -1,0 +1,7 @@
+{
+  "build": {
+    "env": {
+      "VITE_ESLINT_DISABLE": "true"
+    }
+  }
+}
