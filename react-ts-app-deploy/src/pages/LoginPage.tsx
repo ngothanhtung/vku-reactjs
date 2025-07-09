@@ -1,7 +1,10 @@
+import Form01SignUp from "../components/Lesson09-Guidlines/Form01SignUp"
 
 const LoginPage = () => {
   return (
-    <div>LoginPage</div>
+    <div>
+      <Form01SignUp />
+    </div>
   )
 }
 

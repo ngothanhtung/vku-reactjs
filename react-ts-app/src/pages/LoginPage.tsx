@@ -1,7 +1,10 @@
+import Form01 from "../Lesson09-Guidlines/Form01SignUp"
 
 const LoginPage = () => {
   return (
-    <div>LoginPage</div>
+    <div className="container mx-auto">
+      <Form01/>
+    </div>
   )
 }
 
