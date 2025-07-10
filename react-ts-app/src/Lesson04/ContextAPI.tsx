@@ -8,7 +8,13 @@ export default function ContextAPI() {
     <div>
       <h5>Context API Example</h5>
       <ThemeContext.Provider value={theme}>
-        <button onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>Toggle Theme</button>
+        <button
+          onClick={() => {
+            setTheme(theme === 'light' ? 'dark' : 'light');
+          }}
+        >
+          Toggle Theme
+        </button>
         <Child />
         <p>Current Theme: {theme}</p>
       </ThemeContext.Provider>

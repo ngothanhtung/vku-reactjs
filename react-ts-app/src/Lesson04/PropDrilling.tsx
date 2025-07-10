@@ -6,7 +6,13 @@ export default function PropDrilling() {
     <div>
       <Middle theme={theme} />
 
-      <button onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>Toggle Theme</button>
+      <button
+        onClick={() => {
+          setTheme(theme === 'light' ? 'dark' : 'light');
+        }}
+      >
+        Toggle Theme
+      </button>
     </div>
   );
 }
