@@ -8,6 +8,7 @@ import CreateTask from './pages/CreateTask';
 import Login from './pages/Login';
 import Tasks from './pages/Tasks';
 import UpdateTask from './pages/UpdateTask';
+import AccessDenied from './pages/AccessDenied';
 
 // Navigation Component
 const Navigation = () => {
@@ -90,7 +91,7 @@ export default function TaskManagement() {
               {user && <Route path="/create" element={<CreateTask />} />}
               {user && <Route path="/update/:id" element={<UpdateTask />} />}
               {user && <Route path="/assignee-me" element={<AssigneeMe />} />}
-              <Route path="*" element={<div className="text-center text-red-500">Access Denied</div>} />
+              <Route path="*" element={<AccessDenied />} />
             </Routes>
           </div>
         </BrowserRouter>
