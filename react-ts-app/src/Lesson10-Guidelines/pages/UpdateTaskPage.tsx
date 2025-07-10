@@ -12,7 +12,7 @@ interface IFormInput {
   description?: string;
   status: 'to_do' | 'in_progress' | 'done';
   priority: 'low' | 'medium' | 'high';
-  assignee_id?: string;
+  assignee_id?: number;
 }
 
 // Yup validation schema
@@ -44,13 +44,7 @@ const schema: yup.ObjectSchema<IFormInput> = yup.object({
     .mixed<'low' | 'medium' | 'high'>()
     .required('Priority is required')
     .oneOf(['low', 'medium', 'high'], 'Please select a valid priority'),
-  assignee_id: yup
-    .number()
-    .min(1, 'Assignee ID must be a positive number')
-    .test('assignee_id', 'Assignee ID cannot be empty if provided', (value) => {
-      if (!value) return true;
-      return !isNaN(Number(value)) && Number(value) >= 1;
-    }),
+  assignee_id: yup.number().min(1, 'Assignee ID must be a positive number'),
 });
 
 export default function UpdateTaskPage() {
@@ -71,10 +65,11 @@ export default function UpdateTaskPage() {
       description: '',
       status: 'to_do',
       priority: 'medium',
-      assignee_id: '',
+      assignee_id: undefined,
     },
     mode: 'onChange',
   });
+
   useEffect(() => {
     const fetchTask = async () => {
       try {

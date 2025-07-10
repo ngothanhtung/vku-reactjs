@@ -85,8 +85,14 @@ export default function OurTasksPage({}: Props) {
               <td>{task.due_date ? new Date(task.due_date).toLocaleDateString() : ''}</td>
               <td>{task.assignee_id}</td>
               <td>
-                <button onClick={() => handleOnEdit(task.id)} className="text-blue-600 hover:text-blue-800">
+                <button onClick={() => handleOnEdit(task.id)} className="bg-gray-100 text-blue-600 hover:text-blue-800">
                   Edit
+                </button>
+                <button
+                  onClick={() => navigate(`/view-task/${task.id}`)}
+                  className="ml-2 bg-gray-100 text-blue-600 hover:text-blue-800"
+                >
+                  View
                 </button>
               </td>
             </tr>
