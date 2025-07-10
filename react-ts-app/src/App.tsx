@@ -2,12 +2,12 @@ import './App.css';
 
 import React from 'react';
 
-import TaskManagement from './Lesson10/TaskManagement';
+import TasksManagementGuidelines from './Lesson10-Guidelines';
 
 function App() {
   return (
     <React.Fragment>
-      <TaskManagement />
+      <TasksManagementGuidelines />
     </React.Fragment>
   );
 }

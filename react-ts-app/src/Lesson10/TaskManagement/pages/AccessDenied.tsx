@@ -1,9 +1,6 @@
-import React from 'react';
 import { Link } from 'react-router';
 
-type Props = {};
-
-export default function AccessDenied({}: Props) {
+export default function AccessDenied() {
   return (
     <div className="container mx-auto px-4 py-8 text-center">
       <h1 className=" text-lg text-center text-red-500">Access Denied</h1>
