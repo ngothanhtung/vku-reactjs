@@ -75,7 +75,7 @@ const Navigation = () => {
   );
 };
 
-export default function TaskManagement() {
+export default function TasksManagement() {
   const [user, setUser] = useState(null);
   return (
     <LoginContext.Provider value={{ user: user, setUser: setUser }}>
