@@ -22,7 +22,7 @@ export default function useCreateTask() {
   };
 
   return {
-    createTask: handleCreateTask,
+    handleCreateTask,
     loading,
   };
 }

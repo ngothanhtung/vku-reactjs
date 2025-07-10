@@ -1,6 +1,6 @@
 import { Button, Card, Col, DatePicker, Divider, Form, Input, Row, Select, Space, Typography } from 'antd';
-import dayjs, { Dayjs, type } from 'dayjs';
-import { useLocation, useNavigate } from 'react-router';
+import dayjs, { Dayjs } from 'dayjs';
+import { useNavigate } from 'react-router';
 
 import { ArrowLeftOutlined, SaveOutlined } from '@ant-design/icons';
 
@@ -25,7 +25,7 @@ export default function CreateTaskPage() {
   const navigate = useNavigate();
 
   const [form] = Form.useForm();
-  const { createTask: handleCreateTask, loading } = useCreateTask();
+  const { handleCreateTask, loading } = useCreateTask();
 
   const handleSubmit = async (values: CreateTaskFormData) => {
     const taskData = {
