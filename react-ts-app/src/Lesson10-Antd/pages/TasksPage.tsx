@@ -14,7 +14,7 @@ export default function TasksPage() {
       title: 'Title',
       dataIndex: 'title',
       key: 'title',
-      width: 200,
+      width: '100%',
       ellipsis: true,
       sorter: (a, b) => a.title.localeCompare(b.title),
       filterSearch: true,
@@ -43,7 +43,8 @@ export default function TasksPage() {
       dataIndex: 'status',
       key: 'status',
       width: 120,
-      ellipsis: true,
+      align: 'center',
+
       filters: [
         { text: 'To Do', value: 'to_do' },
         { text: 'In Progress', value: 'in_progress' },
@@ -58,15 +59,20 @@ export default function TasksPage() {
           done: { color: 'success', text: 'Done' },
         };
         const config = statusConfig[status];
-        return <Tag color={config.color}>{config.text}</Tag>;
+        return (
+          <Tag style={{ fontWeight: 600, width: '100%', textAlign: 'center' }} color={config.color}>
+            {config.text}
+          </Tag>
+        );
       },
     },
     {
       title: 'Priority',
       dataIndex: 'priority',
       key: 'priority',
-      width: 100,
-      ellipsis: true,
+      width: 120,
+      align: 'center',
+
       filters: [
         { text: 'Low', value: 'low' },
         { text: 'Medium', value: 'medium' },
@@ -84,7 +90,11 @@ export default function TasksPage() {
           high: { color: 'red', text: 'High' },
         };
         const config = priorityConfig[priority];
-        return <Tag color={config.color}>{config.text}</Tag>;
+        return (
+          <Tag style={{ fontWeight: 600, width: '100%', textAlign: 'center' }} color={config.color}>
+            {config.text}
+          </Tag>
+        );
       },
     },
     {
@@ -108,13 +118,39 @@ export default function TasksPage() {
         if (!b.due_date) return -1;
         return new Date(a.due_date).getTime() - new Date(b.due_date).getTime();
       },
+      render: (date: Date | undefined) => {
+        if (!date) return <Text type="secondary">No Due Date</Text>;
+        let color = 'green';
+        const today = new Date();
+        const dueDate = new Date(date);
+        if (dueDate < today) {
+          color = 'red';
+        } else if (dueDate.getTime() - today.getTime() < 3 * 24 * 60 * 60 * 1000) {
+          color = 'orange'; // Due in less than 3 days
+        }
+        return <Text style={{ fontWeight: 600, color }}>{dueDate.toLocaleDateString()}</Text>;
+      },
+    },
+
+    {
+      title: 'Completed Date',
+      dataIndex: 'completed_date',
+      key: 'completed_date',
+      width: 160,
+      ellipsis: true,
+      sorter: (a, b) => {
+        if (!a.completed_date && !b.completed_date) return 0;
+        if (!a.completed_date) return 1;
+        if (!b.completed_date) return -1;
+        return new Date(a.completed_date).getTime() - new Date(b.completed_date).getTime();
+      },
       render: (date: Date | undefined) => <Text>{date ? new Date(date).toLocaleDateString() : '-'}</Text>,
     },
     {
       title: 'Assignee',
       dataIndex: 'assignee_id',
       key: 'assignee_id',
-      width: 100,
+      width: 200,
       ellipsis: true,
       filters: [
         { text: 'Assigned', value: 'assigned' },
@@ -139,9 +175,9 @@ export default function TasksPage() {
       width: 120,
       ellipsis: true,
       render: (_, record: Task) => (
-        <Space size="small">
-          <Button type="text" icon={<EyeOutlined />} size="small" onClick={() => handleView(record.id)} />
-          <Button type="text" icon={<EditOutlined />} size="small" onClick={() => handleEdit(record.id)} />
+        <Space size="small" style={{ display: 'flex', justifyContent: 'end' }}>
+          <Button type="dashed" icon={<EyeOutlined />} size="middle" onClick={() => handleView(record.id)} />
+          <Button type="dashed" icon={<EditOutlined />} size="middle" onClick={() => handleEdit(record.id)} />
         </Space>
       ),
     },
