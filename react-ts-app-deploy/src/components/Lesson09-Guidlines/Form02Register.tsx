@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
-const phoneRegExp = /^[0-9]{10,15}$/;
+const phoneRegExp = /^0[/\d]{9}$/;
 const passwordRegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[^\s]{8,}$/;
 
 const schema = yup
@@ -69,7 +69,7 @@ export default function Form02Register() {
         <img
           src="https://nhannn87dn.github.io/ui-form-antd-yup/statics/img/lottery-display.svg"
           alt="Lottery Display"
-          className="w-60 h-auto"
+          className="w-60 h-auto hidden lg:block"
         />
       </div>
 
