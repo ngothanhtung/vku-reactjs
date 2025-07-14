@@ -1,6 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 interface SideBarProps {
   isOpen?: boolean;
@@ -8,7 +9,15 @@ interface SideBarProps {
 }
 
 export default function SideBar({ isOpen = true, onClose }: SideBarProps) {
-  const [activeItem, setActiveItem] = useState('dashboard');
+  const currentPath = usePathname();
+  const [activeItem, setActiveItem] = useState('');
+
+  React.useEffect(() => {
+    // Set active item based on current path
+    const pathSegments = currentPath.split('/');
+    const lastSegment = pathSegments[pathSegments.length - 1];
+    setActiveItem(lastSegment || 'dashboard');
+  }, [currentPath]);
 
   const menuItems = [
     {
