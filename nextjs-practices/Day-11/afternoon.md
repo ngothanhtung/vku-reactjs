@@ -10,4 +10,7 @@
 - `/products` - Display: Product Page
 - `/login` - Display: Login Page
 
-### 1.2 Handing 404 Not Found
+### 1.2 Handing 404 Not Found Custom UI
+
+### 1.3 Apply Navigation Links to RootLayout
+
