@@ -2,7 +2,7 @@
 
 ## 1. Task 1
 
-### 1.1 Build a application with multi page using nextjs app router:
+### 1.1 Build a application with multi page using nextjs app router
 
 - `/` - Display: Home Page
 - `/blog` - Display: Blog Page
@@ -13,4 +13,3 @@
 ### 1.2 Handing 404 Not Found Custom UI
 
 ### 1.3 Apply Navigation Links to RootLayout
-
