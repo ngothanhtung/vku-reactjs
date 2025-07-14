@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { Product } from '@/types';
 import React from 'react';
 
 export const revalidate = 60; // Revalidate every seconds
@@ -15,7 +16,7 @@ export async function generateStaticParams() {
   // Generate static paths for the first 100 products
   // This is useful for SSG (Static Site Generation) to pre-render pages
   // for known product IDs at build time, unknown IDs will be generated on-demand.
-  return products.slice(0, 100).map((product) => ({
+  return products.slice(0, 100).map((product: Product) => ({
     id: product.id.toString(),
   }));
 }

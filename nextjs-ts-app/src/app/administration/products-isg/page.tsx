@@ -1,6 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import Link from 'next/link';
 import React from 'react';
+
+import { Product } from '@/types';
 
 // ISG Configuration - Revalidate every 60 seconds
 export const revalidate = 60;
@@ -23,7 +24,7 @@ export default async function Index() {
   );
 }
 
-function Products({ products }: { products: any[] }) {
+function Products({ products }: { products: Product[] }) {
   return (
     <div>
       <h1 className='text-2xl font-bold text-gray-800 mb-4'>Products</h1>
