@@ -1,0 +1,7 @@
+PUT https://api.escuelajs.co/api/v1/products/32
+Content-Type: application/json
+
+{
+  "title": "Change title",
+  "price": 100
+}

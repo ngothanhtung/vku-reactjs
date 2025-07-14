@@ -9,6 +9,8 @@ export async function generateStaticParams() {
   // Pre-render 10 users đầu tiên tại build time
   const users = await fetch("https://api.escuelajs.co/api/v1/users?limit=10")
     .then((res) => res.json())
+
+    console.log('<<=== 🚀 users ===>>',users);
   
   return users.map((user: any) => ({
     id: user.id.toString(),
@@ -18,7 +20,7 @@ export async function generateStaticParams() {
 // Cập nhật getUser function với revalidate
 async function getUser(id: string) {
   const res = await fetch(`https://api.escuelajs.co/api/v1/users/${id}`, {
-    next: { revalidate: 60 * 3 } // ISR: revalidate mỗi 3 phút
+    next: { revalidate: 60 * 3 } // ISR: revalidate mỗi 5 phút
   })
   if (!res.ok) {
     throw new Error("Failed to fetch user")
