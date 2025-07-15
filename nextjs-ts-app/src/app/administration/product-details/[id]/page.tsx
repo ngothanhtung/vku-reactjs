@@ -16,7 +16,7 @@ export async function generateStaticParams() {
   // Generate static paths for the first 100 products
   // This is useful for SSG (Static Site Generation) to pre-render pages
   // for known product IDs at build time, unknown IDs will be generated on-demand.
-  return products.slice(0, 100).map((product: Product) => ({
+  return products.slice(0, 20).map((product: Product) => ({
     id: product.id.toString(),
   }));
 }
@@ -27,7 +27,7 @@ export default async function Index({ params }: { params: Promise<{ id: number }
   const response = await fetch(`https://server.aptech.io/online-shop/products/${id}`, {
     next: {
       revalidate: 60, // Revalidate every 60 seconds
-      tags: ['products-isg-all-products', `product-${id}`], // Optional: Tag for cache invalidation
+      tags: [`product-${id}`], // Optional: Tag for cache invalidation
     },
   });
   const product = await response.json();

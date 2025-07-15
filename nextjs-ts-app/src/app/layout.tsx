@@ -28,7 +28,7 @@ export default function RootLayout({
         <div className='container p-4'>
           <h1 className='text-1xl font-bold'>WELCOME TO NEXTJS</h1>
         </div>
-        <div>{children}</div>
+        <div style={{ backgroundColor: 'green', padding: 24 }}>{children}</div>
       </body>
     </html>
   );
