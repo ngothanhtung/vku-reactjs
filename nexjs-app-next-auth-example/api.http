@@ -1,0 +1,7 @@
+POST https://server.aptech.io/auth/login
+Content-Type: application/json
+
+{
+    "username": "tungnt@softech.vn",
+    "password": "123456789"
+}
