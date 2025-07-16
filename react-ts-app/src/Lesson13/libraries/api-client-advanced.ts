@@ -82,6 +82,22 @@ const refreshToken = async () => {
   }
 };
 
+// Flag to prevent multiple refresh attempts simultaneously
+let isRefreshing = false;
+let failedQueue: Array<{ resolve: (value: any) => void; reject: (reason?: any) => void }> = [];
+
+const processQueue = (error: any, token: string | null = null) => {
+  failedQueue.forEach(({ resolve, reject }) => {
+    if (error) {
+      reject(error);
+    } else {
+      resolve(token);
+    }
+  });
+
+  failedQueue = [];
+};
+
 apiClient.interceptors.response.use(
   (response) => {
     return response.data;
@@ -101,7 +117,22 @@ apiClient.interceptors.response.use(
 
     // Check if it's an auth error and we haven't already retried
     if ((error.response?.status === 401 || error.response?.status === 403) && !originalRequest._retry) {
+      if (isRefreshing) {
+        // If already refreshing, queue the request
+        return new Promise((resolve, reject) => {
+          failedQueue.push({ resolve, reject });
+        })
+          .then((token) => {
+            originalRequest.headers['Authorization'] = `Bearer ${token}`;
+            return apiClient(originalRequest);
+          })
+          .catch((err) => {
+            return Promise.reject(err);
+          });
+      }
+
       originalRequest._retry = true;
+      isRefreshing = true;
 
       try {
         const newAccessToken = await refreshToken();
@@ -110,9 +141,14 @@ apiClient.interceptors.response.use(
           // Update the authorization header and retry the request
           apiClient.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
           originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
+
+          // Process queued requests
+          processQueue(null, newAccessToken);
+
           return apiClient(originalRequest);
         } else {
-          // If refresh failed, redirect to login
+          // If refresh failed, process queue with error and redirect to login
+          processQueue(error, null);
           console.error('Unable to refresh token, redirecting to login');
           localStorage.removeItem('auth-storage');
           window.location.href = '/login';
@@ -120,9 +156,12 @@ apiClient.interceptors.response.use(
         }
       } catch (refreshError: any) {
         console.error('Refresh token failed:', refreshError);
+        processQueue(refreshError, null);
         localStorage.removeItem('auth-storage');
         window.location.href = '/login';
         return Promise.reject(refreshError);
+      } finally {
+        isRefreshing = false;
       }
     }
 

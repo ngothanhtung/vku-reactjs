@@ -1,4 +1,4 @@
-import { apiClient } from '../libraries/api-client';
+import { apiClient } from '../libraries/api-client-simple';
 import React from 'react';
 import { useAuthStore } from '../useAuthStore';
 

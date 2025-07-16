@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { NavigateFunction } from 'react-router';
-import { apiClient } from './libraries/api-client';
+import { apiClient } from './libraries/api-client-simple';
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 
@@ -22,15 +22,7 @@ export interface AuthState {
   loggedInUser?: LoggedInUser;
   loading: boolean;
   error: any;
-  login: ({
-    username,
-    password,
-    navigate,
-  }: {
-    username: string;
-    password: string;
-    navigate: NavigateFunction;
-  }) => Promise<void>;
+  login: ({ username, password, navigate }: { username: string; password: string; navigate: NavigateFunction }) => Promise<void>;
   logOut: () => Promise<void>;
   changeAccessToken: () => Promise<void>;
   changeRefreshToken: () => Promise<void>;
