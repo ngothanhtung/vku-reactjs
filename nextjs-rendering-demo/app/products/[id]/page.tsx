@@ -31,7 +31,7 @@ export default async function ProductPage({ params }: { params: { id: string } }
         <div className="bg-white rounded-lg shadow-lg overflow-hidden">
           <div className="md:flex">
             <div className="md:w-1/2">
-              <div className="aspect-square relative">
+              {/* <div className="aspect-square relative">
                 <Image
                   src={product.images[0] || "/placeholder.svg?height=500&width=500"}
                   alt={product.title}
@@ -39,18 +39,30 @@ export default async function ProductPage({ params }: { params: { id: string } }
                   className="object-cover"
                   crossOrigin="anonymous"
                 />
+              </div> */}
+              <div>
+                <img
+                  src={product.images[0]}
+                  alt={product.title}
+                  className="w-full h-auto object-cover"
+                />
               </div>
               {product.images.length > 1 && (
                 <div className="flex gap-2 p-4 overflow-x-auto">
                   {product.images.slice(1, 4).map((image: string, index: number) => (
                     <div key={index} className="flex-shrink-0 w-20 h-20 relative">
-                      <Image
+                    {/* <div key={index} className="flex-shrink-0 w-20 h-20 relative"> */}
+                      {/* <Image
                         src={image || "/placeholder.svg"}
                         alt={`${product.title} ${index + 2}`}
                         fill
                         className="object-cover rounded"
                         crossOrigin="anonymous"
-                      />
+                      /> */}
+                      <img
+                        src={image || "/placeholder.svg"}
+                        alt={`${product.title} ${index + 2}`}
+                        className="w-full h-full object-cover rounded" />
                     </div>
                   ))}
                 </div>

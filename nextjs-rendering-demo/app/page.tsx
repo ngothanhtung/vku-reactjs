@@ -1,5 +1,5 @@
 import Link from "next/link"
-import Image from "next/image"
+//import Image from "next/image"
 
 // Static Site Generation (SSG) - trang này sẽ được pre-render tại build time
 async function getProducts() {
@@ -15,6 +15,9 @@ export default async function HomePage() {
 
   return (
     <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="banner my-5 rounded overflow-hidden">
+        <img className="rounded" src="images/banner-1200.png" alt="banner-1200" />
+      </div>
       <div className="mb-8">
         <h2 className="text-2xl font-bold text-gray-900 mb-2">Sản phẩm nổi bật</h2>
         <p className="text-gray-600">
@@ -26,7 +29,7 @@ export default async function HomePage() {
         {products.map((product: any) => (
           <Link key={product.id} href={`/products/${product.id}`}>
             <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden">
-              <div className="aspect-square relative">
+              {/* <div className="aspect-square relative">
                 <Image
                   src={product.images[0] || "/placeholder.svg?height=300&width=300"}
                   alt={product.title}
@@ -34,7 +37,10 @@ export default async function HomePage() {
                   className="object-cover"
                   crossOrigin="anonymous"
                 />
-              </div>
+               
+              </div> */}
+
+               <img src={product.images[0]} alt={product.title} />
               <div className="p-4">
                 <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2">{product.title}</h3>
                 <p className="text-sm text-gray-600 mb-2 line-clamp-2">{product.description}</p>
