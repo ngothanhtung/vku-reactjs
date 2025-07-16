@@ -2,7 +2,7 @@ import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
-
+// /api/tasks get
 export async function GET(request: Request, res: Response) {
   const session = await getServerSession(authOptions);
   console.log('<<=== 🚀 session ===>>',session);
@@ -43,4 +43,14 @@ export async function GET(request: Request, res: Response) {
    }
    
     
+}
+
+//Thêm mới /api/tasks post
+
+export async function POST(request: Request) {
+  //1. check session
+  //2. check body
+  const body = await request.json();
+  //3. call api
+  //4. return response
 }
