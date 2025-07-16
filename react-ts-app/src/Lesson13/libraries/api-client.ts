@@ -82,8 +82,6 @@ const refreshToken = async () => {
   }
 };
 
-let isRefreshing = false;
-
 apiClient.interceptors.response.use(
   (response) => {
     return response.data;
@@ -102,9 +100,8 @@ apiClient.interceptors.response.use(
     }
 
     // Check if it's an auth error and we haven't already retried
-    if ((error.response?.status === 401 || error.response?.status === 403) && !originalRequest._retry && !isRefreshing) {
+    if ((error.response?.status === 401 || error.response?.status === 403) && !originalRequest._retry) {
       originalRequest._retry = true;
-      isRefreshing = true;
 
       try {
         const newAccessToken = await refreshToken();
@@ -126,8 +123,6 @@ apiClient.interceptors.response.use(
         localStorage.removeItem('auth-storage');
         window.location.href = '/login';
         return Promise.reject(refreshError);
-      } finally {
-        isRefreshing = false;
       }
     }
 
