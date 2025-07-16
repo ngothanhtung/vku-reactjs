@@ -24,9 +24,9 @@ const TasksClient = () => {
     const fetchTask = async () => {
       try {
         /**
-         * Có thể sử dụng access token từ session để xác thực
+         * Có thể sử dụng access token từ session để gọi Backend API.
          * Ví dụ: const token = session?.user.accessToken;
-         * const res = await fetch('/api/tasks', {
+         * const res = await fetch('https://server.aptech.io/workspaces/tasks', {
             headers: {
                 Authorization: `Bearer session?.user.accessToken`,
             },
