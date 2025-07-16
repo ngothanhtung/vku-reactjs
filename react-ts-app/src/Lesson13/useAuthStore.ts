@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { NavigateFunction } from 'react-router';
-import { apiClient } from './libraries/api-client-simple';
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
+
+import { apiClient } from './libraries/api-client';
 
 export interface LoggedInUser {
   id: string | number;

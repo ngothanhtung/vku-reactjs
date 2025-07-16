@@ -3,7 +3,7 @@ import Axios, { type InternalAxiosRequestConfig } from 'axios';
 
 const URL = 'https://server.aptech.io';
 
-export const apiClient = Axios.create({
+const apiClient = Axios.create({
   baseURL: URL,
   headers: {
     'Content-Type': 'application/json',
@@ -169,3 +169,5 @@ apiClient.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+export default apiClient;
