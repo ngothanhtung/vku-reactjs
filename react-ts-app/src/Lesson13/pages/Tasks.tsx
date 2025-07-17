@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 
 import { apiClient } from '../libraries/api-client';
@@ -5,12 +6,36 @@ import { useAuthStore } from '../useAuthStore';
 
 export default function Tasks() {
   const { access_token, refresh_token, changeAccessToken, changeRefreshToken } = useAuthStore((state) => state);
+  const [tasks, setTasks] = React.useState<any[]>([]);
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const tasks = (await apiClient.get('/workspaces/tasks')) as any[];
+        console.log(tasks);
+        setTasks(tasks);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchData();
+  }, []);
 
   React.useEffect(() => {
     const fetchData = async () => {
       try {
-        const tasks = await apiClient.get('/workspaces/tasks');
-        console.log(tasks);
+        const task = (await apiClient.get('/workspaces/tasks/49645')) as any;
+        console.log(task);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchData();
+  }, []);
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const task = (await apiClient.get('/workspaces/tasks/49646')) as any;
+        console.log(task);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -33,6 +58,15 @@ export default function Tasks() {
       <strong>{refresh_token}</strong>
       <button onClick={handleChangeAccessToken}>Change access token for demo</button>
       <button onClick={handleChangeRefreshToken}>Change refresh token for demo</button>
+      <hr />
+
+      {tasks?.map((task: any) => (
+        <div key={task.id} style={{ border: '1px solid #ccc', padding: '10px', marginBottom: '10px' }}>
+          <h2>{task.title}</h2>
+          <p>{task.description}</p>
+          <p>Status: {task.status}</p>
+        </div>
+      ))}
     </div>
   );
 }
