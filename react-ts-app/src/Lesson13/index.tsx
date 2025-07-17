@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from 'react-router';
 import Login from './pages/Login';
 import AccessDenied from './pages/AccessDenied';
 import Tasks from './pages/Tasks';
+import Customer from './pages/Customer';
 
 export default function TasksManagementWithZustand() {
   return (
@@ -14,6 +15,8 @@ export default function TasksManagementWithZustand() {
             <Route index element={<Login />} />
             <Route path="/login" element={<Login />} />
             <Route path="/tasks" element={<Tasks />} />
+             <Route path="/customer" element={<Customer />} />
+             <Route path="/access-denied" element={<AccessDenied />} />
             <Route path="*" element={<AccessDenied />} />
           </Routes>
         </div>

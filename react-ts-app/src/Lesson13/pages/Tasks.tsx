@@ -1,16 +1,25 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { apiClient } from '../libraries/api-client';
 import { useAuthStore } from '../useAuthStore';
+import { useNavigate } from 'react-router';
 
 export default function Tasks() {
-  const { access_token, refresh_token, changeAccessToken, changeRefreshToken } = useAuthStore((state) => state);
+  const {logOut, access_token, refresh_token, changeAccessToken, changeRefreshToken, loggedInUser } = useAuthStore((state) => state);
   const [tasks, setTasks] = React.useState<any[]>([]);
+  const navigate = useNavigate();
+  
+  useEffect(()=>{
+    if(!loggedInUser) {
+      navigate('/login');
+    }
+  }, [loggedInUser, navigate])
+
   React.useEffect(() => {
     const fetchData = async () => {
       try {
-        const tasks = (await apiClient.get('/workspaces/tasks')) as any[];
+        const tasks = (await apiClient.get('/workspaces/tasks', )) as any[];
         console.log(tasks);
         setTasks(tasks);
       } catch (error) {
@@ -53,6 +62,10 @@ export default function Tasks() {
   return (
     <div style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
       <h1>Tasks</h1>
+      <button onClick={()=>{
+        logOut();
+        navigate('/login');
+      }}>Logout</button>
       <strong>{access_token}</strong>
       <br />
       <strong>{refresh_token}</strong>
