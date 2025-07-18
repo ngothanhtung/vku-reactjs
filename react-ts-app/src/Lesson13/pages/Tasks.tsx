@@ -37,25 +37,16 @@ export default function Tasks() {
     await changeRefreshToken();
   };
   return (
-    <div style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-      <h1>Tasks</h1>
-      <button
-        onClick={() => {
-          logOut();
-          navigate('/login');
-        }}
-      >
-        Logout
-      </button>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
       <strong>{access_token}</strong>
       <br />
       <strong>{refresh_token}</strong>
       <button onClick={handleChangeAccessToken}>Change access token for demo</button>
       <button onClick={handleChangeRefreshToken}>Change refresh token for demo</button>
-      <hr />
+      <div style={{ height: 24 }}></div>
 
       {tasks?.map((task: any) => (
-        <div key={task.id} style={{ border: '1px solid #ccc', padding: '10px', marginBottom: '10px' }}>
+        <div key={task.id} style={{ border: '1px solid #ccc', padding: '12px', marginBottom: '12px', borderRadius: '8px' }}>
           <h2>{task.title}</h2>
           <p>{task.description}</p>
           <p>Status: {task.status}</p>

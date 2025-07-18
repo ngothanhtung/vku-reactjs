@@ -7,7 +7,7 @@ import { apiClient } from './libraries/api-client';
 
 export interface LoggedInUser {
   id: string | number;
-  email: string;
+  username: string;
   isActive: boolean;
   roles: [
     {

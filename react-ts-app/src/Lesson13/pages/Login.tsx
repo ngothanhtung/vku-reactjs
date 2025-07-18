@@ -4,8 +4,8 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
 import { yupResolver } from '@hookform/resolvers/yup';
+
 import { useAuthStore } from '../useAuthStore';
-import { useNavigate } from 'react-router';
 
 // Strong typed interface for form data
 interface IFormInput {
@@ -25,7 +25,6 @@ const validationSchema: yup.ObjectSchema<IFormInput> = yup.object({
 });
 
 export default function Login() {
-  const navigate = useNavigate();
   const { login, error } = useAuthStore((state) => state);
 
   const {
