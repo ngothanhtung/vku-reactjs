@@ -9,12 +9,12 @@ export default function TasksManagementWithZustandAndSecurity() {
   const { loggedInUser } = useAuthStore((state) => state);
   // Get array of user roles ["code"]
   const userRoles: string[] = loggedInUser?.roles?.map((role: any) => role.code?.toLowerCase()) || [];
-
+  console.log('userRoles', userRoles);
   const generatedRoutes: any[] = routes
     .map((route) => {
-      const routeRoles: string[] = route.roles || [];
+      const routeRoles: string[] = route.roles?.map((role: string) => role?.toLowerCase()) || [];
       const hasAccess = userRoles.some((role: string) => {
-        return role === 'administrators' || routeRoles.includes(role?.toLowerCase());
+        return role?.toLowerCase() === 'administrators' || routeRoles.includes(role?.toLowerCase());
       });
       return hasAccess
         ? {

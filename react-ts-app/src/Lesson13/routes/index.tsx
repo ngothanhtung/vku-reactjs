@@ -10,7 +10,6 @@ const routes = [
     name: 'Login',
     index: true,
     element: <Login />,
-    roles: [],
   },
   {
     path: '/home',
@@ -18,7 +17,7 @@ const routes = [
     name: 'Home',
     index: true,
     element: <Tasks />,
-    roles: ['managers', 'leaders', 'users'],
+    roles: ['Users', 'Managers', 'Leaders'],
   },
   {
     path: '/tasks',
@@ -26,7 +25,7 @@ const routes = [
     name: 'Tasks',
     index: true,
     element: <Tasks />,
-    roles: ['managers', 'leaders'],
+    roles: ['Managers', 'Leaders'],
   },
 
   {
@@ -44,7 +43,7 @@ const routes = [
     name: 'Security',
     index: true,
     element: <div>Security</div>,
-    roles: ['sdsds'],
+    roles: ['Administrators'],
   },
 ];
 export default routes;

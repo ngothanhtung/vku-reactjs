@@ -5,7 +5,7 @@ import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router';
 import routes from '../routes';
 import { useAuthStore } from '../useAuthStore';
 export default function MainLayout() {
-  const { loggedInUser } = useAuthStore((state) => state);
+  const { loggedInUser, logOut } = useAuthStore((state) => state);
   // Get array of user roles ["code"]
   const userRoles: string[] = loggedInUser?.roles?.map((role: any) => role.code?.toLowerCase()) || [];
   console.log('userRoles', userRoles);
@@ -21,7 +21,7 @@ export default function MainLayout() {
               return null; // Skip routes that should not be shown on the menu
             }
 
-            const routeRoles: string[] = route.roles || [];
+            const routeRoles: string[] = route.roles?.map((role: string) => role?.toLowerCase()) || [];
             const hasAccess = userRoles.some((role: string) => {
               return role === 'administrators' || routeRoles.includes(role?.toLowerCase());
             });
@@ -38,7 +38,19 @@ export default function MainLayout() {
           })}
         </nav>
         <div>
-          <Link to="/login">Login</Link>
+          {!loggedInUser && <Link to="/login">Login</Link>}
+          {loggedInUser && (
+            <button
+              onClick={async () => {
+                logOut().then(() => {
+                  // Redirect to login page after logout
+                  window.location.href = '/login';
+                });
+              }}
+            >
+              Logout
+            </button>
+          )}
         </div>
       </div>
       <div>

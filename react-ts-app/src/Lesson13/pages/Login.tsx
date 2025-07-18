@@ -47,7 +47,7 @@ export default function Login() {
       password: data.password,
     }).then(() => {
       // Redirect to home page after successful login
-      navigate('/home');
+      window.location.href = '/home';
     });
   };
 
