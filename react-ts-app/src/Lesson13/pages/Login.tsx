@@ -21,11 +21,7 @@ const validationSchema: yup.ObjectSchema<IFormInput> = yup.object({
     .email('Please enter a valid email address')
     .min(5, 'Email must be at least 5 characters')
     .max(100, 'Email must be less than 100 characters'),
-  password: yup
-    .string()
-    .required('Password is required')
-    .min(6, 'Password must be at least 6 characters')
-    .max(50, 'Password must be less than 50 characters'),
+  password: yup.string().required('Password is required').min(6, 'Password must be at least 6 characters').max(50, 'Password must be less than 50 characters'),
 });
 
 export default function Login() {
@@ -40,7 +36,7 @@ export default function Login() {
     resolver: yupResolver(validationSchema),
     mode: 'onChange', // Validate on change for better UX
     defaultValues: {
-      username: 'tungnt@softech.vn',
+      username: '',
       password: '123456789', // Example default value
     },
   });
@@ -49,7 +45,9 @@ export default function Login() {
     login({
       username: data.username,
       password: data.password,
-      navigate: navigate,
+    }).then(() => {
+      // Redirect to home page after successful login
+      navigate('/home');
     });
   };
 

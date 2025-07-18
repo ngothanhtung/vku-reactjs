@@ -6,45 +6,22 @@ import { useAuthStore } from '../useAuthStore';
 import { useNavigate } from 'react-router';
 
 export default function Tasks() {
-  const {logOut, access_token, refresh_token, changeAccessToken, changeRefreshToken, loggedInUser } = useAuthStore((state) => state);
+  const { logOut, access_token, refresh_token, changeAccessToken, changeRefreshToken, loggedInUser } = useAuthStore((state) => state);
   const [tasks, setTasks] = React.useState<any[]>([]);
   const navigate = useNavigate();
-  
-  useEffect(()=>{
-    if(!loggedInUser) {
+
+  useEffect(() => {
+    if (!loggedInUser) {
       navigate('/login');
     }
-  }, [loggedInUser, navigate])
+  }, [loggedInUser, navigate]);
 
   React.useEffect(() => {
     const fetchData = async () => {
       try {
-        const tasks = (await apiClient.get('/workspaces/tasks', )) as any[];
+        const tasks = (await apiClient.get('/workspaces/tasks')) as any[];
         console.log(tasks);
         setTasks(tasks);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-    fetchData();
-  }, []);
-
-  React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const task = (await apiClient.get('/workspaces/tasks/49645')) as any;
-        console.log(task);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-    fetchData();
-  }, []);
-  React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const task = (await apiClient.get('/workspaces/tasks/49646')) as any;
-        console.log(task);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -62,10 +39,14 @@ export default function Tasks() {
   return (
     <div style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
       <h1>Tasks</h1>
-      <button onClick={()=>{
-        logOut();
-        navigate('/login');
-      }}>Logout</button>
+      <button
+        onClick={() => {
+          logOut();
+          navigate('/login');
+        }}
+      >
+        Logout
+      </button>
       <strong>{access_token}</strong>
       <br />
       <strong>{refresh_token}</strong>

@@ -23,7 +23,7 @@ export interface AuthState {
   loggedInUser?: LoggedInUser;
   loading: boolean;
   error: any;
-  login: ({ username, password, navigate }: { username: string; password: string; navigate: NavigateFunction }) => Promise<void>;
+  login: ({ username, password }: { username: string; password: string }) => Promise<void>;
   logOut: () => Promise<void>;
   changeAccessToken: () => Promise<void>;
   changeRefreshToken: () => Promise<void>;
@@ -39,7 +39,7 @@ export const useAuthStore = create<AuthState>()(
           loggedInUser: undefined,
           loading: false,
           error: null,
-          login: async ({ username, password, navigate }) => {
+          login: async ({ username, password }) => {
             try {
               set(
                 {
@@ -66,7 +66,8 @@ export const useAuthStore = create<AuthState>()(
                 false,
                 { type: '@AUTH/LOGIN/SUCCESS' }
               );
-              navigate('/tasks');
+
+              window.location.href = '/home'; // Redirect to home page after successful login
             } catch (error) {
               set({ error, access_token: undefined, refresh_token: undefined, loggedInUser: undefined }, false, {
                 type: '@AUTH/LOGIN/ERROR',

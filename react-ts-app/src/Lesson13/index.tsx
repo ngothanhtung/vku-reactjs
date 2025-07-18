@@ -1,26 +1,63 @@
-// Create LoginContext to manage login state
-import { BrowserRouter, Route, Routes } from 'react-router';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React from 'react';
+import { createBrowserRouter, RouterProvider } from 'react-router';
+import MainLayout from './layouts/MainLayout';
+import { useAuthStore } from './useAuthStore';
+import routes from './routes';
 
-import Login from './pages/Login';
-import AccessDenied from './pages/AccessDenied';
-import Tasks from './pages/Tasks';
-import Customer from './pages/Customer';
+export default function TasksManagementWithZustandAndSecurity() {
+  const { loggedInUser } = useAuthStore((state) => state);
+  // Get array of user roles ["code"]
+  const userRoles: string[] = loggedInUser?.roles?.map((role: any) => role.code?.toLowerCase()) || [];
 
-export default function TasksManagementWithZustand() {
+  const generatedRoutes: any[] = routes
+    .map((route) => {
+      const routeRoles: string[] = route.roles || [];
+      const hasAccess = userRoles.some((role: string) => {
+        return role === 'administrators' || routeRoles.includes(role?.toLowerCase());
+      });
+      return hasAccess
+        ? {
+            path: route.path,
+            element: route.element,
+            index: route.index,
+          }
+        : null;
+    })
+    .filter(Boolean); // Filter out null values
+
+  routes.forEach((route) => {
+    if (route.isPublic) {
+      generatedRoutes.push({
+        path: route.path,
+        element: route.element,
+        index: route.index,
+      });
+    }
+  });
+
+  const router = createBrowserRouter([
+    {
+      path: '/',
+      element: <MainLayout />,
+      children: generatedRoutes,
+    },
+
+    //  NO MATCH ROUTE
+    {
+      path: '*',
+      element: (
+        <main style={{ padding: '1rem' }}>
+          <p>404 Page not found 😂😂😂</p>
+        </main>
+      ),
+    },
+  ]);
   return (
-    <div className="bg-gray-50">
-      <BrowserRouter>
-        <div className="container-fluid mx-auto px-8 py-4">
-          <Routes>
-            <Route index element={<Login />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/tasks" element={<Tasks />} />
-             <Route path="/customer" element={<Customer />} />
-             <Route path="/access-denied" element={<AccessDenied />} />
-            <Route path="*" element={<AccessDenied />} />
-          </Routes>
-        </div>
-      </BrowserRouter>
+    <div>
+      <React.Suspense fallback={<div>Loading...</div>}>
+        <RouterProvider router={router} />
+      </React.Suspense>
     </div>
   );
 }
