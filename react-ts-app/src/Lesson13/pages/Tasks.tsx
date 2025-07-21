@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import { apiClient } from '../libraries/api-client';
 import { useAuthStore } from '../useAuthStore';
 import { useNavigate } from 'react-router';
+import ButtonWithRoles from './ButtonWithRoles';
 
 export default function Tasks() {
   const {logOut, access_token, refresh_token, changeAccessToken, changeRefreshToken, loggedInUser } = useAuthStore((state) => state);
@@ -62,6 +63,13 @@ export default function Tasks() {
   return (
     <div style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
       <h1>Tasks</h1>
+      <ButtonWithRoles roles={["Customer"]}>
+         Go To Customer
+      </ButtonWithRoles>
+       <ButtonWithRoles roles={["Administrators"]}>
+         Go To Customer
+      </ButtonWithRoles>
+
       <button onClick={()=>{
         logOut();
         navigate('/login');

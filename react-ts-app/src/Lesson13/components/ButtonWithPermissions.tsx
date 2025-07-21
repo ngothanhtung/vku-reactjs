@@ -1,6 +1,5 @@
-import { Button } from "@/components/ui/button";
-import { hasPermissions } from "../auth.util";
-
+import React from 'react';
+import { useAuthStore } from '../useAuthStore';
 
 /**
  * Protect Action Button with children Components
@@ -15,18 +14,19 @@ const ButtonWithPermissions: React.FC<{
     [key: string]: any;
   }> = ({ permissions, children, onClick, className = '', ...props }) => {
   
+
     if (!hasPermissions(permissions)) {
       return null;
     }
   
     return (
-      <Button  
+      <button  
         onClick={onClick} 
         className={className} 
         {...props}
       >
         {children}
-      </Button>
+      </button>
     );
   };
 
