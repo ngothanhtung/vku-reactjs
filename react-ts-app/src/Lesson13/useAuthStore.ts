@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { NavigateFunction } from 'react-router';
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 
@@ -7,7 +6,7 @@ import { apiClient } from './libraries/api-client';
 
 export interface LoggedInUser {
   id: string | number;
-  email: string;
+  username: string;
   isActive: boolean;
   roles: [
     {
@@ -23,7 +22,7 @@ export interface AuthState {
   loggedInUser?: LoggedInUser;
   loading: boolean;
   error: any;
-  login: ({ username, password, navigate }: { username: string; password: string; navigate: NavigateFunction }) => Promise<void>;
+  login: ({ username, password }: { username: string; password: string }) => Promise<void>;
   logOut: () => Promise<void>;
   changeAccessToken: () => Promise<void>;
   changeRefreshToken: () => Promise<void>;
@@ -39,7 +38,7 @@ export const useAuthStore = create<AuthState>()(
           loggedInUser: undefined,
           loading: false,
           error: null,
-          login: async ({ username, password, navigate }) => {
+          login: async ({ username, password }) => {
             try {
               set(
                 {
@@ -66,7 +65,6 @@ export const useAuthStore = create<AuthState>()(
                 false,
                 { type: '@AUTH/LOGIN/SUCCESS' }
               );
-              navigate('/tasks');
             } catch (error) {
               set({ error, access_token: undefined, refresh_token: undefined, loggedInUser: undefined }, false, {
                 type: '@AUTH/LOGIN/ERROR',

@@ -73,7 +73,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"title\": \"{{$randomWord}}\",\r\n    \"assignee_id\": 1,\r\n    \"status\": \"to_do\",\r\n    \"start_date\": \"2025-07-10 08:30:00\",\r\n    \"due_date\": \"2025-07-12 17:00:00\"\r\n}",
+							"raw": "{\r\n    \"title\": \"{{$randomWord}}\",\r\n    \"assignee_id\": 1,\r\n    \"status\": \"to_do\",\r\n    \"start_date\": \"2025-07-10 08:30:00\",\r\n    \"due_date\": \"2025-07-12 17:00:00\",\r\n\r\n    \"completed_date\": \"2025-07-13 17:00:00\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -100,7 +100,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n   \r\n   \"priority\": \"medium\"\r\n    \r\n}",
+							"raw": "{\r\n   \r\n   \"status\": \"in_progress\"\r\n    \r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -108,20 +108,32 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/workspaces/tasks/6",
+							"raw": "{{baseUrl}}/workspaces/tasks/13794",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"workspaces",
 								"tasks",
-								"6"
+								"13794"
 							]
 						}
 					},
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Users",
+			"item": []
+		},
+		{
+			"name": "Auth",
+			"item": []
+		},
+		{
+			"name": "Roles",
+			"item": []
 		},
 		{
 			"name": "login",

@@ -7,45 +7,22 @@ import { useNavigate } from 'react-router';
 import ButtonWithRoles from './ButtonWithRoles';
 
 export default function Tasks() {
-  const {logOut, access_token, refresh_token, changeAccessToken, changeRefreshToken, loggedInUser } = useAuthStore((state) => state);
+  const { logOut, access_token, refresh_token, changeAccessToken, changeRefreshToken, loggedInUser } = useAuthStore((state) => state);
   const [tasks, setTasks] = React.useState<any[]>([]);
   const navigate = useNavigate();
-  
-  useEffect(()=>{
-    if(!loggedInUser) {
+
+  useEffect(() => {
+    if (!loggedInUser) {
       navigate('/login');
     }
-  }, [loggedInUser, navigate])
+  }, [loggedInUser, navigate]);
 
   React.useEffect(() => {
     const fetchData = async () => {
       try {
-        const tasks = (await apiClient.get('/workspaces/tasks', )) as any[];
+        const tasks = (await apiClient.get('/workspaces/tasks')) as any[];
         console.log(tasks);
         setTasks(tasks);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-    fetchData();
-  }, []);
-
-  React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const task = (await apiClient.get('/workspaces/tasks/49645')) as any;
-        console.log(task);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-    fetchData();
-  }, []);
-  React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const task = (await apiClient.get('/workspaces/tasks/49646')) as any;
-        console.log(task);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -61,28 +38,16 @@ export default function Tasks() {
     await changeRefreshToken();
   };
   return (
-    <div style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-      <h1>Tasks</h1>
-      <ButtonWithRoles roles={["Customer"]}>
-         Go To Customer
-      </ButtonWithRoles>
-       <ButtonWithRoles roles={["Administrators"]}>
-         Go To Customer
-      </ButtonWithRoles>
-
-      <button onClick={()=>{
-        logOut();
-        navigate('/login');
-      }}>Logout</button>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
       <strong>{access_token}</strong>
       <br />
       <strong>{refresh_token}</strong>
       <button onClick={handleChangeAccessToken}>Change access token for demo</button>
       <button onClick={handleChangeRefreshToken}>Change refresh token for demo</button>
-      <hr />
+      <div style={{ height: 24 }}></div>
 
       {tasks?.map((task: any) => (
-        <div key={task.id} style={{ border: '1px solid #ccc', padding: '10px', marginBottom: '10px' }}>
+        <div key={task.id} style={{ border: '1px solid #ccc', padding: '12px', marginBottom: '12px', borderRadius: '8px' }}>
           <h2>{task.title}</h2>
           <p>{task.description}</p>
           <p>Status: {task.status}</p>
