@@ -1,13 +1,47 @@
 # Product Requirements
 
-## 🧩 **User Story #1: Đăng ký tài khoản**
+**User Story**  là một cách tiếp cận phổ biến trong phát triển phần mềm theo Agile/Scrum. Cách này giúp chuyển đổi nhu cầu người dùng thành các yêu cầu rõ ràng, dễ hiểu và dễ lập trình.
+
+---
+
+## ✅ 1. Cấu trúc chuẩn của một User Story
+
+```
+As a [loại người dùng],
+I want [điều tôi muốn làm],
+So that [lý do/mục tiêu tôi cần làm việc đó].
+```
+
+### Ví dụ:
+
+> As a **registered user**,
+> I want to **reset my password**,
+> So that **I can regain access to my account if I forget it**.
+
+---
+
+## ✅ 2. Cách viết chi tiết một User Story
+
+Mỗi User Story nên bao gồm:
+
+| Thành phần                    | Nội dung                                                      |
+| ----------------------------- | ------------------------------------------------------------- |
+| **User Story**                | Câu mô tả theo mẫu ở trên                                     |
+| **Acceptance Criteria**       | Các điều kiện để story được chấp nhận, dạng checklist rõ ràng |
+| **Priority**                  | Mức độ ưu tiên: High / Medium / Low                           |
+| **Story Points** *(tuỳ chọn)* | Độ phức tạp tương đối để ước lượng effort (ví dụ: 3 points)   |
+| **Notes / UI design**         | Ghi chú thêm hoặc đính kèm thiết kế UI (Figma, ảnh...)        |
+
+---
+
+## ✅ 3. Ví dụ đầy đủ về một User Story
+
+### 🧩 **User Story #1: Đăng ký tài khoản**
 
 * **User Story:**
   As a **new visitor**,
   I want to **sign up for an account**,
   So that **I can save my preferences and access member features**.
-
-  [jkd](./product.md)
 
 * **Acceptance Criteria:**
 
@@ -22,8 +56,6 @@
 * **Story Points:** 5
 
 * **UI Design:** Figma link / Ảnh đính kèm
-
-!['mo ta'](./img/photo.png)
 
 ---
 
@@ -67,8 +99,3 @@
 * Dễ đọc, rõ ràng, có thể đưa cho tester viết test case
 * Kèm theo ảnh mockup, luồng UX nếu có
 
----
-
-Nếu bạn có một **dự án cụ thể** (ví dụ: hệ thống quản lý người dùng, trang thương mại điện tử, hệ thống CRM...), bạn có thể gửi các tính năng hoặc mô tả tổng thể, mình sẽ giúp bạn soạn bộ **User Story + Acceptance Criteria đầy đủ** cho từng tính năng.
-
-Bạn muốn bắt đầu với module nào?
