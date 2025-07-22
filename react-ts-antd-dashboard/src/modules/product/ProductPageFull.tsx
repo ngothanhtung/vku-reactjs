@@ -1,4 +1,4 @@
-import { Button, Popconfirm, Space, Image, Form } from 'antd';
+import { Table, Button, Popconfirm, Space, Image, Card,  Spin, Modal, Form, Input, InputNumber, Select, Pagination  } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useSearchParams, useNavigate } from 'react-router';
@@ -8,9 +8,6 @@ import type { PaginationProps } from 'antd';
 import { useAppMessage } from '../../stores/useAppMessage';
 import type { CategoryType, ProductType } from './product.type';
 import { fetchCategories, fetchCreate, fetchData, fetchDelete, updateData } from './product.service';
-import ProductAdd from './components/ProductAdd';
-import ProductEdit from './components/ProductEdit';
-import ProductTable from './components/ProductTable';
 
 /**
  * Component Product
@@ -46,9 +43,9 @@ const ProductPage = () => {
   };
 
  //=========================== PHÂN TRANG =================================//
-  const onChange: PaginationProps['onChange'] = (pageNumber, pageSize) => {
+  const onChange: PaginationProps['onChange'] = (pageNumber) => {
     console.log('Page: ', pageNumber);
-    navigate(`/product?page=${pageNumber}&limit=${pageSize}`);
+    navigate(`/product?page=${pageNumber}`);
   };
 
   
@@ -215,35 +212,180 @@ const ProductPage = () => {
 
   return (
     <div>
-      <ProductTable
-        data={data}
-        loading={isLoading}
-        columns={columns}
-        page={int_page}
-        onPageChange={onChange}
-        onAddClick={() => setCreateFormVisible(true)}
-      />
-      <ProductEdit
-        visible={editFormVisible}
-        onOk={() => updateForm.submit()}
-        onCancel={() => setEditFormVisible(false)}
-        form={updateForm}
-        onFinish={onUpdateFinish}
+     
+    <Card
+      title="Product List"
+      extra={
+        <Button
+          type="primary"
+          onClick={() => {
+            
+            console.log('Thêm mới');
+            setCreateFormVisible(true);
+
+          }}
+        >
+          Thêm mới
+        </Button>
+      }
+    >
+     
+      {/* ==============TABLET================= */}
+     {isLoading ? (
+     <Spin tip="Loading">
+        <div className="content" />
+      </Spin>
+      ): (
+        <>
+        <Table rowKey='id' columns={columns} dataSource={data} pagination={false} />
+        <div style={{textAlign: 'right', marginTop: 30}}>
+          <Pagination
+            defaultCurrent={int_page}
+            total={200}
+            showSizeChanger={false}
+            onChange={onChange}
+            showQuickJumper
+            showTotal={(total) => `Total ${total} items`}
+          />
+        </div>
+        
+        </>
+      )}
+      
+    </Card>
+    {/* ====================== EDIT MODAL ================================ */}
+     <Modal 
+     title="Edit Product" 
+     width='80%'
+     open={editFormVisible} 
+     onOk={()=>{
+        console.log('update submit');
+        updateForm.submit();
+     }} 
+     onCancel={()=>{
+        setEditFormVisible(false);
+     }}>
+        <Form form={updateForm} name='update-form' labelCol={{ span: 4 }} wrapperCol={{ span: 20 }} 
+        onFinish={onUpdateFinish} 
         onFinishFailed={onUpdateFinishFailed}
-        queryCategory={queryCategory}
-      />
-      <ProductAdd
-        visible={createFormVisible}
-        onOk={() => createForm.submit()}
-        onCancel={() => {
-          setCreateFormVisible(false);
-          createForm.resetFields();
-        }}
-        form={createForm}
-        onFinish={onAddFinish}
-        onFinishFailed={onAddFinishFailed}
-        queryCategory={queryCategory}
-      />
+        autoComplete='on'
+        >
+          <Form.Item label='Title' name='title' rules={[{ required: true, message: 'Chưa nhập title' }]} hasFeedback>
+            <Input />
+          </Form.Item>
+
+
+          <Form.Item label='Price' name='price' 
+           rules={[
+            { required: true, message: 'Chưa nhập price' }
+          ]}
+           hasFeedback>
+            <InputNumber addonAfter='$' min={0} style={{ width: '100%' }} />
+          </Form.Item>
+
+          <Form.Item
+            hasFeedback
+            label='Description'
+            name='description'
+           
+          >
+            <Input.TextArea />
+          </Form.Item>
+
+          <Form.Item
+            hasFeedback
+            label='Category'
+            name='categoryId'
+            
+            rules={[{ required: true, type: 'number', message: 'Chưa nhập Category' }]}
+          >
+         <Select
+              options={
+                queryCategory.data &&
+                queryCategory.data.map((c) => {
+                  return {
+                    value: c.id,
+                    label: c.name,
+                  };
+                })
+              }
+            />
+
+          </Form.Item>
+        
+            
+          <Form.Item hidden label='Id' name='id' hasFeedback>
+            <Input />
+          </Form.Item>
+
+        </Form>
+      </Modal>
+      {/* ====================== CREATE MODAL ================================ */}
+     <Modal 
+     title="Create new a Product"
+     width='80%' 
+     open={createFormVisible} 
+     onOk={()=>{
+        console.log('add submit');
+        createForm.submit();
+     }} 
+     okText='Lưu thông tin'
+     onCancel={()=>{
+        console.log('cancel create');
+        
+        setCreateFormVisible(false);
+        createForm.resetFields();
+     }}>
+        <Form form={createForm} name='add-form' labelCol={{ span: 4 }} wrapperCol={{ span: 20 }} 
+        onFinish={onAddFinish} 
+        onFinishFailed={onAddFinishFailed} 
+        autoComplete='on'
+        >
+          <Form.Item label='Title' name='title' rules={[{ required: true, message: 'Chưa nhập title' }]} hasFeedback>
+            <Input />
+          </Form.Item>
+
+
+          <Form.Item label='Price' name='price' 
+           rules={[
+            { required: true, message: 'Chưa nhập price' }
+          ]}
+           hasFeedback>
+            <InputNumber addonAfter='$' min={0} style={{ width: '100%' }} />
+          </Form.Item>
+
+          <Form.Item
+            hasFeedback
+            label='Description'
+            name='description'
+           
+          >
+            <Input.TextArea />
+          </Form.Item>
+
+          <Form.Item
+            hasFeedback
+            label='Category'
+            name='categoryId'
+            
+            rules={[{ required: true, type: 'number', message: 'Chưa nhập Category' }]}
+          >
+         <Select
+              options={
+                queryCategory.data &&
+                queryCategory.data.map((c) => {
+                  return {
+                    value: c.id,
+                    label: c.name,
+                  };
+                })
+              }
+            />
+
+          </Form.Item>
+         
+        </Form>
+      </Modal>
     </div>
   );
 };
