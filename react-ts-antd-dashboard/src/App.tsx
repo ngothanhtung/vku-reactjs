@@ -4,6 +4,14 @@ import DashboardLayout from './layouts/DashboardLayout';
 import EmptyLayout from './layouts/EmptyLayout';
 import { routes, type RouteItem } from './routes';
 import NotFoundPage from './modules/notfound/NotFoundPage';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import {
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
+
+// Create a client
+const queryClient = new QueryClient()
 
 // Đệ quy sinh route từ mảng routes
 function renderRoutes(routes: RouteItem[], parentIsPrivate = false) {
@@ -35,12 +43,16 @@ function renderRoutes(routes: RouteItem[], parentIsPrivate = false) {
 
 function App() {
   return (
+    <QueryClientProvider client={queryClient}>
     <BrowserRouter>
       <Routes>
         {renderRoutes(routes)}
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
+     {/* The rest of your application */}
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
   );
 }
 

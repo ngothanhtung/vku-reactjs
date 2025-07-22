@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
 } from '@ant-design/icons';
 
 import { routes, type RouteItem } from '../routes';
-import { Layout, Menu, Button, theme } from 'antd';
+import { Layout, Menu, Button, theme, message } from 'antd';
 
 import { useNavigate, Outlet } from "react-router";
 
@@ -16,6 +16,7 @@ const { Header, Sider, Content, Footer } = Layout;
 
 
 import type { MenuProps } from 'antd';
+import { useAppMessage } from '../stores/useAppMessage';
 type MenuItem = Required<MenuProps>['items'][number];
 
 // Chuyển đổi mảng routes sang định dạng items của Antd Menu
@@ -37,6 +38,20 @@ const items = mapRoutesToMenuItems(routes);
 
 const DefaultLayout: React.FC = () => {
 
+  const [messageApi, contextHolder] = message.useMessage();
+  const {msg, type, clearMessage} = useAppMessage();
+
+  useEffect(()=>{
+    if (msg) {
+      messageApi.info({
+        content: msg,
+        type: type,
+        duration: 3,
+        onClose: ()=> clearMessage(),
+      });
+    }
+  }, [msg,type, messageApi, clearMessage]);
+  
   const navigate = useNavigate();
 
 
@@ -47,6 +62,7 @@ const DefaultLayout: React.FC = () => {
 
   return (
     <>
+      {contextHolder}
       <Layout hasSider style={{ minHeight: '100vh' }}>
       <Sider trigger={null} collapsible collapsed={collapsed} 
       
