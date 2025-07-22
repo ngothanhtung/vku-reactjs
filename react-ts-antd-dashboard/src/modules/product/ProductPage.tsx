@@ -6,66 +6,9 @@ import { DeleteOutlined, EditOutlined, QuestionCircleOutlined } from '@ant-desig
 import React from 'react';
 import type { PaginationProps } from 'antd';
 import { useAppMessage } from '../../stores/useAppMessage';
+import type { CategoryType, ProductType } from './product.type';
+import { fetchCategories, fetchCreate, fetchData, fetchDelete, updateData } from './product.service';
 
-interface ProductType {
-  id: number;
-  title: string;
-  price: number;
-  description: string;
-  category: {
-    id: number;
-    name: string;
-    image: string
-  };
-  images: string[];
-}
-
-interface CategoryType {
-  id: number;
-  name: string;
-  image: string;
-}
-
-const fetchCategories = async () => {
-  const url = `https://api.escuelajs.co/api/v1/categories`;
-  return fetch(url).then((res) => res.json());
-};
-
-
-//Hàm get Sản phẩm
-const fetchData = async (page: number, limit = 10) => {
-  // const page = 1;
-  const offset = (page - 1) * 10;
-  const url = `https://api.escuelajs.co/api/v1/products?offset=${offset}&limit=${limit}`;
-
-  return fetch(url).then((res) => res.json());
-};
-
-
-const fetchDelete = async (id: number) =>
-      fetch(`https://api.escuelajs.co/api/v1/products/${id}`, {
-        method: 'DELETE',
-      }).then((response) => response.json());
-
-
-const updateData = async (formData: ProductType) => {
-  const {id, ...payload} = formData;
-  return fetch(`https://api.escuelajs.co/api/v1/products/${id}`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(payload),
-  }).then((response) => response.json());
-}
-
-const fetchCreate = async (formData: ProductType) => fetch(`https://api.escuelajs.co/api/v1/products`, {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify(formData),
-}).then((response) => response.json());
 /**
  * Component Product
  */
