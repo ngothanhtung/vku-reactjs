@@ -23,7 +23,7 @@ interface ShoppingCartState {
 export const useShoppingCartStore = create<ShoppingCartState>()(
   devtools(
     persist(
-      (set, get) => {
+      (set) => {
         return {
           items: [],
           addItem: (product: Product, quantity: number) => {
