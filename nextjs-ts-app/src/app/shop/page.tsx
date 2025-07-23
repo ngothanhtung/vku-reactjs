@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import AddToCart from '@/components/AddToCart';
 import Image from 'next/image';
 import React from 'react';
 
@@ -26,6 +27,9 @@ export default async function Shop() {
             <p className='text-gray-600'>Price: ${product.price}</p>
             <p className='text-gray-600'>Discount: {product.discount}%</p>
             <p className='text-gray-600'>Stock: {product.stock}</p>
+            <div>
+              <AddToCart product={product} quantity={1} />
+            </div>
           </div>
         );
       })}
