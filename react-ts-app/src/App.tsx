@@ -9,6 +9,7 @@ import TasksManagement from './Lesson10/TasksManagement';
 import TasksManagementWithZustand from './Lesson13';
 import TasksManagementWithZustandAndSecurity from './Lesson13';
 import ZustandExample from './Lesson18-Zustand';
+import GoogleOAuth from './Lesson26-OAuth2';
 
 function App() {
   return (
@@ -19,7 +20,8 @@ function App() {
       {/* <RecoilExample /> */}
       {/* <TasksManagementWithZustand /> */}
       {/* <TasksManagementWithZustandAndSecurity /> */}
-      <ZustandExample />
+      {/* <ZustandExample /> */}
+      <GoogleOAuth />
     </React.Fragment>
   );
 }
