@@ -1,0 +1,146 @@
+# Please help me build this file for ignore cypress project
+# Cypress configuration files
+cypress.json
+cypress.env.json  
+# Cypress fixtures
+cypress/fixtures/*
+# Cypress integration tests
+cypress/integration/*
+# Cypress plugins
+cypress/plugins/* 
+# Cypress screenshots
+cypress/screenshots/*
+# Cypress videos
+cypress/videos/*
+# Cypress support files
+cypress/support/*
+# Cypress custom commands
+cypress/support/commands.js
+# Cypress custom assertions
+cypress/support/assertions.js
+# Cypress configuration overrides
+cypress/support/config.js
+# Cypress local storage
+cypress/support/localStorage.js
+# Cypress environment variables
+cypress/support/env.js
+# Cypress custom hooks
+cypress/support/hooks.js
+# Cypress custom utilities
+cypress/support/utils.js
+# Cypress custom commands for specific tests
+cypress/support/commands/*.js
+# Cypress custom plugins
+cypress/plugins/*.js
+# Cypress custom fixtures
+cypress/fixtures/*.json
+# Cypress custom integration tests
+cypress/integration/*.spec.js
+# Cypress custom screenshots
+cypress/screenshots/*.png 
+# Cypress custom videos
+cypress/videos/*.mp4
+# Cypress custom support files
+cypress/support/*.js
+# Node modules
+node_modules/
+# Logs
+logs/
+# Temporary files
+temp/
+# Build artifacts
+dist/
+# Coverage reports
+coverage/             
+# IDE specific files
+.vscode/
+.idea/
+# Operating system files
+.DS_Store
+Thumbs.db
+# Environment files
+.env
+# Cypress cache
+cypress/cache/
+# Cypress binary
+cypress/binary/
+# Cypress plugins cache
+cypress/plugins/cache/
+# Cypress test results
+cypress/results/
+# Cypress reports
+cypress/reports/
+# Cypress custom configuration        
+cypress/custom-config.js
+# Cypress custom scripts
+cypress/scripts/*.js
+# Cypress custom commands directory
+cypress/commands/
+# Cypress custom utilities directory
+cypress/utils/
+# Cypress custom hooks directory
+cypress/hooks/
+# Cypress custom environment variables
+cypress/env-vars/
+# Cypress custom support directory
+cypress/support-dir/
+# Cypress custom integration directory
+cypress/integration-dir/
+# Cypress custom fixtures directory
+cypress/fixtures-dir/
+# Cypress custom plugins directory
+cypress/plugins-dir/
+# Cypress custom screenshots directory
+cypress/screenshots-dir/
+# Cypress custom videos directory
+cypress/videos-dir/
+# Cypress custom reports directory
+cypress/reports-dir/
+# Cypress custom results directory
+cypress/results-dir/
+# Cypress custom cache directory
+cypress/cache-dir/
+# Cypress custom binary directory
+cypress/binary-dir/
+# Cypress custom test results directory
+cypress/test-results-dir/     
+# Cypress custom reports directory
+cypress/custom-reports-dir/
+# Cypress custom artifacts directory
+cypress/custom-artifacts-dir/
+# Cypress custom logs directory
+cypress/custom-logs-dir/
+# Cypress custom temp directory
+cypress/custom-temp-dir/
+# Cypress custom dist directory 
+cypress/custom-dist-dir/
+# Cypress custom coverage directory
+cypress/custom-coverage-dir/
+# Cypress custom node modules directory
+cypress/custom-node-modules-dir/      
+# Cypress custom IDE files
+cypress/custom-ide-files/
+# Cypress custom operating system files
+cypress/custom-os-files/      
+# Cypress custom environment files
+cypress/custom-env-files/     
+# Cypress custom configuration files
+cypress/custom-config-files/
+# Cypress custom scripts directory
+cypress/custom-scripts-dir/
+# Cypress custom commands directory
+cypress/custom-commands-dir/
+# Cypress custom utilities directory
+cypress/custom-utils-dir/
+# Cypress custom hooks directory
+cypress/custom-hooks-dir/
+# Cypress custom environment variables directory    
+cypress/custom-env-vars-dir/
+# Cypress custom support directory    
+cypress/custom-support-dir/
+# Cypress custom integration directory  
+cypress/custom-integration-dir/
+# Cypress custom fixtures directory
+cypress/custom-fixtures-dir/
+# Cypress custom plugins directory
+cypress/custom-plugins-dir/     
