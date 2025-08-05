@@ -11,7 +11,7 @@ This project demonstrates how to implement OAuth2 authentication flow using Goog
 
 ## Setup Instructions
 
-1. Create a google project:
+### 1. Create a google project
 
 - Go to the [Google Developers Console](https://console.developers.google.com/).
 - Create a new project.
@@ -33,19 +33,30 @@ This project demonstrates how to implement OAuth2 authentication flow using Goog
   - ClientID:
   - ClientSecret:
 
-2. Install dependencies:
+### 2. Install dependencies
+
+> Tham khảo: [text](https://react-oauth.vercel.app/)
 
 ```bash
 npm install @react-oauth/google --save
 ```
 
-3. Create a `.env` file in the root of your project and add the following environment variables:
+### 3. Create a `.env` file in the root of your project and add the following environment variables
 
 ```plaintext
 VITE_GOOGLE_CLIENT_ID=<your-client-id>
 VITE_GOOGLE_CLIENT_SECRET=<your-client-secret>
 ```
 
-4. Update your `src/App.tsx` file to include the Google OAuth component:
+### 4. Update your `src/App.tsx` file to include the Google OAuth component
 
-5. Create a new component `src/Lesson26-OAuth2/index.tsx` and implement the Google OAuth logic:
+### 5. Create a new component `src/Lesson26-OAuth2/index.tsx` and implement the Google OAuth logic
+
+### 6. Manual Google Login Component
+
+- index.html
+  - Add the Google Identity Services script to your HTML file:
+  
+```html
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+```

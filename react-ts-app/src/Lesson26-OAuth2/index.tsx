@@ -6,6 +6,7 @@ import { GoogleLogin, GoogleOAuthProvider, useGoogleLogin } from '@react-oauth/g
 import { Button } from 'antd';
 import { GooglePlusOutlined } from '@ant-design/icons';
 import GoogleLoginButton from './components/GoogleLoginButton';
+import GoogleLoginManual from './components/GoogleLoginManual';
 
 export default function GoogleOAuth() {
   const [googleUser, setGoogleUser] = React.useState<any>(null);
@@ -44,22 +45,24 @@ export default function GoogleOAuth() {
   // });
 
   return (
-    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
-      <div style={{ display: 'flex', flexDirection: 'column', padding: '20px', gap: '10px' }}>
-        {/* Your application components go here */}
-        <h1>Welcome to the OAuth2 Example</h1>
-        {googleUser && (
-          <>
-            <img src={googleUser.picture} alt={googleUser.name} style={{ borderRadius: '50%', width: '40px', height: '40px' }} />
-            <button onClick={handleLogout}>Đăng xuất</button>
-          </>
-        )}
-        <GoogleLogin onSuccess={handleSuccess} onError={handleError} useOneTap />
+    <React.Fragment>
+      {/* <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+        <div style={{ display: 'flex', flexDirection: 'column', padding: '20px', gap: '10px' }}>
+          <h1>Welcome to the OAuth2 Example</h1>
+          {googleUser && (
+            <>
+              <img src={googleUser.picture} alt={googleUser.name} style={{ borderRadius: '50%', width: '40px', height: '40px' }} />
+              <button onClick={handleLogout}>Đăng xuất</button>
+            </>
+          )}
+          <GoogleLogin onSuccess={handleSuccess} onError={handleError} useOneTap />
 
-        <div>
-          <GoogleLoginButton />
+          <div>
+            <GoogleLoginButton />
+          </div>
         </div>
-      </div>
-    </GoogleOAuthProvider>
+      </GoogleOAuthProvider> */}
+      <GoogleLoginManual />
+    </React.Fragment>
   );
 }
