@@ -1,8 +1,16 @@
 import type { NextAuthOptions, Session, User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { JWT } from "next-auth/jwt";
+import GoogleProvider from "next-auth/providers/google";
 
-
+/**
+ * Thêm Authorized JavaScript origins trong Google Cloud Console
+ * For production: https://{YOUR_DOMAIN}
+ * For development: http://localhost:3000
+ * và Authorized redirect URIs trong Google Cloud Console
+ * For production: https://{YOUR_DOMAIN}/api/auth/callback/google
+ * For development: http://localhost:3000/api/auth/callback/google
+ */
 interface UserType {
   id: string;
   name: string;
@@ -22,7 +30,10 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt",
   },
   providers: [
-   
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+    }),
     CredentialsProvider({
       name: "Sign in",
       credentials: {
@@ -55,10 +66,7 @@ export const authOptions: NextAuthOptions = {
 
         const res = await fetch('https://server.aptech.io/auth/login', {
           method: 'POST',
-          body: JSON.stringify({
-            username: credentials.email,
-            password: credentials.password,
-          }),
+          body: JSON.stringify(payload),
           headers: {
             'Content-Type': 'application/json',
           },
