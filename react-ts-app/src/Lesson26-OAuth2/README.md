@@ -60,3 +60,14 @@ VITE_GOOGLE_CLIENT_SECRET=<your-client-secret>
 ```html
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 ```
+
+### 7. BackEnd Setup
+
+#### Các bạn lưu ý, code thêm ở BACKEND, tham khảo project demo tại GitHub
+
+1. Thêm CORS ở config/WebConfig
+2. Thêm RestTemplate ở config/AppConfig
+3. Bổ sung: GoogleLoginRequestDto, GoogleLoginWithCredentialRequestDto
+4. Bổ sung findByEmail tại UserJpaRepository
+5. Bổ sung googleLogin, googleLoginWithCredential tại UserService
+6. Bổ sung googleLogin, googleLoginWithCredential tại AuthController
