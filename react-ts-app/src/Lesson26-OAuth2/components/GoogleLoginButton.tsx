@@ -5,7 +5,7 @@ import { jwtDecode } from 'jwt-decode';
 
 export default function GoogleLoginButton() {
   const googleLogin = useGoogleLogin({
-    flow: 'implicit', // 'implicit' || 'auth-code'
+    flow: 'auth-code', // 'implicit' || 'auth-code'
     // Dùng implicit flow for access token
     // Dùng auth-code flow để lấy mã xác thực.
     // Sau đó gửi mã này đến server để lấy access token
@@ -45,9 +45,9 @@ export default function GoogleLoginButton() {
   });
   return (
     <div>
-      <Button icon={<GooglePlusOutlined />} type="primary" onClick={() => googleLogin()}>
+      {/* <Button icon={<GooglePlusOutlined />} type="primary" onClick={() => googleLogin()}>
         Google Login
-      </Button>
+      </Button> */}
     </div>
   );
 }
