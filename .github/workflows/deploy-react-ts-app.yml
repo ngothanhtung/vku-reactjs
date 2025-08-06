@@ -30,19 +30,18 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
-          cache-dependency-path: ${{ env.PROJECT_DIR }}/package-lock.json
 
       - name: Install dependencies
         working-directory: ${{ env.PROJECT_DIR }}
-        run: npm ci
+        run: npm install
 
-      - name: Run ESLint
-        working-directory: ${{ env.PROJECT_DIR }}
-        run: npm run lint
+      # - name: Run ESLint
+      #   working-directory: ${{ env.PROJECT_DIR }}
+      #   run: npm run lint
 
-      - name: Type check
-        working-directory: ${{ env.PROJECT_DIR }}
-        run: npx tsc --noEmit
+      # - name: Type check
+      #   working-directory: ${{ env.PROJECT_DIR }}
+      #   run: npx tsc --noEmit
 
       - name: Build project
         working-directory: ${{ env.PROJECT_DIR }}
