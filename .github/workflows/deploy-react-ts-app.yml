@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'react-ts-app/**'
+    # paths:
+    #   - 'react-ts-app/**'
   pull_request:
     branches:
       - main
@@ -14,7 +14,7 @@ on:
   workflow_dispatch:
 
 env:
-  NODE_VERSION: '24'
+  NODE_VERSION: '18'
   PROJECT_DIR: 'react-ts-app'
 
 jobs:
@@ -30,15 +30,25 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
-      - name: Cache node modules
-        uses: actions/cache@v4
-        with:
-          path: ${{ env.PROJECT_DIR }}/node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles(format('{0}/package.json', env.PROJECT_DIR)) }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+      - name: Clear npm cache
+        working-directory: ${{ env.PROJECT_DIR }}
+        run: npm cache clean --force
 
-      - name: Install dependencies
+      - name: Remove existing node_modules and package-lock.json
+        working-directory: ${{ env.PROJECT_DIR }}
+        run: |
+          rm -rf node_modules
+          rm -f package-lock.json
+
+      - name: Install dependencies with clean install
+        working-directory: ${{ env.PROJECT_DIR }}
+        run: npm install --no-optional
+
+      - name: Install Rollup dependencies explicitly
+        working-directory: ${{ env.PROJECT_DIR }}
+        run: npm install @rollup/rollup-linux-x64-gnu --save-dev
+
+      - name: Reinstall all dependencies
         working-directory: ${{ env.PROJECT_DIR }}
         run: npm install
 
