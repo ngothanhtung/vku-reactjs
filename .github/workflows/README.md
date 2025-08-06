@@ -70,6 +70,7 @@ on:
 3. Sử dụng `npm ci` thay vì `npm install` để đảm bảo reproducible builds
 4. Type checking được chạy riêng trước khi build
 5. ESLint check để đảm bảo code quality
+6. Cần đảm bảo các secrets đã được thiết lập đúng trong GitHub repository
 
 ## Troubleshooting
 
