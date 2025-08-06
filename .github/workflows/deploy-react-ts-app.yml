@@ -69,23 +69,7 @@ jobs:
         with:
           publish-dir: '${{ env.PROJECT_DIR }}/dist'
           production-branch: main
-          github-token: ${{ secrets.GITHUB_TOKEN }}
           deploy-message: 'Deploy from GitHub Actions'
-          enable-pull-request-comment: false
-          enable-commit-comment: true
-          overwrites-pull-request-comment: true
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-
-      - name: Comment PR with deploy URL
-        if: github.event_name == 'pull_request'
-        uses: actions/github-script@v7
-        with:
-          script: |
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: '🚀 Preview deployed to Netlify! Check it out at: https://${{ secrets.NETLIFY_SITE_ID }}.netlify.app'
-            })
