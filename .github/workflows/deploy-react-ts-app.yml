@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - main
-    # paths:
-    #   - 'react-ts-app/**'
+    paths:
+      - 'react-ts-app/**'
   pull_request:
     branches:
       - main
@@ -67,7 +67,8 @@ jobs:
       - name: Deploy to Netlify
         uses: netlify/actions/cli@master
         with:
-          args: deploy --dir=${{ env.PROJECT_DIR }}/dist --prod
+          args: deploy --dir=dist --prod
+        working-directory: ${{ env.PROJECT_DIR }}
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}

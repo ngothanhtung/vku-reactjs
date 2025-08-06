@@ -1,9 +1,9 @@
 [build]
   # Build command
-  command = "cd react-ts-app && npm run build"
+  command = "npm run build"
   
   # Directory to publish (relative to root of repository)
-  publish = "react-ts-app/dist"
+  publish = "dist"
   
   # Base directory for build (relative to root of repository)
   base = "react-ts-app"
