@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - main
-    # paths:
-    #   - 'react-ts-app/**'
+    paths:
+      - 'react-ts-app/**'
   pull_request:
     branches:
       - main
