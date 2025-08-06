@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'react-ts-app/**'
+    # paths:
+    #   - 'react-ts-app/**'
   pull_request:
     branches:
       - main
@@ -65,9 +65,15 @@ jobs:
         run: npm run build
 
       - name: Deploy to Netlify
-        uses: netlify/actions/cli@master
+        uses: nwtgck/actions-netlify@v3.0
         with:
-          args: deploy --dir=${{ env.PROJECT_DIR }}/dist --prod
+          publish-dir: '${{ env.PROJECT_DIR }}/dist'
+          production-branch: main
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          deploy-message: 'Deploy from GitHub Actions'
+          enable-pull-request-comment: false
+          enable-commit-comment: true
+          overwrites-pull-request-comment: true
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}

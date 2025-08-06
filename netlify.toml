@@ -1,20 +1,5 @@
-[build]
-  # Build command
-  command = "npm run build"
-  
-  # Directory to publish (relative to root of repository)
-  publish = "dist"
-  
-  # Base directory for build (relative to root of repository)
-  base = "react-ts-app"
-
-[build.environment]
-  # Node.js version
-  NODE_VERSION = "18"
-  
-  # NPM version (optional)
-  NPM_VERSION = "9"
-
+# netlify.toml configuration for React + TypeScript application
+# This file is used to configure the Netlify deployment settings for the React app.
 # Redirect rules for SPA (Single Page Application)
 [[redirects]]
   from = "/*"
