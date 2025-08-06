@@ -14,14 +14,14 @@ import GoogleOAuth from './Lesson26-OAuth2';
 function App() {
   return (
     <React.Fragment>
-      {/* <TasksManagement /> */}
+      <TasksManagement />
       {/* <TasksManagementGuidelines /> */}
       {/* <TasksManagementWithAntd /> */}
       {/* <RecoilExample /> */}
       {/* <TasksManagementWithZustand /> */}
       {/* <TasksManagementWithZustandAndSecurity /> */}
       {/* <ZustandExample /> */}
-      <GoogleOAuth />
+      {/* <GoogleOAuth /> */}
     </React.Fragment>
   );
 }

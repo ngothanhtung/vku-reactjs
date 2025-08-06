@@ -1,0 +1,40 @@
+[build]
+  # Build command
+  command = "cd react-ts-app && npm run build"
+  
+  # Directory to publish (relative to root of repository)
+  publish = "react-ts-app/dist"
+  
+  # Base directory for build (relative to root of repository)
+  base = "react-ts-app"
+
+[build.environment]
+  # Node.js version
+  NODE_VERSION = "18"
+  
+  # NPM version (optional)
+  NPM_VERSION = "9"
+
+# Redirect rules for SPA (Single Page Application)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Headers for security and performance
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[headers]]
+  for = "/static/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Edge functions or serverless functions (if needed in the future)
+# [functions]
+#   directory = "react-ts-app/netlify/functions"
