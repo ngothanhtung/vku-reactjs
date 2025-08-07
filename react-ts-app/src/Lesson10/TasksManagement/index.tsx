@@ -39,7 +39,7 @@ const Navigation = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
-            <h1 className="text-xl font-bold text-gray-800">Tasks Management</h1>
+            <h1 className="text-xl font-bold text-gray-800">Tasks Management (Netlify)</h1>
           </div>
 
           {/* Navigation Links */}
@@ -50,9 +50,7 @@ const Navigation = () => {
                   key={item.path}
                   to={item.path}
                   className={`px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
-                    isActive(item.path, item.exact)
-                      ? 'bg-blue-500 text-white shadow-sm'
-                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                    isActive(item.path, item.exact) ? 'bg-blue-500 text-white shadow-sm' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
                   }`}
                 >
                   {item.label}
