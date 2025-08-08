@@ -2,19 +2,21 @@ import './App.css';
 
 import React from 'react';
 
-import RecoilExample from './Lesson08/RecoilExample';
-import TasksManagementWithAntd from './Lesson10-Antd';
-import TasksManagementGuidelines from './Lesson10-Guidelines';
+// import RecoilExample from './Lesson08/RecoilExample';
+// import TasksManagementWithAntd from './Lesson10-Antd';
+// import TasksManagementGuidelines from './Lesson10-Guidelines';
+// import TasksManagement from './Lesson10/TasksManagement';
+// import TasksManagementWithZustand from './Lesson13';
+// import TasksManagementWithZustandAndSecurity from './Lesson13';
+// import ZustandExample from './Lesson18-Zustand';
+// import GoogleOAuth from './Lesson26-OAuth2';
+import ReactQueryExample from './Bonus-React-Query';
 import TasksManagement from './Lesson10/TasksManagement';
-import TasksManagementWithZustand from './Lesson13';
-import TasksManagementWithZustandAndSecurity from './Lesson13';
-import ZustandExample from './Lesson18-Zustand';
-import GoogleOAuth from './Lesson26-OAuth2';
 
 function App() {
   return (
     <React.Fragment>
-      <TasksManagement />
+      {/* <TasksManagement /> */}
       {/* <TasksManagementGuidelines /> */}
       {/* <TasksManagementWithAntd /> */}
       {/* <RecoilExample /> */}
@@ -22,6 +24,7 @@ function App() {
       {/* <TasksManagementWithZustandAndSecurity /> */}
       {/* <ZustandExample /> */}
       {/* <GoogleOAuth /> */}
+      <ReactQueryExample />
     </React.Fragment>
   );
 }
