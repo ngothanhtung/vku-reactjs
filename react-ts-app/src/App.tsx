@@ -12,6 +12,7 @@ import React from 'react';
 // import GoogleOAuth from './Lesson26-OAuth2';
 import ReactQueryExample from './Bonus-React-Query';
 import TasksManagement from './Lesson10/TasksManagement';
+import ChunkUploadExample from './Bonus-Chunk-Upload';
 
 function App() {
   return (
@@ -24,7 +25,8 @@ function App() {
       {/* <TasksManagementWithZustandAndSecurity /> */}
       {/* <ZustandExample /> */}
       {/* <GoogleOAuth /> */}
-      <ReactQueryExample />
+      {/* <ReactQueryExample /> */}
+      <ChunkUploadExample />
     </React.Fragment>
   );
 }
