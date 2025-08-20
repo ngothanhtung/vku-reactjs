@@ -14,6 +14,7 @@ import ReactQueryExample from './Bonus-React-Query';
 import TasksManagement from './Lesson10/TasksManagement';
 import ChunkUploadExample from './Bonus-Chunk-Upload';
 import FirebaseExample from './Bonus-Firebase';
+import { Chat } from './Lesson40-WebSocket';
 
 function App() {
   return (
@@ -28,7 +29,8 @@ function App() {
       {/* <GoogleOAuth /> */}
       {/* <ReactQueryExample /> */}
       {/* <ChunkUploadExample /> */}
-      <FirebaseExample />
+      {/* <FirebaseExample /> */}
+      <Chat />
     </React.Fragment>
   );
 }
