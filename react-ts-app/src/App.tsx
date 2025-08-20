@@ -13,6 +13,7 @@ import React from 'react';
 import ReactQueryExample from './Bonus-React-Query';
 import TasksManagement from './Lesson10/TasksManagement';
 import ChunkUploadExample from './Bonus-Chunk-Upload';
+import FirebaseExample from './Bonus-Firebase';
 
 function App() {
   return (
@@ -26,7 +27,8 @@ function App() {
       {/* <ZustandExample /> */}
       {/* <GoogleOAuth /> */}
       {/* <ReactQueryExample /> */}
-      <ChunkUploadExample />
+      {/* <ChunkUploadExample /> */}
+      <FirebaseExample />
     </React.Fragment>
   );
 }
