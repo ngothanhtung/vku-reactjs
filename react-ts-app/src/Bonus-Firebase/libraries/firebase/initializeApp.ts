@@ -3,7 +3,12 @@ import { Firestore, getFirestore, initializeFirestore } from 'firebase/firestore
 // import { Auth, getAuth, initializeAuth } from 'firebase/auth';
 // Initialize Firebase
 const firebaseConfig = {
-  // CONFIG HERE
+  apiKey: import.meta.env.VITE_APIKEY,
+  authDomain: import.meta.env.VITE_AUTHDOMAIN,
+  projectId: import.meta.env.VITE_PROJECTID,
+  storageBucket: import.meta.env.VITE_STORAGEBUCKET,
+  messagingSenderId: import.meta.env.VITE_MESSAGINGSENDERID,
+  appId: import.meta.env.VITE_APPID,
 };
 
 let firebaseApp: FirebaseApp;

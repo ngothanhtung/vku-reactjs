@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect, useRef } from 'react';
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
@@ -63,7 +64,22 @@ export default function Chat() {
           // Subscribe to the topic
           client.subscribe('/topic/public', (message) => {
             const chatMessage: ChatMessage = JSON.parse(message.body);
+
+            // Message received
             showMessage(chatMessage);
+            console.log('🚀 Received message on /topic/public:', chatMessage);
+            // Report to server
+            (stompClientRef.current as any).send('/app/chat.received', {}, JSON.stringify(chatMessage));
+
+            //
+          });
+
+          // Subscribe to the topic
+          client.subscribe('/topic/class/a1', (message) => {
+            const chatMessage: ChatMessage = JSON.parse(message.body);
+            // showMessage(chatMessage);
+
+            console.log('🚀 Received message on /topic/class/a1:', chatMessage);
           });
 
           // Send join message
@@ -215,6 +231,21 @@ export default function Chat() {
               />
               <button className={styles.sendButton} onClick={sendMessage} disabled={!currentMessage.trim()}>
                 Send
+              </button>
+
+              <button
+                onClick={() => {
+                  console.log('Sending message to class A1');
+                  const chatMessage: ChatMessage = {
+                    sender: username,
+                    content: 'Test message from Nhân to class A1',
+                    type: 'CHAT',
+                  };
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  (stompClientRef.current as any).send('/app/chat.sendMessage.classA1', {}, JSON.stringify(chatMessage));
+                }}
+              >
+                Send to class A1
               </button>
             </div>
           </div>
