@@ -15,6 +15,11 @@ export default function Chat() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [connectionStatus, setConnectionStatus] = useState<ConnectionStatus>('disconnected');
   const [isConnected, setIsConnected] = useState<boolean>(false);
+  // Dynamic topic state
+  const [topicName, setTopicName] = useState<string>('');
+  const [joinedTopic, setJoinedTopic] = useState<string | null>(null);
+  const [topicMessages, setTopicMessages] = useState<ChatMessage[]>([]);
+  const topicSubscriptionRef = useRef<any>(null);
 
   // Refs for WebSocket and DOM elements
   const stompClientRef = useRef<any>(null); // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -33,6 +38,12 @@ export default function Chat() {
       messageAreaRef.current.scrollTop = messageAreaRef.current.scrollHeight;
     }
   }, [messages]);
+  // Auto-scroll for topic messages
+  useEffect(() => {
+    if (messageAreaRef.current) {
+      messageAreaRef.current.scrollTop = messageAreaRef.current.scrollHeight;
+    }
+  }, [topicMessages]);
 
   // Connection function
   const connect = () => {
@@ -61,25 +72,10 @@ export default function Chat() {
           setConnectionStatus('connected');
           setIsConnected(true);
 
-          // Subscribe to the topic
+          // Subscribe to the public topic
           client.subscribe('/topic/public', (message) => {
             const chatMessage: ChatMessage = JSON.parse(message.body);
-
-            // Message received
             showMessage(chatMessage);
-            console.log('🚀 Received message on /topic/public:', chatMessage);
-            // Report to server
-            (stompClientRef.current as any).send('/app/chat.received', {}, JSON.stringify(chatMessage));
-
-            //
-          });
-
-          // Subscribe to the topic
-          client.subscribe('/topic/class/a1', (message) => {
-            const chatMessage: ChatMessage = JSON.parse(message.body);
-            // showMessage(chatMessage);
-
-            console.log('🚀 Received message on /topic/class/a1:', chatMessage);
           });
 
           // Send join message
@@ -91,6 +87,11 @@ export default function Chat() {
               type: 'JOIN',
             })
           );
+
+          // If already joined a topic, re-subscribe
+          if (joinedTopic) {
+            subscribeToDynamicTopic(joinedTopic);
+          }
         },
         (error) => {
           console.error('WebSocket connection error:', error);
@@ -107,15 +108,97 @@ export default function Chat() {
 
   // Disconnect function
   const disconnect = () => {
+    if (topicSubscriptionRef.current) {
+      topicSubscriptionRef.current.unsubscribe();
+      topicSubscriptionRef.current = null;
+    }
     if (stompClientRef.current) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (stompClientRef.current as any).disconnect();
       stompClientRef.current = null;
     }
     setConnectionStatus('disconnected');
     setIsConnected(false);
     setMessages([]);
+    setTopicMessages([]);
+    setJoinedTopic(null);
     console.log('Disconnected');
+  };
+  // Subscribe to a dynamic topic
+  const subscribeToDynamicTopic = (topic: string) => {
+    if (!stompClientRef.current) return;
+    if (topicSubscriptionRef.current) {
+      topicSubscriptionRef.current.unsubscribe();
+      topicSubscriptionRef.current = null;
+    }
+    setTopicMessages([]);
+    topicSubscriptionRef.current = (stompClientRef.current as any).subscribe(`/topic/dynamic/${topic}`, (message: any) => {
+      const chatMessage: ChatMessage = JSON.parse(message.body);
+      setTopicMessages((prev) => {
+        const next = [...prev, chatMessage];
+        return next.length > 100 ? next.slice(next.length - 100) : next;
+      });
+    });
+  };
+
+  // Join a dynamic topic
+  const joinTopic = () => {
+    const trimmedTopic = topicName.trim();
+    if (!trimmedTopic || !username.trim()) {
+      alert('Please enter a topic name and username');
+      return;
+    }
+    if (!stompClientRef.current) {
+      alert('Please connect first');
+      return;
+    }
+    // Send join message
+    (stompClientRef.current as any).send('/app/topic.join', {}, JSON.stringify({ topicName: trimmedTopic, username }));
+    subscribeToDynamicTopic(trimmedTopic);
+    setJoinedTopic(trimmedTopic);
+  };
+
+  // Leave a dynamic topic
+  const leaveTopic = () => {
+    if (!joinedTopic || !stompClientRef.current) return;
+    (stompClientRef.current as any).send('/app/topic.leave', {}, JSON.stringify({ topicName: joinedTopic, username }));
+    if (topicSubscriptionRef.current) {
+      topicSubscriptionRef.current.unsubscribe();
+      topicSubscriptionRef.current = null;
+    }
+    setJoinedTopic(null);
+    setTopicMessages([]);
+  };
+
+  // Create a dynamic topic
+  const createTopic = () => {
+    const trimmedTopic = topicName.trim();
+    if (!trimmedTopic || !username.trim()) {
+      alert('Please enter a topic name and username');
+      return;
+    }
+    if (!stompClientRef.current) {
+      alert('Please connect first');
+      return;
+    }
+    (stompClientRef.current as any).send('/app/topic.create', {}, JSON.stringify({ topicName: trimmedTopic, username }));
+    // Auto-join after create
+    subscribeToDynamicTopic(trimmedTopic);
+    setJoinedTopic(trimmedTopic);
+  };
+
+  // Send message to dynamic topic
+  const sendTopicMessage = () => {
+    if (!currentMessage.trim() || !joinedTopic || !stompClientRef.current) return;
+    (stompClientRef.current as any).send(
+      '/app/topic.sendMessage',
+      {},
+      JSON.stringify({
+        topicName: joinedTopic,
+        sender: username,
+        content: currentMessage,
+      })
+    );
+    setCurrentMessage('');
   };
 
   // Send message function
@@ -142,8 +225,10 @@ export default function Chat() {
       ...message,
       timestamp: message.timestamp || new Date().toLocaleTimeString(),
     };
-
-    setMessages((prevMessages) => [...prevMessages, messageWithTimestamp]);
+    setMessages((prevMessages) => {
+      const next = [...prevMessages, messageWithTimestamp];
+      return next.length > 100 ? next.slice(next.length - 100) : next;
+    });
   };
 
   // Handle keyboard events
@@ -175,7 +260,7 @@ export default function Chat() {
   // Render message component
   const renderMessage = (message: ChatMessage, index: number) => {
     return (
-      <div key={index} className={`${styles.message} ${styles[message.type.toLowerCase()]}`}>
+      <div key={index} className={`${styles.message} ${styles[message.type?.toLowerCase?.()] || ''}`}>
         <div className={styles.messageTime}>{message.timestamp}</div>
         {message.type === 'CHAT' ? (
           <>
@@ -215,40 +300,100 @@ export default function Chat() {
             </button>
           </div>
         ) : (
-          <div className={styles.chatArea}>
-            <div ref={messageAreaRef} className={styles.chatMessages}>
-              {messages.map((message, index) => renderMessage(message, index))}
-            </div>
-            <div className={styles.chatInput}>
+          <>
+            {/* Dynamic Topic Controls */}
+            <div style={{ marginBottom: 12, display: 'flex', gap: 8 }}>
               <input
                 type="text"
-                className={styles.messageInput}
-                placeholder="Type your message..."
-                maxLength={500}
-                value={currentMessage}
-                onChange={(e) => setCurrentMessage(e.target.value)}
-                onKeyPress={handleMessageKeyPress}
+                placeholder="Topic name"
+                value={topicName}
+                onChange={(e) => setTopicName(e.target.value)}
+                style={{ flex: 1, padding: 4 }}
+                disabled={!!joinedTopic}
               />
-              <button className={styles.sendButton} onClick={sendMessage} disabled={!currentMessage.trim()}>
-                Send
+              <button onClick={createTopic} disabled={!!joinedTopic || !topicName.trim()}>
+                Create Topic
               </button>
-
-              <button
-                onClick={() => {
-                  console.log('Sending message to class A1');
-                  const chatMessage: ChatMessage = {
-                    sender: username,
-                    content: 'Test message from Nhân to class A1',
-                    type: 'CHAT',
-                  };
-                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                  (stompClientRef.current as any).send('/app/chat.sendMessage.classA1', {}, JSON.stringify(chatMessage));
-                }}
-              >
-                Send to class A1
+              <button onClick={joinTopic} disabled={!!joinedTopic || !topicName.trim()}>
+                Join Topic
+              </button>
+              <button onClick={leaveTopic} disabled={!joinedTopic}>
+                Leave Topic
               </button>
             </div>
-          </div>
+
+            {/* Show joined topic */}
+            {joinedTopic && (
+              <div style={{ marginBottom: 8 }}>
+                <strong>Joined topic:</strong> {joinedTopic}
+              </div>
+            )}
+
+            {/* Chat Areas */}
+            <div className={styles.chatArea}>
+              {/* Public chat */}
+              <div style={{ marginBottom: 16 }}>
+                <div style={{ fontWeight: 'bold', marginBottom: 4 }}>Public Chat</div>
+                <div ref={messageAreaRef} className={styles.chatMessages} style={{ maxHeight: 120, overflowY: 'auto' }}>
+                  {messages.map((message, index) => renderMessage(message, index))}
+                </div>
+                <div className={styles.chatInput}>
+                  <input
+                    type="text"
+                    className={styles.messageInput}
+                    placeholder="Type your message..."
+                    maxLength={500}
+                    value={currentMessage}
+                    onChange={(e) => setCurrentMessage(e.target.value)}
+                    onKeyPress={handleMessageKeyPress}
+                    disabled={!!joinedTopic}
+                  />
+                  <button className={styles.sendButton} onClick={sendMessage} disabled={!currentMessage.trim() || !!joinedTopic}>
+                    Send
+                  </button>
+                  {/* <button
+                    onClick={() => {
+                      const chatMessage: ChatMessage = {
+                        sender: username,
+                        content: 'Test message from Nhân to class A1',
+                        type: 'CHAT',
+                      };
+                      (stompClientRef.current as any).send('/app/chat.sendMessage.classA1', {}, JSON.stringify(chatMessage));
+                    }}
+                    disabled={!!joinedTopic}
+                  >
+                    Send to class A1
+                  </button> */}
+                </div>
+              </div>
+
+              {/* Dynamic topic chat */}
+              {joinedTopic && (
+                <div>
+                  <div style={{ fontWeight: 'bold', marginBottom: 4 }}>Topic: {joinedTopic}</div>
+                  <div ref={messageAreaRef} className={styles.chatMessages} style={{ maxHeight: 120, overflowY: 'auto' }}>
+                    {topicMessages.map((message, index) => renderMessage(message, index))}
+                  </div>
+                  <div className={styles.chatInput}>
+                    <input
+                      type="text"
+                      className={styles.messageInput}
+                      placeholder={`Message to ${joinedTopic}...`}
+                      maxLength={500}
+                      value={currentMessage}
+                      onChange={(e) => setCurrentMessage(e.target.value)}
+                      onKeyPress={(e) => {
+                        if (e.key === 'Enter') sendTopicMessage();
+                      }}
+                    />
+                    <button className={styles.sendButton} onClick={sendTopicMessage} disabled={!currentMessage.trim()}>
+                      Send to Topic
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          </>
         )}
       </div>
     </div>
