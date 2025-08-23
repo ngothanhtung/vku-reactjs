@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
-import AuthProvider from '@/components/AuthProvider';
-import UserProfile from '@/components/UserProfile';
-import React from "react";
+import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
+import { AppSidebar } from '@/components/app-sidebar';
+import { Navbar01 } from '@/components/ui/shadcn-io/navbar-01';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -28,15 +28,16 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <AuthProvider>
-          <div className='container p-4'>
-            <div className='flex justify-between items-center mb-4'>
-              <h1 className='text-1xl font-bold'>WELCOME TO NEXTJS</h1>
-              <UserProfile />
-            </div>
-          </div>
-          <div style={{ padding: 24 }}>{children}</div>
-        </AuthProvider>
+        <Navbar01 />
+        <SidebarProvider>
+          <AppSidebar />
+
+          <main className='m-4'>
+            <SidebarTrigger />
+
+            {children}
+          </main>
+        </SidebarProvider>
       </body>
     </html>
   );
