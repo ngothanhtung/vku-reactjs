@@ -44,13 +44,13 @@ function renderRoutes(routes: RouteItem[], parentIsPrivate = false) {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-    <BrowserRouter>
-      <Routes>
-        {renderRoutes(routes)}
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
-    </BrowserRouter>
-     {/* The rest of your application */}
+      <BrowserRouter>
+        <Routes>
+          {renderRoutes(routes)}
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </BrowserRouter>
+      {/* The rest of your application */}
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );

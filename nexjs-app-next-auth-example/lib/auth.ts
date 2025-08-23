@@ -18,6 +18,7 @@ interface UserType {
   avatar: string;
   accessToken: string;
   refreshToken: string;
+  role?: string;
 }
 
 export const authOptions: NextAuthOptions = {
@@ -97,22 +98,73 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
+    //cấu hình signIn để xử lý sau khi login với provider thành công 
+    async signIn({ user, account, profile }) {
+      console.log('=== SIGN IN CALLBACK ===');
+      console.log('User:', user);
+      console.log('Account:', account);
+      console.log('Profile:', profile);
+
+      if (account?.provider === 'google') {
+        try {
+          // Gọi API để verify/create user
+          const response = await fetch('https://server.aptech.io/auth/google-signin', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              email: user.email,
+              name: user.name,
+              avatar: user.image,
+              googleId: profile?.sub, // Google's unique identifier
+            }),
+          });
+
+          if (!response.ok) {
+            console.error('Failed to verify/create user with backend');
+            return false;
+          }
+
+          const data = await response.json();
+          
+          // Thêm thông tin từ backend vào user object
+          user.id = data.user.id;
+          user.role = data.user.role;
+          user.accessToken = data.access_token;
+          user.refreshToken = data.refresh_token;
+          
+          return true;
+        } catch (error) {
+          console.error('Error during backend verification:', error);
+          return false;
+        }
+      }
+
+      return true;
+    },
     
-    async jwt({ token, user} : { token: JWT; user: User }) {
-      //console.log('callbacks jwt', token, user);
+    async jwt({ token, user, account }) {
+      console.log('=== JWT CALLBACK ===');
+      console.log('Token:', token);
+      console.log('User:', user);
+      console.log('Account:', account);
+      
       if (user) {
-        return {
-          ...token,
-          accessToken: user.accessToken,
-          refreshToken: user.refreshToken,
-        };
+        token.id = user.id;
+        token.role = user.role;
+        token.accessToken = user.accessToken;
+        token.refreshToken = user.refreshToken;
+        token.avatar = (user.avatar ?? user.image ?? "") as string;
       }
 
       return token;
     },
 
     async session({ session, token }: { session: Session; token: JWT }) {
-      //console.log('callbacks session', token);
+      console.log('=== SESSION CALLBACK ===');
+      console.log('Session:', session);
+      console.log('Token:', token);
       // Create a user object with token properties
       const userObject: UserType = {
         id: token.id as string,
@@ -121,6 +173,7 @@ export const authOptions: NextAuthOptions = {
         accessToken: (token.accessToken as string) ?? "",
         refreshToken: (token.refreshToken as string) ?? "",
         email: (token.email as string) ?? "",
+        role: (token.role as string) ?? "",
       };
 
       // Add the user object to the session

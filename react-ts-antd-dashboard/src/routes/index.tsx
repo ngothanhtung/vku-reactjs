@@ -3,6 +3,7 @@ import { routesDashboard } from '../modules/dashboard/dashboard.route';
 import { routesAuth } from '../modules/auth/auth.route';
 import { routesProduct } from '../modules/product/product.route';
 import { routesAdministrator } from '../modules/administrator/administrator.route';
+import { routesBrand } from '../modules/brand/brand.route';
 
 export type RouteItem = {
   path?: string;
@@ -18,6 +19,7 @@ export type RouteItem = {
 export const routes: RouteItem[] = [
   ...routesDashboard, //đăng ký route dashboard
   ...routesAuth,
+  ...routesBrand,
   ...routesProduct,
   ...routesAdministrator,
   
