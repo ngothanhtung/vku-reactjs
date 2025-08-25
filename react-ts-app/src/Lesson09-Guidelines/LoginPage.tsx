@@ -23,10 +23,7 @@ const validationSchema: yup.ObjectSchema<IFormInput> = yup.object({
     .required('Password is required')
     .min(6, 'Password must be at least 6 characters')
     .max(50, 'Password must be less than 50 characters')
-    .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
-      'Password must contain at least one uppercase letter, one lowercase letter, and one number'
-    ),
+    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/, 'Password must contain at least one uppercase letter, one lowercase letter, and one number'),
 });
 
 const LoginPage = () => {

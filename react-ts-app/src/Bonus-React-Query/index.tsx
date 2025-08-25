@@ -11,6 +11,7 @@ import { useState } from 'react';
 import Login from '@/Lesson13/pages/Login';
 import About from './pages/About';
 import TasksWithOutReactQuery from './pages/TasksWithOutReactQuery';
+import CreateTask from './pages/CreateTask';
 
 export default function ReactQueryExample() {
   const [user, setUser] = useState(null);
@@ -32,6 +33,7 @@ export default function ReactQueryExample() {
                 <Route path="/about" element={<About />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/tasks" element={<Tasks />} />
+                <Route path="/tasks/create" element={<CreateTask />} />
                 <Route path="/tasks-without-react-query" element={<TasksWithOutReactQuery />} />
                 <Route path="*" element={<AccessDenied />} />
               </Routes>

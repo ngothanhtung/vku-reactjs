@@ -28,11 +28,11 @@ function App() {
       {/* <TasksManagementWithZustandAndSecurity /> */}
       {/* <ZustandExample /> */}
       {/* <GoogleOAuth /> */}
-      {/* <ReactQueryExample /> */}
+      <ReactQueryExample />
       {/* <ChunkUploadExample /> */}
       {/* <FirebaseExample /> */}
       {/* <Chat /> */}
-      <AntdFormValidation />
+      {/* <AntdFormValidation /> */}
     </React.Fragment>
   );
 }
