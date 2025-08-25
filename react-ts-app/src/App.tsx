@@ -15,6 +15,7 @@ import TasksManagement from './Lesson10/TasksManagement';
 import ChunkUploadExample from './Bonus-Chunk-Upload';
 import FirebaseExample from './Bonus-Firebase';
 import { Chat } from './Lesson40-WebSocket';
+import AntdFormValidation from './Bonus-Zod-Validations/AntdFormValidation';
 
 function App() {
   return (
@@ -30,7 +31,8 @@ function App() {
       {/* <ReactQueryExample /> */}
       {/* <ChunkUploadExample /> */}
       {/* <FirebaseExample /> */}
-      <Chat />
+      {/* <Chat /> */}
+      <AntdFormValidation />
     </React.Fragment>
   );
 }
