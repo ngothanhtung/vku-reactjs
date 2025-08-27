@@ -52,6 +52,7 @@ apiClient.interceptors.response.use(
       window.location.href = '/login';
       return Promise.reject(error);
     }
+    // Ghi log error here: ...
 
     // For all other errors, just reject
     return Promise.reject(error);
