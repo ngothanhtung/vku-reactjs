@@ -16,6 +16,7 @@ import ChunkUploadExample from './Bonus-Chunk-Upload';
 import FirebaseExample from './Bonus-Firebase';
 import { Chat } from './Lesson40-WebSocket';
 import AntdFormValidation from './Bonus-Zod-Validations/AntdFormValidation';
+import LottieExample from './Bonus-Lotties';
 
 function App() {
   return (
@@ -28,11 +29,12 @@ function App() {
       {/* <TasksManagementWithZustandAndSecurity /> */}
       {/* <ZustandExample /> */}
       {/* <GoogleOAuth /> */}
-      <ReactQueryExample />
+      {/* <ReactQueryExample /> */}
       {/* <ChunkUploadExample /> */}
       {/* <FirebaseExample /> */}
       {/* <Chat /> */}
       {/* <AntdFormValidation /> */}
+      <LottieExample />
     </React.Fragment>
   );
 }
