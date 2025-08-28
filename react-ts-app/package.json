@@ -16,6 +16,8 @@
     "@hookform/resolvers": "^5.1.1",
     "@lottiefiles/dotlottie-react": "^0.15.1",
     "@react-oauth/google": "^0.12.2",
+    "@react-three/drei": "^10.7.4",
+    "@react-three/fiber": "^9.3.0",
     "@tailwindcss/vite": "^4.1.11",
     "@tanstack/react-query": "^5.84.1",
     "antd": "^5.26.4",
@@ -37,6 +39,7 @@
     "sockjs-client": "^1.6.1",
     "stompjs": "^2.3.3",
     "tailwindcss": "^4.1.11",
+    "three": "^0.179.1",
     "yup": "^1.6.1",
     "zod": "^4.0.15",
     "zustand": "^5.0.6"

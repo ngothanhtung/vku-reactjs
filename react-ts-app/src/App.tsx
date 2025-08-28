@@ -17,6 +17,7 @@ import FirebaseExample from './Bonus-Firebase';
 import { Chat } from './Lesson40-WebSocket';
 import AntdFormValidation from './Bonus-Zod-Validations/AntdFormValidation';
 import LottieExample from './Bonus-Lotties';
+import ThreeExample from './Bonus-3D';
 
 function App() {
   return (
@@ -33,8 +34,9 @@ function App() {
       {/* <ChunkUploadExample /> */}
       {/* <FirebaseExample /> */}
       {/* <Chat /> */}
-      <AntdFormValidation />
+      {/* <AntdFormValidation /> */}
       {/* <LottieExample /> */}
+      <ThreeExample />
     </React.Fragment>
   );
 }
