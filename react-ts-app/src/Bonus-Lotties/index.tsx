@@ -7,7 +7,7 @@ export default function LottieExample({}: Props) {
     <div>
       <DotLottieReact src="/assets/lotties/teaching.json" loop autoplay />
 
-      {/* <img src={'/public/assets/vectors/education.svg'} /> */}
+      {/* <img src={'/assets/vectors/education.svg'} /> */}
     </div>
   );
 }
