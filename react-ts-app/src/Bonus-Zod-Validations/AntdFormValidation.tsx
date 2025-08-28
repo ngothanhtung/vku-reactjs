@@ -47,6 +47,10 @@ export default function AntdFormValidation() {
           required
           rules={[
             {
+              required: true,
+              message: 'Email không được để trống',
+            },
+            {
               validator: async (_: unknown, value: string) => {
                 try {
                   formSchema.email.parse(value);

@@ -33,8 +33,8 @@ function App() {
       {/* <ChunkUploadExample /> */}
       {/* <FirebaseExample /> */}
       {/* <Chat /> */}
-      {/* <AntdFormValidation /> */}
-      <LottieExample />
+      <AntdFormValidation />
+      {/* <LottieExample /> */}
     </React.Fragment>
   );
 }
