@@ -18,6 +18,8 @@ import { Chat } from './Lesson40-WebSocket';
 import AntdFormValidation from './Bonus-Zod-Validations/AntdFormValidation';
 import LottieExample from './Bonus-Lotties';
 import ThreeExample from './Bonus-3D';
+import DaeExample from './Bonus-3D/dae';
+import FBXExample from './Bonus-3D/fbx';
 
 function App() {
   return (
@@ -35,8 +37,10 @@ function App() {
       {/* <FirebaseExample /> */}
       {/* <Chat /> */}
       {/* <AntdFormValidation /> */}
-      {/* <LottieExample /> */}
-      <ThreeExample />
+      <LottieExample />
+      {/* <ThreeExample /> */}
+      {/* <FBXExample /> */}
+      {/* <DaeExample /> */}
     </React.Fragment>
   );
 }

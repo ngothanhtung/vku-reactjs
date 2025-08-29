@@ -1,12 +1,11 @@
 import { Suspense } from 'react';
 import * as THREE from 'three';
-import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
-import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { FBXLoader } from 'three/addons/loaders/FBXLoader.js';
 
 import { Environment, OrbitControls } from '@react-three/drei';
 import { Canvas, useLoader } from '@react-three/fiber';
 
-export default function ThreeExample() {
+export default function FBXExample() {
   return (
     <div>
       <Canvas
@@ -20,7 +19,7 @@ export default function ThreeExample() {
         }}
       >
         {/* Environment lighting cho màu sắc tự nhiên */}
-        <Environment preset="forest" />
+        <Environment preset="sunset" />
         {/* Ánh sáng chính */}
         <ambientLight intensity={1} color="#ffffff" />
         {/* Dùng để chiếu sáng */}
@@ -63,22 +62,18 @@ export default function ThreeExample() {
 
         {/* Model with Suspense for loading */}
         <Suspense fallback={null}>
-          <Model />
+          <FBXModel />
         </Suspense>
       </Canvas>
     </div>
   );
 }
 
-const Model = () => {
-  const gltf = useLoader(GLTFLoader, '/assets/3d/9382762.glb', (loader) => {
-    const dracoLoader = new DRACOLoader();
-    dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/');
-    loader.setDRACOLoader(dracoLoader);
-  });
+const FBXModel = () => {
+  const fbx = useLoader(FBXLoader, '/assets/3d/Avocado.fbx');
 
   // Tự động căn giữa model
-  const box = new THREE.Box3().setFromObject(gltf.scene);
+  const box = new THREE.Box3().setFromObject(fbx);
   const center = box.getCenter(new THREE.Vector3());
   const size = box.getSize(new THREE.Vector3());
 
@@ -87,5 +82,5 @@ const Model = () => {
   const scale = 2 / maxSize; // Scale để model có kích thước 2 units
 
   // Scale and position the model appropriately
-  return <primitive object={gltf.scene} scale={[scale, scale, scale]} position={[-center.x * scale, -center.y * scale, -center.z * scale]} />;
+  return <primitive object={fbx} scale={[scale, scale, scale]} position={[-center.x * scale, -center.y * scale, -center.z * scale]} />;
 };

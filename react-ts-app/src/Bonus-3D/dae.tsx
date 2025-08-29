@@ -1,12 +1,11 @@
-import { Suspense } from 'react';
+import { Suspense, useEffect, useRef } from 'react';
 import * as THREE from 'three';
-import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
-import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { ColladaLoader } from 'three/addons/loaders/ColladaLoader.js';
 
 import { Environment, OrbitControls } from '@react-three/drei';
-import { Canvas, useLoader } from '@react-three/fiber';
+import { Canvas, useLoader, useFrame } from '@react-three/fiber';
 
-export default function ThreeExample() {
+export default function DaeExample() {
   return (
     <div>
       <Canvas
@@ -20,7 +19,7 @@ export default function ThreeExample() {
         }}
       >
         {/* Environment lighting cho màu sắc tự nhiên */}
-        <Environment preset="forest" />
+        <Environment preset="sunset" />
         {/* Ánh sáng chính */}
         <ambientLight intensity={1} color="#ffffff" />
         {/* Dùng để chiếu sáng */}
@@ -54,7 +53,7 @@ export default function ThreeExample() {
           enableRotate={true}
           autoRotate={true}
           reverseOrbit={false}
-          autoRotateSpeed={5}
+          autoRotateSpeed={1}
           maxPolarAngle={Math.PI * 0.75}
           minDistance={2}
           maxDistance={10}
@@ -63,22 +62,54 @@ export default function ThreeExample() {
 
         {/* Model with Suspense for loading */}
         <Suspense fallback={null}>
-          <Model />
+          <DaeModel />
         </Suspense>
       </Canvas>
     </div>
   );
 }
 
-const Model = () => {
-  const gltf = useLoader(GLTFLoader, '/assets/3d/9382762.glb', (loader) => {
-    const dracoLoader = new DRACOLoader();
-    dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/');
-    loader.setDRACOLoader(dracoLoader);
+const DaeModel = () => {
+  const collada = useLoader(ColladaLoader, '/assets/3d/BrainStem.dae');
+  const mixerRef = useRef<THREE.AnimationMixer | null>(null);
+  const modelRef = useRef<THREE.Group>(null);
+
+  // Thiết lập animations
+  useEffect(() => {
+    // Tìm animations trong scene
+    const animations: THREE.AnimationClip[] = [];
+    collada.scene.traverse((child) => {
+      if (child.animations && child.animations.length > 0) {
+        animations.push(...child.animations);
+      }
+    });
+
+    if (animations.length > 0) {
+      // Tạo AnimationMixer
+      mixerRef.current = new THREE.AnimationMixer(collada.scene);
+
+      // Phát tất cả animations
+      animations.forEach((clip) => {
+        const action = mixerRef.current!.clipAction(clip);
+        action.play();
+      });
+    }
+  }, [collada]);
+
+  // Update animation trong mỗi frame
+  useFrame((_, delta) => {
+    if (mixerRef.current) {
+      mixerRef.current.update(delta);
+    }
+
+    // Thêm rotation đơn giản nếu không có animations hoặc để tạo hiệu ứng
+    if (modelRef.current) {
+      modelRef.current.rotation.y += delta * 0.3; // Quay chậm
+    }
   });
 
   // Tự động căn giữa model
-  const box = new THREE.Box3().setFromObject(gltf.scene);
+  const box = new THREE.Box3().setFromObject(collada.scene);
   const center = box.getCenter(new THREE.Vector3());
   const size = box.getSize(new THREE.Vector3());
 
@@ -87,5 +118,9 @@ const Model = () => {
   const scale = 2 / maxSize; // Scale để model có kích thước 2 units
 
   // Scale and position the model appropriately
-  return <primitive object={gltf.scene} scale={[scale, scale, scale]} position={[-center.x * scale, -center.y * scale, -center.z * scale]} />;
+  return (
+    <group ref={modelRef} scale={[scale, scale, scale]} position={[-center.x * scale, -center.y * scale, -center.z * scale]}>
+      <primitive object={collada.scene} />
+    </group>
+  );
 };

@@ -1,13 +1,11 @@
-import React from 'react';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
-type Props = {};
 
-export default function LottieExample({}: Props) {
+export default function LottieExample() {
   return (
     <div>
-      <DotLottieReact src="/assets/lotties/teaching.json" loop autoplay />
+      <DotLottieReact src="/assets/lotties/truck.json" loop autoplay />
 
-      {/* <img src={'/assets/vectors/education.svg'} /> */}
+      <img src={'/assets/vectors/shipping.svg'} />
     </div>
   );
 }
