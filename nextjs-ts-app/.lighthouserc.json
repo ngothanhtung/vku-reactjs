@@ -1,0 +1,65 @@
+{
+  "ci": {
+    "collect": {
+      "numberOfRuns": 3,
+      "startServerCommand": "npm run start",
+      "url": [
+        "http://localhost:3000/",
+        "http://localhost:3000/blog",
+        "http://localhost:3000/contact"
+      ],
+      "settings": {
+        "preset": "desktop",
+        "formFactor": "desktop",
+        "screenEmulation": {
+          "disabled": false
+        }
+      }
+    },
+    "assert": {
+      "assertions": {
+        "categories:performance": [
+          "error",
+          {
+            "minScore": 0.8
+          }
+        ],
+        "largest-contentful-paint": [
+          "error",
+          {
+            "maxNumericValue": 2500,
+            "aggregationMethod": "median"
+          }
+        ],
+        "total-blocking-time": [
+          "error",
+          {
+            "maxNumericValue": 200,
+            "aggregationMethod": "median"
+          }
+        ],
+        "cumulative-layout-shift": [
+          "error",
+          {
+            "maxNumericValue": 0.1,
+            "aggregationMethod": "p75"
+          }
+        ],
+        "unused-javascript": [
+          "warn",
+          {
+            "maxNumericValue": 120000
+          }
+        ],
+        "render-blocking-resources": "warn",
+        "uses-responsive-images": "warn",
+        "uses-text-compression": "warn",
+        "uses-optimized-images": "warn",
+        "uses-rel-preconnect": "warn"
+      }
+    },
+    "upload": {
+      "target": "temporary-public-storage"
+    }
+  }
+}

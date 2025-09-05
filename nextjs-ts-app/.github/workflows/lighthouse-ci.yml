@@ -1,0 +1,48 @@
+name: Lighthouse CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  lhci:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Build Next.js
+        run: npm run build
+
+      - name: Run Lighthouse CI (autorun)
+        run: npx lhci autorun
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # (Tuỳ chọn) Upload HTML reports như artifact
+      - name: Upload LHCI artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lhci-reports
+          path: '.lighthouseci/*'
+
+      # (Tuỳ chọn) Comment vào PR khi fail
+      - name: PR Comment on failure
+        if: failure() && github.event_name == 'pull_request'
+        uses: thollander/actions-comment-pull-request@v3
+        with:
+          message: |
+            ⚠️ Lighthouse CI failed due to performance assertions.
+            Please check the uploaded artifacts or `.lighthouserc.json` thresholds.
