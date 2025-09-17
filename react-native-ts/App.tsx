@@ -1,23 +1,15 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
-import Login from './src/components/Login';
-import Products from './src/components/Products';
+import { NavigationContainer } from '@react-navigation/native';
 
-const URL = 'https://server.aptech.io/online-shop/products';
+import RootStack from './src/RootStack';
+import RootTab from './src/screens/Tabs';
 
 export default function App() {
   return (
-    <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
-      {/* <Products /> */}
-      <Login />
-    </SafeAreaView>
+    <NavigationContainer>
+      {/* <RootTab /> */}
+      <RootStack />
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
