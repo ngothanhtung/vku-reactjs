@@ -1,3 +1,6 @@
+---
+height: 9024
+---
 # Diagrams
 
 You can create diagrams / graphs from textual descriptions, directly in your Markdown.
@@ -68,6 +71,16 @@ database "MySql" {
 [Folder 3] --> [Frame 4]
 
 @enduml
+```
+
+```mermaid
+flowchart TD
+    A[Christmas] -->|Get money| B(Go shopping)
+    B --> C{Let me think}
+    C -->|One| D[Laptop]
+    C -->|Two| E[iPhone]
+    C -->|Three| F[fa:fa-car Car]
+  
 ```
 
 </div>

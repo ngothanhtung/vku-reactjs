@@ -1,6 +1,6 @@
 ---
 layout: image-right
-image: https://cover.sli.dev
+image: /assets/images/image-01.jpg
 transition: slide-up
 ---
 
