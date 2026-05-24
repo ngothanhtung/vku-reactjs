@@ -3,20 +3,15 @@ import React from 'react';
 
 import { Product } from '@/types';
 
-// ISG Configuration - Revalidate every 60 seconds
-export const revalidate = 60;
-
-// Optional: Configure dynamic behavior
-export const dynamic = 'force-static';
-
 export default async function Index() {
   const response = await fetch('https://server.aptech.io/online-shop/products', {
     next: {
-      revalidate: 60, // Revalidate every 60 seconds
-      tags: ['products-isg'], // Optional: Tag for cache invalidation
+      revalidate: 60,
+      tags: ['products-isg'],
     },
   });
   const products = await response.json();
+
   return (
     <div className='bg-white rounded-lg shadow p-6'>
       <Products products={products} />
